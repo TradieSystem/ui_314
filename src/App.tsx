@@ -3,12 +3,17 @@ import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
 import {RoutesEnum} from "./Routes";
+<<<<<<< Updated upstream
 import {MemoryRouter, Route, Routes} from "react-router-dom";
+=======
+import Login from "./Login/Login";
+import {HashRouter, MemoryRouter, Route, Routes} from "react-router-dom";
+>>>>>>> Stashed changes
 import PageContainer from "./Components/PageContainer/PageContainer";
 function App() {
     return (
         <NavigationContextContextProvider>
-            <MemoryRouter>
+            <HashRouter>
                 <Routes>
                     <Route path={RoutesEnum.HOME} element={<HomePage/>}/>
                     {/*DELETE THIS - only for testing*/}
@@ -20,11 +25,14 @@ function App() {
                             </PageContainer>
                         }
                     />
-                    <Route path={'*'} element={<HomePage/>} />
+                    <Route path={RoutesEnum.LOGIN} element={<Login />} />
                 </Routes>
-            </MemoryRouter>
+            </HashRouter>
         </NavigationContextContextProvider>
     );
 }
 
 export default App;
+
+
+

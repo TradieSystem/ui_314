@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
 import "./Login.css";
-
-
-
-
 
 function Login() {
     // React States
@@ -48,9 +43,6 @@ function Login() {
                 setIsSubmitted(true);
 
             }
-        } else {
-            // Username not found
-            setErrorMessages({name: "uname", message: errors.uname});
         }
     };
 
@@ -79,18 +71,16 @@ function Login() {
     );
 
     return (
-            <div className="app">
-                <div className="login-form">
-                    <div className="title">Sign In</div>
-                    {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
-
-                </div>
-
+        <div className="app">
+            <div className="login-form">
+                <div className="title">Sign In</div>
+                {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
             </div>
-
-
+        </div>
     );
 
 }
 
 export default Login;
+
+
