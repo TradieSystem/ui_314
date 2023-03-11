@@ -5,7 +5,6 @@ import "./Login.css";
 
 function Login() {
     // React States
-    const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     // User Login info
@@ -33,20 +32,6 @@ function Login() {
 
         // Find user login info
         const userData = database.find((user) => user.username === uname.value);
-
-        // Compare user info
-        if (userData) {
-            if (userData.password !== pass.value) {
-                // Invalid password
-                setErrorMessages({name: "pass", message: errors.pass});
-            } else {
-                setIsSubmitted(true);
-
-            }
-        }
-    };
-
-    // Generate JSX code for error message
 
 
     // JSX code for login form
