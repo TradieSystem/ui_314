@@ -7,7 +7,7 @@ import {RoutesEnum} from "./Routes";
 import {MemoryRouter, Route, Routes} from "react-router-dom";
 =======
 import Login from "./Login/Login";
-import {HashRouter, MemoryRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 >>>>>>> Stashed changes
 import PageContainer from "./Components/PageContainer/PageContainer";
 function App() {
