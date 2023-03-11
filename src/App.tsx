@@ -3,12 +3,12 @@ import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
 import {RoutesEnum} from "./Routes";
-import {MemoryRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import PageContainer from "./Components/PageContainer/PageContainer";
 function App() {
     return (
         <NavigationContextContextProvider>
-            <MemoryRouter>
+            <HashRouter>
                 <Routes>
                     <Route path={RoutesEnum.HOME} element={<HomePage/>}/>
                     {/*DELETE THIS - only for testing*/}
@@ -22,7 +22,7 @@ function App() {
                     />
                     <Route path={'*'} element={<HomePage/>} />
                 </Routes>
-            </MemoryRouter>
+            </HashRouter>
         </NavigationContextContextProvider>
     );
 }
