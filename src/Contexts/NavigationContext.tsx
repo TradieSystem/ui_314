@@ -3,6 +3,7 @@ import {SideNavigationMenuItemProps} from "../Components/SideNavigation/SideNavi
 import HomeIcon from '@mui/icons-material/Home';
 import BiotechIcon from '@mui/icons-material/Biotech';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import {RoutesEnum} from "../Routes";
 
 const NavigationContext = createContext({} as NavigationContextState);
@@ -34,13 +35,14 @@ export const NavigationContextContextProvider = ({children}: any) => {
             route: RoutesEnum.TEST
         },
         {
-            icon: <LogoutIcon />,
+            icon: <LoginIcon/>,
             text: 'Login',
             route: RoutesEnum.LOGIN
         },
         {
             icon: <LogoutIcon />,
-            text: 'Logout (Inactive)'
+            text: 'Logout (Inactive)',
+            route: RoutesEnum.LOGOUT
         }
     ]
 

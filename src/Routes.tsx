@@ -3,6 +3,7 @@
  */
 export enum RoutesEnum {
     LOGIN = "Login",
+    LOGOUT = "Logout",
     HOME = "home",
     TEST = "test"
 }

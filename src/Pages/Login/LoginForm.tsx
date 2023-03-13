@@ -51,9 +51,7 @@ const LoginForm = ({ setAuth }) => {
         },
         validationSchema: LoginSchema,
         onSubmit: () => {
-            console.log("submitting...");
             setTimeout(() => {
-                console.log("submited!!");
                 setAuth(true);
                 navigate(from, { replace: true });
             }, 2000);
@@ -141,14 +139,14 @@ const LoginForm = ({ setAuth }) => {
                                 label="Remember me"
                             />
 
-                            <Link
+                          {/* <Link
                                 component={RouterLink}
                                 variant="subtitle2"
                                 to="#"
                                 underline="hover"
                             >
                                 Forgot password?
-                            </Link>
+                            </Link> */}
                         </Stack>
 
                         <LoadingButton
