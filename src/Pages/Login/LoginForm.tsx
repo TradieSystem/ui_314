@@ -29,7 +29,7 @@ const animate = {
 };
 
 // @ts-ignore
-const LoginForm = ({ setAuth }) => {
+const LoginForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -52,7 +52,7 @@ const LoginForm = ({ setAuth }) => {
         validationSchema: LoginSchema,
         onSubmit: () => {
             setTimeout(() => {
-                setAuth(true);
+
                 navigate(from, { replace: true });
             }, 2000);
         },

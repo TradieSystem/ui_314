@@ -7,9 +7,6 @@ import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PageContainer from "./Components/PageContainer/PageContainer";
 function App() {
-    const [auth, setAuth] = useState(false);
-
-
 
     return (
         <NavigationContextContextProvider>
@@ -25,8 +22,7 @@ function App() {
                             </PageContainer>
                         }
                     />
-                    <Route path={RoutesEnum.LOGIN} element={<Login setAuth={setAuth}/>} />
-                    <Route path={RoutesEnum.LOGOUT} element={<Login setAuth={setAuth}/>} />
+                    <Route path={RoutesEnum.LOGIN} element={<Login/>} />
                     <Route path={'*'} element={<HomePage/>} />
                 </Routes>
             </HashRouter>
