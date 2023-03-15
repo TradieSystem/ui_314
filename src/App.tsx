@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
@@ -6,10 +6,11 @@ import Login from "./Pages/Login/Login";
 import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PageContainer from "./Components/PageContainer/PageContainer";
+import { AuthContextContextProvider } from "./Contexts/auth0";
 function App() {
-
     return (
         <NavigationContextContextProvider>
+            <AuthContextContextProvider>
             <HashRouter>
                 <Routes>
                     <Route path={RoutesEnum.HOME} element={<HomePage/>}/>
@@ -22,10 +23,11 @@ function App() {
                             </PageContainer>
                         }
                     />
-                    <Route path={RoutesEnum.LOGIN} element={<Login/>} />
+                    <Route path={RoutesEnum.LOGOUT} element={<Login useAuthContext/>} />
                     <Route path={'*'} element={<HomePage/>} />
                 </Routes>
             </HashRouter>
+                </AuthContextContextProvider>
         </NavigationContextContextProvider>
     );
 }

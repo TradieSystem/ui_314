@@ -3,6 +3,7 @@ import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
 
+
 import {
     Box,
     Checkbox,
@@ -29,7 +30,8 @@ const animate = {
 };
 
 // @ts-ignore
-const LoginForm = () => {
+const LoginForm = ({ useAuthContext }) => {
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -166,3 +168,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+function AuthContextState(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}
