@@ -6,8 +6,6 @@ import LoginForm from "../Login/LoginForm";
 import { motion } from "framer-motion";
 import Logo from "./logo";
 
-
-
 const RootStyle = styled("div")({
     background: "rgb(216,206,205)",
     height: "100vh",
@@ -59,7 +57,7 @@ const Login = () => {
                        <Logo />
                     </HeadingStyle>
 
-                    <LoginForm  />
+                    <LoginForm />
 
                     <Typography
                         component={motion.p}
