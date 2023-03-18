@@ -9,10 +9,10 @@ import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PageContainer from "./Components/PageContainer/PageContainer";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
+import SignUp from "./Pages/SignUp/SignUp";
 
 function App() {
 
-    // @ts-ignore
     return (
         <NavigationContextContextProvider>
             <AuthContextContextProvider>
@@ -29,9 +29,10 @@ function App() {
                             }
                         />
                         <Route path={RoutesEnum.LOGIN} element={<Login />}/>
+                        <Route path={RoutesEnum.SIGN_UP} element={<SignUp />}/>
                         <Route path={'*'} element={<HomePage/>}/>
-                    <Route path={"/ForgotPassword"} element={ <ForgotPassword />}/>
-                    <Route path={"/Password"} element={ <Password />}/>
+                    <Route path={"/ForgotPassword"} element={<ForgotPassword />}/>
+                    <Route path={"/Password"} element={<Password />}/>
                 </Routes>
             </HashRouter>
             </AuthContextContextProvider>

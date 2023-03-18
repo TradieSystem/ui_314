@@ -4,7 +4,8 @@
 export enum RoutesEnum {
     LOGIN = "login",
     HOME = "home",
-    TEST = "test"
+    TEST = "test",
+    SIGN_UP = "signup"
 }
 
 /**

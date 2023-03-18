@@ -1,34 +1,15 @@
-import React, { useState } from "react";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import { Form, FormikProvider, useFormik } from "formik";
+import React, {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {Form, FormikProvider, useFormik} from "formik";
 import * as Yup from "yup";
-import {ThemedButton} from "../Button/ThemedButton";
-import {ThemedTextField} from "../TextField/ThemedTextField";
 import Loading from "./loading";
-import {
-    Box,
-    Checkbox,
-    FormControlLabel,
-    IconButton,
-    InputAdornment,
-    Link,
-    Stack
-} from "@mui/material";
-import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-let easing = [0.6, -0.05, 0.01, 0.99];
-const animate = {
-    opacity: 1,
-    y: 0,
-    transition: {
-        duration: 0.6,
-        ease: easing,
-        delay: 0.16,
-    },
-};
+import {Box, IconButton, InputAdornment, Stack} from "@mui/material";
+import {Icon} from "@iconify/react";
+import {motion} from "framer-motion";
+import {yupResolver} from '@hookform/resolvers/yup';
+import {ThemedButton} from "../../Components/Button/ThemedButton";
+import {animate} from "../../Effects/Animations";
+import ThemedTextField from "../../Components/TextField/ThemedTextField";
 
 
 const PasswordForm = () => {
@@ -60,16 +41,16 @@ const PasswordForm = () => {
         },
         validationSchema: PasswordSchema,
         onSubmit: (values, actions) => {
-            const formOptions = { resolver: yupResolver(PasswordSchema) }
+            const formOptions = {resolver: yupResolver(PasswordSchema)}
 
             setTimeout(() => {
-                navigate(from, { replace: true });
+                navigate(from, {replace: true});
             }, 2000);
         },
     });
 
 
-    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
         formik;
 
 
@@ -92,7 +73,7 @@ const PasswordForm = () => {
                             gap: 3,
                         }}
                         component={motion.div}
-                        initial={{ opacity: 0, y: 40 }}
+                        initial={{opacity: 0, y: 40}}
                         animate={animate}
                     >
                         <ThemedTextField
@@ -118,9 +99,9 @@ const PasswordForm = () => {
                                             onClick={() => setShowPassword((prev) => !prev)}
                                         >
                                             {showPassword ? (
-                                                <Icon icon="eva:eye-fill" />
+                                                <Icon icon="eva:eye-fill"/>
                                             ) : (
-                                                <Icon icon="eva:eye-off-fill" />
+                                                <Icon icon="eva:eye-off-fill"/>
                                             )}
                                         </IconButton>
                                     </InputAdornment>
@@ -144,9 +125,9 @@ const PasswordForm = () => {
                                             onClick={() => setShowPassword1((prev) => !prev)}
                                         >
                                             {showPassword1 ? (
-                                                <Icon icon="eva:eye-fill" />
+                                                <Icon icon="eva:eye-fill"/>
                                             ) : (
-                                                <Icon icon="eva:eye-off-fill" />
+                                                <Icon icon="eva:eye-off-fill"/>
                                             )}
                                         </IconButton>
                                     </InputAdornment>
@@ -157,14 +138,14 @@ const PasswordForm = () => {
 
                     <Box
                         component={motion.div}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{opacity: 0, y: 20}}
                         animate={animate}
                     >
                         <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            sx={{ my: 2 }}
+                            sx={{my: 2}}
                         >
                         </Stack>
 
@@ -175,7 +156,7 @@ const PasswordForm = () => {
                             variant="contained"
                             loading={isSubmitting}
                         >
-                            {isSubmitting ? <Loading /> : "Reset Password"}
+                            {isSubmitting ? <Loading/> : "Reset Password"}
                         </ThemedButton>
 
                     </Box>
