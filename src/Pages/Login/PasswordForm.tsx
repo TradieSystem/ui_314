@@ -16,6 +16,8 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -29,41 +31,52 @@ const animate = {
 };
 
 
-const LoginForm = () => {
+const PasswordForm = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-
+    const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [showPassword1, setShowPassword1] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const LoginSchema = Yup.object().shape({
-        email: Yup.string()
-            .email("Provide a valid email address")
-            .required("Email is required"),
-        password: Yup.string().required("Password is required"),
+    const PasswordSchema = Yup.object().shape({
+        password: Yup.string()
+            .required("Password is required")
+            .min(3, 'Password must be at 3 char long'),
+        password1: Yup.string()
+            .label('Password1')
+            .required("Password is required")
+            .oneOf([Yup.ref('password')], "Passwords doesn't match"),
     });
-
     const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
-            remember: true,
+            password1: "",
+
         },
-        validationSchema: LoginSchema,
-        onSubmit: () => {
+        validationSchema: PasswordSchema,
+        onSubmit: (values, actions) => {
+            const formOptions = { resolver: yupResolver(PasswordSchema) }
+
             setTimeout(() => {
                 navigate(from, { replace: true });
             }, 2000);
         },
     });
 
-    const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+
+    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
         formik;
+
 
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+
                 <Box
                     component={motion.div}
                     animate={{
@@ -87,19 +100,17 @@ const LoginForm = () => {
                             autoComplete="username"
                             type="email"
                             label="Email Address"
-                            {...getFieldProps("email")}
-                            error={Boolean(touched.email && errors.email)}
-                            helperText={touched.email && errors.email}
                         />
-
                         <ThemedTextField
                             fullWidth
-                            autoComplete="current-password"
+                            autoComplete="new-password"
                             type={showPassword ? "text" : "password"}
                             label="Password"
-                            {...getFieldProps("password")}
+                            {...getFieldProps('password')}
                             error={Boolean(touched.password && errors.password)}
                             helperText={touched.password && errors.password}
+                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">
@@ -107,6 +118,32 @@ const LoginForm = () => {
                                             onClick={() => setShowPassword((prev) => !prev)}
                                         >
                                             {showPassword ? (
+                                                <Icon icon="eva:eye-fill" />
+                                            ) : (
+                                                <Icon icon="eva:eye-off-fill" />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <ThemedTextField
+                            fullWidth
+                            autoComplete="new-password"
+                            type={showPassword1 ? "text" : "password"}
+                            label="Password1"
+                            {...getFieldProps('password1')}
+                            error={Boolean(touched.password1 && errors.password1)}
+                            helperText={touched.password1 && errors.password1}
+                            className={`form-control ${errors.password1 ? 'is-invalid' : ''}`}
+
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => setShowPassword1((prev) => !prev)}
+                                        >
+                                            {showPassword1 ? (
                                                 <Icon icon="eva:eye-fill" />
                                             ) : (
                                                 <Icon icon="eva:eye-off-fill" />
@@ -129,25 +166,6 @@ const LoginForm = () => {
                             justifyContent="space-between"
                             sx={{ my: 2 }}
                         >
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
-                                        {...getFieldProps("remember")}
-                                        checked={values.remember}
-                                    />
-                                }
-                                label="Remember me"
-                            />
-
-                          <Link
-                                component={RouterLink}
-                                variant="subtitle2"
-                                to="/ForgotPassword"
-                                underline="hover"
-                            >
-                                Forgot password?
-                            </Link>
                         </Stack>
 
                         <ThemedButton
@@ -157,7 +175,7 @@ const LoginForm = () => {
                             variant="contained"
                             loading={isSubmitting}
                         >
-                            {isSubmitting ? <Loading /> : "Login"}
+                            {isSubmitting ? <Loading /> : "Reset Password"}
                         </ThemedButton>
 
                     </Box>
@@ -167,5 +185,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
-
+export default PasswordForm;

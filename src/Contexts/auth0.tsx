@@ -1,4 +1,3 @@
-import { User } from '@supabase/supabase-js';
 import { useContext, useState, useEffect, createContext} from 'react';
 
 
@@ -11,6 +10,7 @@ const AuthContext = createContext<{token: Token | null| undefined, user: User | 
 });
 
 export const AuthProvider = ({children}: any) => {
+    // @ts-ignore
     const [user, setUser] = useState<User>()
     const [token, setToken] = useState<string>(" ")
 

@@ -29,29 +29,29 @@ const animate = {
 };
 
 
-const LoginForm = () => {
+const ForgotPasswordForm = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-
+    const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const LoginSchema = Yup.object().shape({
+    const PasswordSchema = Yup.object().shape({
         email: Yup.string()
+            .label('Email')
             .email("Provide a valid email address")
             .required("Email is required"),
-        password: Yup.string().required("Password is required"),
     });
 
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
-            remember: true,
+            email: " "
+
         },
-        validationSchema: LoginSchema,
-        onSubmit: () => {
+        validationSchema: PasswordSchema,
+        onSubmit: (values, actions) => {
+
             setTimeout(() => {
                 navigate(from, { replace: true });
             }, 2000);
@@ -91,31 +91,6 @@ const LoginForm = () => {
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
                         />
-
-                        <ThemedTextField
-                            fullWidth
-                            autoComplete="current-password"
-                            type={showPassword ? "text" : "password"}
-                            label="Password"
-                            {...getFieldProps("password")}
-                            error={Boolean(touched.password && errors.password)}
-                            helperText={touched.password && errors.password}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={() => setShowPassword((prev) => !prev)}
-                                        >
-                                            {showPassword ? (
-                                                <Icon icon="eva:eye-fill" />
-                                            ) : (
-                                                <Icon icon="eva:eye-off-fill" />
-                                            )}
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
                     </Box>
 
                     <Box
@@ -129,25 +104,6 @@ const LoginForm = () => {
                             justifyContent="space-between"
                             sx={{ my: 2 }}
                         >
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
-                                        {...getFieldProps("remember")}
-                                        checked={values.remember}
-                                    />
-                                }
-                                label="Remember me"
-                            />
-
-                          <Link
-                                component={RouterLink}
-                                variant="subtitle2"
-                                to="/ForgotPassword"
-                                underline="hover"
-                            >
-                                Forgot password?
-                            </Link>
                         </Stack>
 
                         <ThemedButton
@@ -156,8 +112,9 @@ const LoginForm = () => {
                             type="submit"
                             variant="contained"
                             loading={isSubmitting}
+                            onClick={() => navigate("/Password")}
                         >
-                            {isSubmitting ? <Loading /> : "Login"}
+                            {isSubmitting ? <Loading /> : "Send Link"}
                         </ThemedButton>
 
                     </Box>
@@ -167,5 +124,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
-
+export default ForgotPasswordForm;

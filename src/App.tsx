@@ -3,6 +3,8 @@ import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
 import Login from "./Pages/Login/Login";
+import ForgotPassword from "./Pages/Login/ForgotPassword";
+import Password from "./Pages/Login/Password";
 import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PageContainer from "./Components/PageContainer/PageContainer";
@@ -28,8 +30,9 @@ function App() {
                         }
                     />
                     <Route path={RoutesEnum.LOGOUT} element={ <Login />}/>
-
                     <Route path={'*'} element={<HomePage/>} />
+                    <Route path={"/ForgotPassword"} element={ <ForgotPassword />}/>
+                    <Route path={"/Password"} element={ <Password />}/>
                 </Routes>
             </HashRouter>
             </AuthProvider>
