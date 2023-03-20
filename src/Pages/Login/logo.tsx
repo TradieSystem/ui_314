@@ -7,7 +7,7 @@ const Logo = () => {
             <Box component="img" sx={{
                 height: 233,
                 width: 350,
-            }} src="/img.png" alt="logo"/>
+            }} src="/logo.png" alt="logo"/>
         </Box>
     );
 }

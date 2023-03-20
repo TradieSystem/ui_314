@@ -1,37 +1,35 @@
-import React, {createContext, useContext, useState} from 'react';
-
-const AuthContext = createContext({} as AuthContextState);
-
-interface AuthContextState{
-
-   user: boolean;
-    token: boolean;
+import { User } from '@supabase/supabase-js';
+import { useContext, useState, useEffect, createContext} from 'react';
 
 
-}
+// create a context for authentication
+// @ts-ignore
+const AuthContext = createContext<{token: Token | null| undefined, user: User | null | undefined }>({
+    token: null,
+    user: null,
 
-export const AuthContextContextProvider = ({children}: any) => {
-    /**
-     * Current state of user
-     */
-    const [user, setUser] = useState<boolean>(false);
-    const [token, setToken] = useState<boolean>(false);
+});
 
+export const AuthProvider = ({children}: any) => {
+    const [user, setUser] = useState<User>()
+    const [token, setToken] = useState<string>(" ")
 
     const value = {
-        user,
-        setUser,
         token,
-        setToken
+        user
 
-    }
+    };
 
-    // @ts-ignore
+    // use a provider to pass down the value
     return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
-}
+};
 
-export const useAuthContext = () => useContext(AuthContext);
+// export the useAuth hook
+export const useAuth = () => {
+    return useContext(AuthContext);
+};
+

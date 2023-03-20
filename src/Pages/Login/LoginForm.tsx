@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-
-
+import {ThemedButton} from "../Button/ThemedButton";
+import {ThemedTextField} from "../TextField/ThemedTextField";
+import Loading from "./loading";
 import {
     Box,
     Checkbox,
@@ -11,10 +12,8 @@ import {
     IconButton,
     InputAdornment,
     Link,
-    Stack,
-    TextField,
+    Stack
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 
@@ -29,8 +28,8 @@ const animate = {
     },
 };
 
-// @ts-ignore
-const LoginForm = ({ useAuthContext }) => {
+
+const LoginForm = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -54,7 +53,6 @@ const LoginForm = ({ useAuthContext }) => {
         validationSchema: LoginSchema,
         onSubmit: () => {
             setTimeout(() => {
-
                 navigate(from, { replace: true });
             }, 2000);
         },
@@ -84,7 +82,7 @@ const LoginForm = ({ useAuthContext }) => {
                         initial={{ opacity: 0, y: 40 }}
                         animate={animate}
                     >
-                        <TextField
+                        <ThemedTextField
                             fullWidth
                             autoComplete="username"
                             type="email"
@@ -94,7 +92,7 @@ const LoginForm = ({ useAuthContext }) => {
                             helperText={touched.email && errors.email}
                         />
 
-                        <TextField
+                        <ThemedTextField
                             fullWidth
                             autoComplete="current-password"
                             type={showPassword ? "text" : "password"}
@@ -134,6 +132,7 @@ const LoginForm = ({ useAuthContext }) => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
+                                        style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
                                         {...getFieldProps("remember")}
                                         checked={values.remember}
                                     />
@@ -151,15 +150,16 @@ const LoginForm = ({ useAuthContext }) => {
                             </Link> */}
                         </Stack>
 
-                        <LoadingButton
+                        <ThemedButton
                             fullWidth
                             size="large"
                             type="submit"
                             variant="contained"
                             loading={isSubmitting}
                         >
-                            {isSubmitting ? "loading..." : "Login"}
-                        </LoadingButton>
+                            {isSubmitting ? <Loading /> : "Login"}
+                        </ThemedButton>
+
                     </Box>
                 </Box>
             </Form>
@@ -169,6 +169,3 @@ const LoginForm = ({ useAuthContext }) => {
 
 export default LoginForm;
 
-function AuthContextState(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}

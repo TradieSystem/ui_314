@@ -8,12 +8,12 @@ import Logo from "./logo";
 
 
 
-
 const RootStyle = styled("div")({
-    background: "rgb(8,124,241)",
+    background: "rgb(216,206,205)",
     height: "100vh",
-    display: "grid",
     placeItems: "center",
+    display: "grid",
+
 });
 
 const HeadingStyle = styled(Box)({
@@ -21,14 +21,16 @@ const HeadingStyle = styled(Box)({
 });
 
 const ContentStyle = styled("div")({
-    maxWidth: 600,
+    maxWidth: 480,
     padding: 25,
     margin: "auto",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    background: "#eae4e4"
+    background: "#d8cecd",
 });
+
+
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const fadeInUp = {
@@ -47,7 +49,7 @@ const fadeInUp = {
     },
 };
 
-const Login = ({useAuthContext}) => {
+const Login = () => {
 
     return (
         <RootStyle>
@@ -55,12 +57,9 @@ const Login = ({useAuthContext}) => {
                 <ContentStyle>
                     <HeadingStyle component={motion.div} {...fadeInUp}>
                        <Logo />
-                        <Typography sx={{ color: "text.secondary", mb: 5 }}>
-                            Login to your account
-                        </Typography>
                     </HeadingStyle>
 
-                    <LoginForm useAuthContext={useAuthContext}/>
+                    <LoginForm  />
 
                     <Typography
                         component={motion.p}
@@ -69,14 +68,20 @@ const Login = ({useAuthContext}) => {
                         align="left"
                         sx={{ mt: 3 }}
                     >
+                        <HeadingStyle>
                         Don’t have an account?{" "}
                         <Link variant="subtitle2" component={RouterLink} to="/signup">
                             Sign up
                         </Link>
+                    </HeadingStyle>
                     </Typography>
                 </ContentStyle>
             </Container>
         </RootStyle>
+
+
+
+
     );
 };
 
