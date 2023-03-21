@@ -1,13 +1,16 @@
 import React from "react";
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 
 const Logo = () => {
     return (
         <Box>
-            <Box component="img" sx={{
+            <Box
+                component="img" sx={{
                 height: 233,
                 width: 350,
-            }} src="/logo.png" alt="logo"/>
+            }}
+                src="/logo.png" alt="logo"
+            />
         </Box>
     );
 }

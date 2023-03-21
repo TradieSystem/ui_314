@@ -4,7 +4,7 @@ import { Container, Typography, Link, Box} from "@mui/material";
 import styled from "@emotion/styled";
 import Passwordform from "../Login/PasswordForm";
 import { motion } from "framer-motion";
-import Logo from "./logo";
+import Logo from "../../Components/logo";
 
 
 

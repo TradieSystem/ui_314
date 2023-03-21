@@ -1,38 +1,12 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Link, Box} from "@mui/material";
-import styled from "@emotion/styled";
+import { Container, Typography, Link} from "@mui/material";
 import LoginForm from "../Login/LoginForm";
 import { motion } from "framer-motion";
-import Logo from "./logo";
+import Logo from "../../Components/logo";
+import {easing} from '../../Effects/Animations';
+import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";
 
-
-
-const RootStyle = styled("div")({
-    background: "rgb(216,206,205)",
-    height: "100vh",
-    placeItems: "center",
-    display: "grid",
-
-});
-
-const HeadingStyle = styled(Box)({
-    textAlign: "center",
-});
-
-const ContentStyle = styled("div")({
-    maxWidth: 480,
-    padding: 25,
-    margin: "auto",
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    background: "#d8cecd",
-});
-
-
-
-let easing = [0.6, -0.05, 0.01, 0.99];
 const fadeInUp = {
     initial: {
         y: 60,
@@ -58,23 +32,21 @@ const Login = () => {
                     <HeadingStyle component={motion.div} {...fadeInUp}>
                        <Logo />
                     </HeadingStyle>
-
-                    <LoginForm  />
-
-                    <Typography
-                        component={motion.p}
-                        {...fadeInUp}
-                        variant="body2"
-                        align="left"
-                        sx={{ mt: 3 }}
-                    >
-                        <HeadingStyle>
+                    <LoginForm />
+                    <HeadingStyle>
+                        <Typography
+                            component={motion.p}
+                            {...fadeInUp}
+                            variant="body2"
+                            align="left"
+                            sx={{ mt: 3 }}
+                        >
                         Don’t have an account?{" "}
                         <Link variant="subtitle2" component={RouterLink} to="/signup">
                             Sign up
                         </Link>
+                        </Typography>
                     </HeadingStyle>
-                    </Typography>
                 </ContentStyle>
             </Container>
         </RootStyle>

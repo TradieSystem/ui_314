@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import {ThemedButton} from "../Button/ThemedButton";
-import {ThemedTextField} from "../TextField/ThemedTextField";
 import Loading from "./loading";
 import {
     Box,
@@ -16,6 +14,8 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
+import {ThemedButton} from "../../Components/Button/ThemedButton";
+import ThemedTextField from "../../Components/TextField/ThemedTextField";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -107,6 +107,7 @@ const ForgotPasswordForm = () => {
                         </Stack>
 
                         <ThemedButton
+                            loadingButton
                             fullWidth
                             size="large"
                             type="submit"
@@ -116,7 +117,6 @@ const ForgotPasswordForm = () => {
                         >
                             {isSubmitting ? <Loading /> : "Send Link"}
                         </ThemedButton>
-
                     </Box>
                 </Box>
             </Form>

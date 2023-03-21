@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import {ThemedButton} from "../Button/ThemedButton";
-import {ThemedTextField} from "../TextField/ThemedTextField";
 import Loading from "./loading";
 import {
     Box,
@@ -14,20 +12,12 @@ import {
     Link,
     Stack
 } from "@mui/material";
+import {Link as RouterLink} from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
-
-let easing = [0.6, -0.05, 0.01, 0.99];
-const animate = {
-    opacity: 1,
-    y: 0,
-    transition: {
-        duration: 0.6,
-        ease: easing,
-        delay: 0.16,
-    },
-};
-
+import { animate } from "../../Effects/Animations";
+import ThemedTextField from "../../Components/TextField/ThemedTextField";
+import {ThemedButton} from "../../Components/Button/ThemedButton";
 
 const LoginForm = () => {
 
@@ -135,6 +125,7 @@ const LoginForm = () => {
                                         style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
                                         {...getFieldProps("remember")}
                                         checked={values.remember}
+                                        color={"warning"}
                                     />
                                 }
                                 label="Remember me"
@@ -151,15 +142,14 @@ const LoginForm = () => {
                         </Stack>
 
                         <ThemedButton
+                            loadingButton
                             fullWidth
                             size="large"
                             type="submit"
-                            variant="contained"
                             loading={isSubmitting}
                         >
                             {isSubmitting ? <Loading /> : "Login"}
                         </ThemedButton>
-
                     </Box>
                 </Box>
             </Form>
@@ -169,3 +159,6 @@ const LoginForm = () => {
 
 export default LoginForm;
 
+function AuthContextState(arg0: boolean) { //Do we need this?
+    throw new Error("Function not implemented.");
+}
