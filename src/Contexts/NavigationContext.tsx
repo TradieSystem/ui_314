@@ -35,7 +35,8 @@ export const NavigationContextContextProvider = ({children}: any) => {
         },
         {
             icon: <LogoutIcon />,
-            text: 'Logout (Inactive)'
+            text: 'Logout',
+            route: RoutesEnum.LOGOUT
         }
     ]
 

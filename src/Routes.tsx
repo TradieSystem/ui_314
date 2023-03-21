@@ -2,7 +2,7 @@
  * Route values
  */
 export enum RoutesEnum {
-    LOGIN_PAGE = "login",
+    LOGOUT = "Logout",
     HOME = "home",
     TEST = "test"
 }
