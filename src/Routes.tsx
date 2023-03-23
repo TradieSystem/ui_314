@@ -14,4 +14,4 @@ export enum RoutesEnum {
  * Default dev path --
  * use this for axios calls so we can easily change the path when we deploy
  */
-export const DEV_PATH = "http://localhost:3000"
+export const DEV_PATH = "http://localhost:3000";

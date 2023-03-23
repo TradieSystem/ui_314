@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {User} from "../Types/User";
-import {AccountType} from "../Types/AccountType";
+import {UserType} from "../Types/Account";
 
 const AuthContext = createContext({} as AuthContextState);
 
@@ -41,7 +41,7 @@ export const AuthContextContextProvider = ({children}: any) => {
             suburb: "Liverpool"
         },
         mobile: "0411222333",
-        usertype: AccountType.CLIENT
+        usertype: UserType.CLIENT
     }
 
     const dummyProfessionalUser : User = {
@@ -57,7 +57,7 @@ export const AuthContextContextProvider = ({children}: any) => {
             suburb: "Liverpool"
         },
         mobile: "0499888777",
-        usertype: AccountType.PROFESSIONAL
+        usertype: UserType.PROFESSIONAL
     }
 
     /**

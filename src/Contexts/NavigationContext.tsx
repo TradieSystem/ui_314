@@ -5,7 +5,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {RoutesEnum} from "../Routes";
 import {useAuthContext} from "./AuthContext";
-import {AccountType} from "../Types/AccountType";
+import {UserType} from "../Types/Account";
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -35,7 +35,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         },
         {
             icon: <ArticleIcon />,
-            text: user?.usertype === AccountType.PROFESSIONAL ? 'Request History' : 'My Requests',
+            text: user?.usertype === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
         //TODO we want this at the bottom of the side nav bar, not rendered as part of the top navigation group
@@ -47,7 +47,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
     ];
 
     //If the usertype is a client, render the client icons too
-    if(user?.usertype === AccountType.CLIENT) {
+    if(user?.usertype === UserType.CLIENT) {
         const createRequest : SideNavigationMenuItemProps = {
             icon: <AddIcon />,
             text: 'Create Requests',
@@ -56,7 +56,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         sideNavigationMenuItems.splice(1, 0, createRequest);
     }
 
-    if(user?.usertype === AccountType.PROFESSIONAL) {
+    if(user?.usertype === UserType.PROFESSIONAL) {
         const userSpecificNavigation : SideNavigationMenuItemProps = {
             icon: <MenuIcon />,
             text: 'Available Requests',
