@@ -3,6 +3,7 @@ import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
 import Login from "./Pages/Login/Login";
+import UserPage from "./Pages/UserPage/UserPage";
 import ForgotPassword from "./Pages/Login/ForgotPassword";
 import Password from "./Pages/Login/Password";
 import {RoutesEnum} from "./Routes";
@@ -30,6 +31,7 @@ function App() {
                         />
                         <Route path={RoutesEnum.LOGIN} element={<Login />}/>
                         <Route path={RoutesEnum.SIGN_UP} element={<SignUp />}/>
+                        <Route path={RoutesEnum.User_Page} element={<UserPage />}/>
                         <Route path={'*'} element={<HomePage/>}/>
                     <Route path={"/ForgotPassword"} element={<ForgotPassword />}/>
                     <Route path={"/Password"} element={<Password />}/>
