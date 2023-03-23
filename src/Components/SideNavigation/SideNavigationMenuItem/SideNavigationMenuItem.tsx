@@ -9,7 +9,7 @@ export interface SideNavigationMenuItemProps {
     /**
      * Text to display in the menu item
      */
-    text: string;
+    text?: string;
 
     /**
      * (Optional) icon to display on the left of the menu item
@@ -20,9 +20,14 @@ export interface SideNavigationMenuItemProps {
      * (Optional) route to go to when menu item is clicked
      */
     route?: RoutesEnum;
+
+    /**
+     * (Optional) Callback to perform an onClick action
+     */
+    onClick?: () => void;
 }
 
-export const SideNavigationMenuItem = ({text, icon, route}: SideNavigationMenuItemProps) => {
+export const SideNavigationMenuItem = ({text, icon, route, onClick}: SideNavigationMenuItemProps) => {
     const {isExpanded} = useNavigationContext();
     const navigate = useNavigate();
 
@@ -30,12 +35,15 @@ export const SideNavigationMenuItem = ({text, icon, route}: SideNavigationMenuIt
         <div
             className={isExpanded ? `${styles['menu-item']} ${styles['menu-item__expanded']}` : `${styles['menu-item']} ${styles['menu-item__condensed']}`}
             onClick={() => {
+                if(onClick) {
+                    onClick();
+                }
                 route && navigate(`/${route}`);
             }}
 
         >
             {icon}
-            {isExpanded && <Typography variant={'subtitle1'}>{text}</Typography>}
+            {isExpanded && <Typography fontWeight={"bold"} variant={'subtitle1'}>{text}</Typography>}
         </div>
     )
 }

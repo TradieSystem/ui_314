@@ -3,6 +3,7 @@ import {Typography} from "@mui/material";
 import SideNavigation from "../SideNavigation/SideNavigation";
 import styles from './PageContainer.module.css';
 import {useNavigationContext} from "../../Contexts/NavigationContext";
+import {RootStyle} from "../../CommonStyles/SignUp_Login";
 
 /**
  * Interface describing the properties of {@link PageContainer}
@@ -40,11 +41,15 @@ export const PageContainer = ({title, subtitle, children}: PageContainerProps) =
                 id={'page-content'}
                 className={isExpanded ? styles['page-content__min'] : styles['page-content__max']}
             >
-                <Typography variant={'h2'}>{title}</Typography>
-                {
-                    subtitle &&
-                    <Typography variant={'h3'}>{subtitle}</Typography>
-                }
+                <div className={styles['headers']}>
+                    <Typography variant={'h2'}>{title}</Typography>
+                </div>
+                <div className={styles['headers']}>
+                    {
+                        subtitle &&
+                        <Typography variant={'h4'}>{subtitle}</Typography>
+                    }
+                </div>
                 {children}
             </div>
         </>

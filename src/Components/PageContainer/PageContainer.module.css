@@ -7,3 +7,12 @@
     margin-top: 1.5rem;
     margin-left: 7.5rem;
 }
+
+.headers {
+    display: flex;
+    justify-content: center;
+}
+
+body {
+    background-color: #D8CECD;
+}

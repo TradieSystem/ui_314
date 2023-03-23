@@ -111,7 +111,9 @@ export const SignUp = () => {
 
         //if it is a professional, delete the membershipOption
 
-        //construct user object to send to endpoint
+        //TODO encrypt the CC details
+
+        //TODO construct user object to send to endpoint
 
         //TODO send details to sign up endpoint
 
