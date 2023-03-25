@@ -6,6 +6,7 @@ import Logo from "../../Components/logo";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";
 import {easing} from '../../Effects/Animations';
 
+
 const fadeInUp = {
     initial: {
         y: 60,
@@ -25,7 +26,7 @@ const fadeInUp = {
 const ForgotPassword = () => {
 
     return (
-        <RootStyle>
+        <RootStyle className = 'Background'>
             <Container maxWidth="sm">
                 <ContentStyle>
                     <HeadingStyle component={motion.div} {...fadeInUp}>

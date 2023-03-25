@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import Loading from "./loading";
+import Loading from "../../Effects/loading";
 import {
     Box,
     Checkbox,

@@ -5,7 +5,9 @@ export enum RoutesEnum {
     LOGIN = "login",
     HOME = "home",
     TEST = "test",
-    SIGN_UP = "signup"
+    SIGN_UP = "signup",
+    Request = "clientrequest",
+    User = "UserProfile"
 }
 
 /**

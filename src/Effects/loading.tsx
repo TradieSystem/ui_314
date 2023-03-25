@@ -7,7 +7,7 @@ const Loading = () => {
     return (
         <Box>
             <Box className="image" component="img" sx={{
-                height: 50,
+                height:50,
                 width: 50,
             }} src="/pie.png" alt="logo"/>
         </Box>
