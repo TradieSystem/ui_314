@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddBox from '@mui/icons-material/AddBox';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import {RoutesEnum} from "../Routes";
 import {useAuthContext} from "./AuthContext";
 import {AccountType} from "../Types/AccountType";
@@ -51,7 +52,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
             route: RoutesEnum.Request
         },
         {
-            icon: <AddBox />,
+            icon: <AccountCircle />,
             text: 'Profile',
             route: RoutesEnum.User
         }
