@@ -40,28 +40,23 @@ export const NavigationContextContextProvider = ({children}: any) => {
             text: user?.usertype === AccountType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
+        {
+            icon: <AccountCircle />,
+            text: 'Profile',
+            route: RoutesEnum.USER_MANAGEMENT
+        },
         //TODO we want this at the bottom of the side nav bar, not rendered as part of the top navigation group
         {
             icon: <LogoutIcon />,
             text: 'Logout',
             route: RoutesEnum.LOGIN
-        },
-        {
-            icon: <AddBox />,
-            text: 'Request',
-            route: RoutesEnum.Request
-        },
-        {
-            icon: <AccountCircle />,
-            text: 'Profile',
-            route: RoutesEnum.User
         }
     ];
 
     //If the usertype is a client, render the client icons too
     if(user?.usertype === AccountType.CLIENT) {
         const createRequest : SideNavigationMenuItemProps = {
-            icon: <AddIcon />,
+            icon: <AddBox />,
             text: 'Create Requests',
             route: RoutesEnum.CREATE_REQUEST
         }

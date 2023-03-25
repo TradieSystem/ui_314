@@ -22,8 +22,8 @@ function App() {
                         <Route path={RoutesEnum.HOME} element={<HomePage/>}/>
                         <Route path={RoutesEnum.LOGIN} element={<Login/>}/>
                         <Route path={RoutesEnum.SIGN_UP} element={<SignUp/>}/>
-                        <Route path={RoutesEnum.User} element={<UserProfileDisplay />}/>
-                        <Route path={RoutesEnum.Request} element={<ClientRequest />}/>
+                        <Route path={RoutesEnum.USER_MANAGEMENT} element={<UserProfileDisplay />}/>
+                        <Route path={RoutesEnum.REQUEST_HISTORY} element={<ClientRequest />}/>
                         <Route path={'*'} element={<HomePage/>}/>
                         <Route path={"/ForgotPassword"} element={<ForgotPassword/>}/>
                         <Route path={"/Password"} element={<Password/>}/>
