@@ -47,22 +47,24 @@ const ClientRequestForm = () => {
 
 
 
-
     const ClientFormSchema = Yup.object().shape({
         Description:Yup.string()
-        .label('Description')
-        .required("Description is required"),
+            .required("Description is required")
+            .length(1, 'Enter Description'),
+        CheckButton:Yup.string().required("Description is required"),
 
     });
 
     const formik = useFormik({
         initialValues: {
-            Description: " "
+            Description: " ",
+            CheckButton: " "
 
 
         },
         validationSchema: ClientFormSchema,
         onSubmit: (values, actions) => {
+
             setTimeout(() => {
                 navigate(from, { replace: true });
             }, 2000);
@@ -153,6 +155,7 @@ const ClientRequestForm = () => {
                                 {"Go Back"}
                             </ThemedButton>
                         <ThemedButton
+
                             type="submit"
                             variant="contained"
                             loadingButton={isSubmitting}
@@ -162,7 +165,6 @@ const ClientRequestForm = () => {
                             </Box>
                     </Box>
                 </Box>
-
             </Form>
         </FormikProvider>
     );

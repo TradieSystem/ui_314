@@ -4,6 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import BiotechIcon from '@mui/icons-material/Biotech';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddBox from '@mui/icons-material/AddBox';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import {RoutesEnum} from "../Routes";
 
 const NavigationContext = createContext({} as NavigationContextState);
@@ -45,7 +46,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
             route: RoutesEnum.Request
         },
         {
-            icon: <AddBox />,
+            icon: <AccountCircle />,
             text: 'Profile',
             route: RoutesEnum.User
         }
