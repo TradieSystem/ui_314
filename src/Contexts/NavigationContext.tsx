@@ -3,6 +3,7 @@ import {SideNavigationMenuItemProps} from "../Components/SideNavigation/SideNavi
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddBox from '@mui/icons-material/AddBox';
 import {RoutesEnum} from "../Routes";
 import {useAuthContext} from "./AuthContext";
 import {AccountType} from "../Types/AccountType";
@@ -43,6 +44,16 @@ export const NavigationContextContextProvider = ({children}: any) => {
             icon: <LogoutIcon />,
             text: 'Logout',
             route: RoutesEnum.LOGIN
+        },
+        {
+            icon: <AddBox />,
+            text: 'Request',
+            route: RoutesEnum.Request
+        },
+        {
+            icon: <AddBox />,
+            text: 'Profile',
+            route: RoutesEnum.User
         }
     ];
 

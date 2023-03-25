@@ -7,7 +7,7 @@ export enum RoutesEnum {
     REQUEST_HISTORY = "request_history",
     CREATE_REQUEST = "create_request",
     SIGN_UP = "signup",
-    AVAILABLE_REQUESTS = "available_requests"
+    User = "UserProfile"
 }
 
 /**
