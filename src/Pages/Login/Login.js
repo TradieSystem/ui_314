@@ -54,6 +54,7 @@ const Login = () => {
                     </Stack>
                     <LoginForm />
                     <HeadingStyle>
+
                         <Typography
                             component={motion.p}
                             {...fadeInUp}
@@ -61,7 +62,9 @@ const Login = () => {
                             align="left"
                             sx={{ mt: 3 }}
                         >
+                            <span style={{color:"black"}}>
                         Don’t have an account?{" "}
+                        </span>
                         <Link variant="subtitle2" component={RouterLink} to="/signup">
                             Sign up
                         </Link>

@@ -120,14 +120,16 @@ const LoginForm = () => {
                             sx={{ my: 2 }}
                         >
                             <FormControlLabel
+                                style={{color:"black"}}
                                 control={
                                     <Checkbox
-                                        style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
+                                        inputProps={{ 'aria-label': 'controlled'}}
                                         {...getFieldProps("remember")}
                                         checked={values.remember}
                                         color={"warning"}
                                     />
                                 }
+
                                 label="Remember me"
                             />
 
