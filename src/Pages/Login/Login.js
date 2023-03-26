@@ -6,7 +6,10 @@ import { motion } from "framer-motion";
 import Logo from "../../Components/logo";
 import {easing} from '../../Effects/Animations';
 import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";
-
+import Image from "./Background.jpg";
+import {
+    Stack
+} from "@mui/material";
 const fadeInUp = {
     initial: {
         y: 60,
@@ -26,12 +29,29 @@ const fadeInUp = {
 const Login = () => {
 
     return (
-        <RootStyle>
+
+        <RootStyle style={{
+            backgroundImage: 'url('+Image+')',
+            backgroundSize: "cover",
+            height: "100vh",
+            color: "#f5f5f5",
+        }} >
+        <RootStyle style={{height: "700px",
+            borderRadius: "25px",
+            border: "2px solid #DB5B13",
+            padding: "20px",}}>
             <Container maxWidth="sm">
                 <ContentStyle>
                     <HeadingStyle component={motion.div} {...fadeInUp}>
                        <Logo />
                     </HeadingStyle>
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        sx={{ my: 2 }}
+                    >
+                    </Stack>
                     <LoginForm />
                     <HeadingStyle>
                         <Typography
@@ -50,7 +70,7 @@ const Login = () => {
                 </ContentStyle>
             </Container>
         </RootStyle>
-
+</RootStyle>
 
 
 
