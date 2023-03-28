@@ -144,9 +144,16 @@ const ClientRequestForm = () => {
                                 justifyContent: "space-between"
                             }}
                         >
+                            <ThemedButton
+
+                                type="submit"
+                                variant="contained"
+                                onClick={() => navigate("/HomePage")}
+
+                            >
+                                {"Go Back"}
+                            </ThemedButton>
                         <ThemedButton
-                            fullWidth
-                            size="large"
                             type="submit"
                             variant="contained"
                             loadingButton={isSubmitting}
