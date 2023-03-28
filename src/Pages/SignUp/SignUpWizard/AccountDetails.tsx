@@ -6,19 +6,20 @@ import {animate} from "../../../Effects/Animations";
 import {SignUpFields, SignUpProps} from "../SignUp";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {Field, useFormikContext} from "formik";
-import {AccountType, MembershipOption, ProfessionalServices} from "../../../Types/AccountType";
+import {UserType, MembershipOption} from "../../../Types/Account";
+import {ServiceType} from "../../../Types/ServiceType";
 
 export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
     const {values, setFieldValue} = useFormikContext();
 
     function stepsComplete() {
         //Professionals need at least service selected
-        if ((values as SignUpFields).userType === AccountType.PROFESSIONAL) {
+        if ((values as SignUpFields).userType === UserType.PROFESSIONAL) {
             const services = (values as SignUpFields).professionalServices;
             if (services !== undefined && services.length > 0) {
                 return true;
             }
-        } else if (((values as SignUpFields).userType === AccountType.CLIENT) && ((values as SignUpFields).membershipOption !== undefined)) {
+        } else if (((values as SignUpFields).userType === UserType.CLIENT) && ((values as SignUpFields).membershipOption !== undefined)) {
             //Clients need their membership option selected
             return true;
         }
@@ -67,7 +68,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 value={(values as SignUpFields).userType ? (values as SignUpFields).userType : " "}
                             >
                                 <FormControlLabel
-                                    value={AccountType.CLIENT}
+                                    value={UserType.CLIENT}
                                     control={
                                         <Radio
                                             color={"warning"}
@@ -77,14 +78,14 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     label="Client"
                                 />
                                 <FormControlLabel
-                                    value={AccountType.PROFESSIONAL}
+                                    value={UserType.PROFESSIONAL}
                                     control={<Radio color={"warning"} name={"userType"}/>}
                                     label="Professional"
                                 />
                             </RadioGroup>
                         </Box>
                         {
-                            (values as SignUpFields).userType === AccountType.CLIENT &&
+                            (values as SignUpFields).userType === UserType.CLIENT &&
                             <Box
                                 sx={{
                                     display: "flex",
@@ -116,7 +117,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                         label={"Subscription"}
                                     />
                                     <FormControlLabel
-                                        value={MembershipOption.SINGLE}
+                                        value={MembershipOption.PAY_AS_YOU_GO}
                                         control={<Radio color={"warning"} name={"membershipOption"}/>}
                                         label={"Pay as you go"}
                                     />
@@ -124,7 +125,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             </Box>
                         }
                         {
-                            (values as SignUpFields).userType === AccountType.PROFESSIONAL &&
+                            (values as SignUpFields).userType === UserType.PROFESSIONAL &&
                             <Box
                                 sx={{
                                     display: "flex",
@@ -144,7 +145,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     Please select services to offer
                                 </Typography>
                                 <FormGroup aria-labelledby={"services__form-group"}>
-                                    {Object.entries(ProfessionalServices).map(([key, value]) => {
+                                    {Object.entries(ServiceType).map(([key, value]) => {
                                         return (
                                             <Field
                                                 type={"checkbox"}

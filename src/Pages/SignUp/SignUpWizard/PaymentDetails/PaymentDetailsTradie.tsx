@@ -7,7 +7,7 @@ import {animate} from "../../../../Effects/Animations";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {useFormikContext} from "formik";
-import {AccountType} from "../../../../Types/AccountType";
+import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
 
 export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProps) => {
@@ -42,7 +42,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                             sx={{marginTop: 2}}
                         >
                             {
-                                ((values as SignUpFields).userType === AccountType.PROFESSIONAL) &&
+                                ((values as SignUpFields).userType === UserType.PROFESSIONAL) &&
                                 <Box
                                     sx={{
                                         display: "flex",

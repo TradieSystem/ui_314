@@ -17,14 +17,19 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     const [alert, setAlert] = useState(<></>);
     const navigate = useNavigate();
 
-    const {errors, touched, getFieldProps} = useFormikContext();
+    const {errors, values, touched, getFieldProps} = useFormikContext();
 
     function stepsComplete() {
         return ((errors as SignUpFields).username === undefined) &&
             ((errors as SignUpFields).firstname === undefined) &&
             ((errors as SignUpFields).lastname === undefined) &&
             ((errors as SignUpFields).email === undefined) &&
-            ((errors as SignUpFields).mobile === undefined);
+            ((errors as SignUpFields).mobile === undefined) &&
+            ((values as SignUpFields).username !== "") &&
+            ((values as SignUpFields).firstname !== "") &&
+            ((values as SignUpFields).lastname !== "") &&
+            ((values as SignUpFields).email !== "") &&
+            ((values as SignUpFields).mobile !== "");
     }
 
     function emailValid() {
