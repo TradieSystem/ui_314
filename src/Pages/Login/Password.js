@@ -1,12 +1,10 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Link, Box} from "@mui/material";
+import {Box, Container, Typography} from "@mui/material";
 import styled from "@emotion/styled";
 import Passwordform from "../Login/PasswordForm";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import Logo from "../../Components/logo";
-
-
+import {fadeInUp} from '../../Effects/Animations';
 
 const RootStyle = styled("div")({
     background: "rgb(216,206,205)",
@@ -29,25 +27,6 @@ const ContentStyle = styled("div")({
     flexDirection: "column",
     background: "#d8cecd",
 });
-
-
-
-let easing = [0.6, -0.05, 0.01, 0.99];
-const fadeInUp = {
-    initial: {
-        y: 60,
-        opacity: 0,
-        transition: { duration: 0.6, ease: easing },
-    },
-    animate: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            duration: 0.6,
-            ease: easing,
-        },
-    },
-};
 
 const Password = () => {
 
