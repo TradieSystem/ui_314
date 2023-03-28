@@ -54,9 +54,7 @@ const UserProfileDisplay = () => {
         <RootStyle>
             <Container maxWidth="sm">
                 <ContentStyle>
-                    <HeadingStyle style={{ text: "100px" ,textAlign:"center"}} >
-                        <h1>User Profile</h1>
-                    </HeadingStyle>
+
                     <UserProfile />
                     <Typography
                         component={motion.p}

@@ -32,7 +32,7 @@ function App() {
                   
 
                         <Route path={RoutesEnum.REQUEST_HISTORY} element={<RequestHistory />}/>
-
+                        <Route path={RoutesEnum.CREATE_REQUEST} element={<ClientRequest />} />
                         <Route path={'*'} element={<HomePage/>}/>
                         <Route path={"/ForgotPassword"} element={<ForgotPassword/>}/>
                         <Route path={"/Password"} element={<Password/>}/>

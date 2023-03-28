@@ -22,7 +22,9 @@ import { motion } from "framer-motion";
 import { useRadioGroup } from '@mui/material/RadioGroup';
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
-import {AccountType } from "../../Types/AccountType";
+import PageContainer from "../../Components/PageContainer/PageContainer";
+import { pink } from "@mui/material/colors";
+
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -44,21 +46,13 @@ const ClientRequestForm = () => {
     const from = location.state?.from?.pathname || "/";
 
 
-
-
-
     const ClientFormSchema = Yup.object().shape({
-        Description:Yup.string()
-            .required("Description is required")
-            .length(1, 'Enter Description'),
-        CheckButton:Yup.string().required("Description is required"),
-
+        Description:Yup.string().required("Description is required")
     });
 
     const formik = useFormik({
         initialValues: {
             Description: " ",
-            CheckButton: " "
 
 
         },
@@ -75,6 +69,7 @@ const ClientRequestForm = () => {
         formik;
 
     return (
+        <PageContainer title>
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Box
@@ -95,18 +90,21 @@ const ClientRequestForm = () => {
                         initial={{ opacity: 0, y: 40 }}
                         animate={animate}
                     >
+
                         <FormControl>
-                            <FormLabel id="Checkbutton">Pick A Job</FormLabel>
+                            <p style={{fontSize:"20px"}}>Pick a Job:</p>
                     <RadioGroup
+
                         aria-labelledby="Checkbutton"
                         defaultValue="Tree Removal"
                         name="CheckButton"
+
                     >
-                        <FormControlLabel value="Tree Removal" control={<Radio />} label="Tree Removal"  />
-                        <FormControlLabel value="Roof Cleaning" control={<Radio />} label="Roof Cleaning" />
-                        <FormControlLabel value="Fence Installation" control={<Radio />} label="Fence Installation" />
-                        <FormControlLabel value="Oven Repairs" control={<Radio />} label="Oven Repairs" />
-                        <FormControlLabel value="Plumbing" control={<Radio />} label="Plumbing" />
+                        <FormControlLabel value="Tree Removal" control={<Radio color={"warning"} />}  label="Tree Removal"  />
+                        <FormControlLabel value="Roof Cleaning" control={<Radio color={"warning"} />}  label="Roof Cleaning" />
+                        <FormControlLabel value="Fence Installation" control={<Radio color={"warning"} />}  label="Fence Installation" />
+                        <FormControlLabel value="Oven Repairs" control={<Radio color={"warning"}/>} label="Oven Repairs" />
+                        <FormControlLabel value="Plumbing" control={<Radio color={"warning"}/>}  label="Plumbing" />
                     </RadioGroup>
                         </FormControl>
 
@@ -146,14 +144,9 @@ const ClientRequestForm = () => {
                                 justifyContent: "space-between"
                             }}
                         >
-                            <ThemedButton
-                                type="button"
-                                variant="contained"
-                                onClick={() => navigate("/HomePage")}
-                            >
-                                {"Go Back"}
-                            </ThemedButton>
                         <ThemedButton
+                            fullWidth
+                            size="large"
                             type="submit"
                             variant="contained"
                             loadingButton={isSubmitting}
@@ -165,6 +158,7 @@ const ClientRequestForm = () => {
                 </Box>
             </Form>
         </FormikProvider>
+        </PageContainer>
     );
 };
 
