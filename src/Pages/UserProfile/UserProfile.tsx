@@ -40,11 +40,11 @@ const UserProfile = () => {
                     <ThemedTextField
                         value={user.address.suburb}
                         type="text"
-                        label="State/Region"/>
+                        label="Suburb"/>
                     <ThemedTextField
                         value={user.address.postcode}
                         type="text"
-                        label="Post-Code"/>
+                        label="postcode"/>
                    <ThemedTextField
                        value={user.usertype}
                        type="text"

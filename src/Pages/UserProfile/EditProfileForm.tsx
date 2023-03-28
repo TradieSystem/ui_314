@@ -148,17 +148,17 @@ if(user) {
                         <ThemedTextField
                             value={user.address.postcode}
                             type="text"
-                            label="Post-Code"
+                            label="postcode"
                         />
                         <ThemedTextField
                             value="*****************"
                             type="text"
-                            label="credit card"
+                            label="Credit Card"
                         />
                         <ThemedTextField
                             value="***"
                             type="text"
-                            label="cc"
+                            label="CVV"
                         />
                         <FormControl sx={{
                             background: "#dcdcdc",
