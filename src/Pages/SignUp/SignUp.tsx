@@ -2,11 +2,12 @@ import React, {useCallback, useState} from 'react';
 import {Form, Formik} from "formik";
 import UserDetails from "./SignUpWizard/UserDetails";
 import * as Yup from "yup";
-import {AccountType, MembershipOption, ProfessionalServices} from "../../Types/AccountType";
+import {UserType, MembershipOption} from "../../Types/Account";
 import UserAddressDetails from "./SignUpWizard/UserAddressDetails";
 import AccountDetails from "./SignUpWizard/AccountDetails";
 import {PaymentDetails} from "./SignUpWizard/PaymentDetails/PaymentDetails";
 import PaymentDetailsTradie from "./SignUpWizard/PaymentDetails/PaymentDetailsTradie";
+import {ServiceType} from "../../Types/ServiceType";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numericRegExp = /^\d+$/;
@@ -53,9 +54,9 @@ export interface SignUpFields {
     suburb: string;
     postcode: string;
     mobile: string;
-    userType?: AccountType;
+    userType?: UserType;
     membershipOption?: MembershipOption;
-    professionalServices?: ProfessionalServices[];
+    professionalServices?: ServiceType[];
     incomingCCName?: string;
     incomingCCNumber?: string;
     incomingCCCVV?:string;
@@ -111,7 +112,9 @@ export const SignUp = () => {
 
         //if it is a professional, delete the membershipOption
 
-        //construct user object to send to endpoint
+        //TODO encrypt the CC details
+
+        //TODO construct user object to send to endpoint
 
         //TODO send details to sign up endpoint
 

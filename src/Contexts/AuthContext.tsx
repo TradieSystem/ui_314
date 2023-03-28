@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {User} from "../Types/User";
+import {UserType} from "../Types/Account";
 
 const AuthContext = createContext({} as AuthContextState);
 
@@ -26,10 +27,43 @@ interface AuthContextState{
 }
 
 export const AuthContextContextProvider = ({children}: any) => {
+    //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
+    const dummyClientUser : User = {
+        username: "client1",
+        firstname: "Adam",
+        lastname: "Adams",
+        email: "adam@adam.com",
+        password: "adam",
+        address: {
+            streetNumber: "1",
+            streetName: "Adamson Street",
+            postcode: "2170",
+            suburb: "Liverpool"
+        },
+        mobile: "0411222333",
+        usertype: UserType.CLIENT
+    }
+
+    const dummyProfessionalUser : User = {
+        username: "professional1",
+        firstname: "Bob",
+        lastname: "Bobby",
+        email: "bob@bob.com",
+        password: "bob",
+        address: {
+            streetNumber: "2",
+            streetName: "Bobby Street",
+            postcode: "2170",
+            suburb: "Liverpool"
+        },
+        mobile: "0499888777",
+        usertype: UserType.PROFESSIONAL
+    }
+
     /**
      * Current state of user
      */
-    const [user, setUser] = useState<User | undefined>();
+    const [user, setUser] = useState<User | undefined>(dummyClientUser); //edit this as needed
     const [authToken, setAuthToken] = useState<string | undefined>();
     const [refreshToken, setRefreshToken] = useState<string | undefined>();
 
