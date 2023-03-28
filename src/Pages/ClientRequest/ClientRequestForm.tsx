@@ -69,7 +69,7 @@ const ClientRequestForm = () => {
         formik;
 
     return (
-        <PageContainer title>
+
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Box
@@ -158,7 +158,6 @@ const ClientRequestForm = () => {
                 </Box>
             </Form>
         </FormikProvider>
-        </PageContainer>
     );
 };
 
