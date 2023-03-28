@@ -112,10 +112,8 @@ const ForgotPasswordForm = () => {
                             size="large"
                             type="submit"
                             variant="contained"
-                            loading={isSubmitting}
                             onClick={() => navigate("/Password")}
                         >
-                            {isSubmitting ? <Loading /> : "Send Link"}
                         </ThemedButton>
                     </Box>
                 </Box>

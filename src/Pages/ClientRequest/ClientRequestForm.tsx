@@ -149,13 +149,11 @@ const ClientRequestForm = () => {
                             <ThemedButton
                                 type="button"
                                 variant="contained"
-                                loadingButton={isSubmitting}
                                 onClick={() => navigate("/HomePage")}
                             >
                                 {"Go Back"}
                             </ThemedButton>
                         <ThemedButton
-
                             type="submit"
                             variant="contained"
                             loadingButton={isSubmitting}

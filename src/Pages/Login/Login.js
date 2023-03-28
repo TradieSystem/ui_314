@@ -29,7 +29,6 @@ const fadeInUp = {
 const Login = () => {
 
     return (
-
         <RootStyle style={{
             backgroundImage: 'url('+Image+')',
             backgroundSize: "cover",
@@ -54,7 +53,6 @@ const Login = () => {
                     </Stack>
                     <LoginForm />
                     <HeadingStyle>
-
                         <Typography
                             component={motion.p}
                             {...fadeInUp}

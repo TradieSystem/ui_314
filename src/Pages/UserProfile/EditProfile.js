@@ -2,8 +2,9 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, Typography, Link, Box} from "@mui/material";
 import styled from "@emotion/styled";
-import UserProfile from "./UserProfile";
+import EditProfileForm from "../UserProfile/EditProfileForm";
 import { motion } from "framer-motion";
+import Logo from "../../Components/logo";
 
 
 
@@ -48,16 +49,16 @@ const fadeInUp = {
     },
 };
 
-const UserProfileDisplay = () => {
+const EditProfile = () => {
 
     return (
         <RootStyle>
             <Container maxWidth="sm">
                 <ContentStyle>
                     <HeadingStyle style={{ text: "100px" ,textAlign:"center"}} >
-                        <h1>User Profile</h1>
-                    </HeadingStyle>
-                    <UserProfile />
+                             <h1>Edit User</h1>
+                </HeadingStyle>
+                    <EditProfileForm />
                     <Typography
                         component={motion.p}
                         {...fadeInUp}
@@ -69,11 +70,7 @@ const UserProfileDisplay = () => {
                 </ContentStyle>
             </Container>
         </RootStyle>
-
-
-
-
     );
 };
 
-export default UserProfileDisplay ;
+export default EditProfile;

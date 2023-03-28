@@ -11,6 +11,7 @@ import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
 import SignUp from "./Pages/SignUp/SignUp";
+import EditProfile from './Pages/UserProfile/EditProfile';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                         <Route path={'*'} element={<HomePage/>}/>
                         <Route path={"/ForgotPassword"} element={<ForgotPassword/>}/>
                         <Route path={"/Password"} element={<Password/>}/>
+                        <Route path={"/EditProfile"} element={<EditProfile/>}/>
                     </Routes>
                 </HashRouter>
             </NavigationContextContextProvider>
