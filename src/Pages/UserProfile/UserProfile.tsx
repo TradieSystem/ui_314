@@ -62,6 +62,7 @@ const UserProfile = () => {
                 background: "rgba(219,91,19,0.3)",
                 borderColor: "#DB5B13",
                 borderWidth: 1,
+                color:"black",
                 '&:hover': {
                     background: "rgba(219,91,19,0.3)",
                     borderColor: "#DB5B13",
@@ -80,6 +81,7 @@ const UserProfile = () => {
                         background: "rgba(219,91,19,0.3)",
                         borderColor: "#DB5B13",
                         borderWidth: 1,
+                        color:"black",
                         '&:hover': {
                             background: "rgba(219,91,19,0.3)",
                             borderColor: "#DB5B13",

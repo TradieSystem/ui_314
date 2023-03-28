@@ -217,6 +217,7 @@ if(user) {
                                         background: "rgba(219,91,19,0.3)",
                                         borderColor: "#DB5B13",
                                         borderWidth: 1,
+                                        color:"black",
                                         '&:hover': {
                                             background: "rgba(219,91,19,0.3)",
                                             borderColor: "#DB5B13",
@@ -236,6 +237,7 @@ if(user) {
                                     background: "rgba(219,91,19,0.3)",
                                     borderColor: "#DB5B13",
                                     borderWidth: 1,
+                                    color:"black",
                                     '&:hover': {
                                         background: "rgba(219,91,19,0.3)",
                                         borderColor: "#DB5B13",
