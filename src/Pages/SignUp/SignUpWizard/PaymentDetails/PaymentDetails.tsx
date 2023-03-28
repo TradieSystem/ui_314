@@ -7,7 +7,7 @@ import {animate} from "../../../../Effects/Animations";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {useFormikContext} from "formik";
-import {AccountType} from "../../../../Types/AccountType";
+import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
 
 export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => {
@@ -118,7 +118,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                 <ThemedButton
                                     disabled={!stepsComplete()}
                                     onClick={() => {
-                                        if((values as SignUpFields).userType === AccountType.CLIENT) {
+                                        if((values as SignUpFields).userType === UserType.CLIENT) {
                                             const enteredFields = values as SignUpFields;
                                             if(enteredFields && handleSubmit) {
                                                 handleSubmit(enteredFields);
@@ -128,7 +128,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                         }
                                     }}
                                 >
-                                    {(values as SignUpFields).userType === AccountType.CLIENT ? `Create Account` : 'Next'}
+                                    {(values as SignUpFields).userType === UserType.CLIENT ? `Create Account` : 'Next'}
                                 </ThemedButton>
                             </Box>
                         </Box>

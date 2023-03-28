@@ -10,14 +10,18 @@ export interface ThemedButtonProps extends LoadingButtonProps {
      * (Optional) property to set the button to a loading button
      */
     loadingButton?: boolean;
+    /**
+     * (Optional) override to the button style {@code outlined}, {@code text}, {@code contained}
+     */
+    variantOverride?: LoadingButtonProps['variant'];
 }
 
-export const ThemedButton = ({loadingButton, ...props}: ThemedButtonProps) => {
+export const ThemedButton = ({loadingButton, variantOverride, ...props}: ThemedButtonProps) => {
     return !loadingButton ?
         <Button
-            variant={'outlined'}
+            variant={variantOverride ? variantOverride : 'outlined'}
             sx={{
-                background: "rgba(219,91,19,0.3)",
+                background: !variantOverride ? "rgba(219,91,19,0.3)" : "",
                 borderColor: "#DB5B13",
                 borderWidth: 1,
                 color: "black",
@@ -27,6 +31,7 @@ export const ThemedButton = ({loadingButton, ...props}: ThemedButtonProps) => {
                     borderWidth: 1.5,
                     boxShadow: 0,
                 },
+                textTransform: "None"
             }}
             {...props}
         /> :
@@ -44,6 +49,7 @@ export const ThemedButton = ({loadingButton, ...props}: ThemedButtonProps) => {
                     borderWidth: 1.5,
                     boxShadow: 0,
                 },
+                textTransform: "None"
             }}
             {...props}
         />;

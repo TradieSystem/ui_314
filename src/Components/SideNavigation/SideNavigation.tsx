@@ -2,7 +2,7 @@ import React from "react";
 import SideNavigationMenuItem from "./SideNavigationMenuItem/SideNavigationMenuItem";
 import {useNavigationContext} from "../../Contexts/NavigationContext";
 import styles from './SideNavigation.module.css';
-import {Button, Drawer} from "@mui/material";
+import {Drawer} from "@mui/material";
 import {ChevronLeft, ChevronRight} from "@mui/icons-material";
 
 export const SideNavigation = () => {

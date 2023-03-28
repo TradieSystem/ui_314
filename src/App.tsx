@@ -11,7 +11,11 @@ import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
 import SignUp from "./Pages/SignUp/SignUp";
+
 import EditProfile from './Pages/UserProfile/EditProfile';
+
+
+import {RequestHistory} from "./Pages/ClientRequests/RequestHistory";
 
 
 function App() {
@@ -23,8 +27,12 @@ function App() {
                         <Route path={RoutesEnum.HOME} element={<HomePage/>}/>
                         <Route path={RoutesEnum.LOGIN} element={<Login/>}/>
                         <Route path={RoutesEnum.SIGN_UP} element={<SignUp/>}/>
+
                         <Route path={RoutesEnum.USER_MANAGEMENT} element={<UserProfileDisplay />}/>
-                        <Route path={RoutesEnum.REQUEST_HISTORY} element={<ClientRequest />}/>
+                  
+
+                        <Route path={RoutesEnum.REQUEST_HISTORY} element={<RequestHistory />}/>
+
                         <Route path={'*'} element={<HomePage/>}/>
                         <Route path={"/ForgotPassword"} element={<ForgotPassword/>}/>
                         <Route path={"/Password"} element={<Password/>}/>

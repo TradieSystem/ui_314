@@ -1,4 +1,4 @@
-import {AccountType} from "./AccountType";
+import {UserType} from "./Account";
 
 /**
  * Interface to describe the attributes of User
@@ -11,7 +11,7 @@ export interface User {
     password: string;
     address: Address;
     mobile: string;
-    usertype: AccountType;
+    usertype: UserType;
 }
 
 export interface Address {
