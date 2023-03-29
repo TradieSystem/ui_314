@@ -8,7 +8,9 @@ export enum RoutesEnum {
     CREATE_REQUEST = "create_request",
     SIGN_UP = "signup",
     USER_MANAGEMENT = "user_management",
-    AVAILABLE_REQUESTS = "available_requests"
+    AVAILABLE_REQUESTS = "available_requests",
+    EDIT_PROFILE = "edit_profile",
+    PASSWORD = 'password',
 }
 
 /**
@@ -17,4 +19,3 @@ export enum RoutesEnum {
  */
 
 export const DEV_PATH = "http://localhost:3000";
-

@@ -1,11 +1,7 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Link, Box} from "@mui/material";
+import {Container} from "@mui/material";
 import styled from "@emotion/styled";
 import UserProfile from "./UserProfile";
-import { motion } from "framer-motion";
-
-
 
 const RootStyle = styled("div")({
     background: "rgb(216,206,205)",
@@ -13,10 +9,6 @@ const RootStyle = styled("div")({
     placeItems: "center",
     display: "grid",
 
-});
-
-const HeadingStyle = styled(Box)({
-    textAlign: "center",
 });
 
 const ContentStyle = styled("div")({
@@ -30,48 +22,17 @@ const ContentStyle = styled("div")({
 });
 
 
-
-let easing = [0.6, -0.05, 0.01, 0.99];
-const fadeInUp = {
-    initial: {
-        y: 60,
-        opacity: 0,
-        transition: { duration: 0.6, ease: easing },
-    },
-    animate: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            duration: 0.6,
-            ease: easing,
-        },
-    },
-};
-
 const UserProfileDisplay = () => {
 
     return (
         <RootStyle>
             <Container maxWidth="sm">
                 <ContentStyle>
-
-                    <UserProfile />
-                    <Typography
-                        component={motion.p}
-                        {...fadeInUp}
-                        variant="body2"
-                        align="left"
-                        sx={{ mt: 3 }}
-                    >
-                    </Typography>
+                    <UserProfile/>
                 </ContentStyle>
             </Container>
         </RootStyle>
-
-
-
-
     );
 };
 
-export default UserProfileDisplay ;
+export default UserProfileDisplay;

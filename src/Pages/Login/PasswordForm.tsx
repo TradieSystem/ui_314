@@ -153,7 +153,7 @@ const PasswordForm = () => {
                             fullWidth
                             size="large"
                             type="submit"
-                            variant="contained"
+                            loadingButton
                             loading={isSubmitting}
                         >
                             {isSubmitting ? <Loading/> : "Reset Password"}

@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { animate } from "../../Effects/Animations";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
+import {RoutesEnum} from "../../Routes";
 
 const LoginForm = () => {
 
@@ -136,7 +137,7 @@ const LoginForm = () => {
                           <Link
                                 component={RouterLink}
                                 variant="subtitle2"
-                                to="/ForgotPassword"
+                                to={`/${RoutesEnum.PASSWORD}`}
                                 underline="hover"
                             >
                                 Forgot password?
