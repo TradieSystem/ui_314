@@ -4,28 +4,12 @@ import ForgotPasswordform from "../Login/ForgotPasswordform";
 import {motion} from "framer-motion";
 import Logo from "../../Components/logo";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";
-import {easing} from '../../Effects/Animations';
-
-const fadeInUp = {
-    initial: {
-        y: 60,
-        opacity: 0,
-        transition: {duration: 0.6, ease: easing},
-    },
-    animate: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            duration: 0.6,
-            ease: easing,
-        },
-    },
-};
+import {fadeInUp} from '../../Effects/Animations';
 
 const ForgotPassword = () => {
 
     return (
-        <RootStyle>
+        <RootStyle className = 'Background'>
             <Container maxWidth="sm">
                 <ContentStyle>
                     <HeadingStyle component={motion.div} {...fadeInUp}>

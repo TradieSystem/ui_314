@@ -1,21 +1,12 @@
-import React, { useState } from "react";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import { Form, FormikProvider, useFormik } from "formik";
+import React, {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {Form, FormikProvider, useFormik} from "formik";
 import * as Yup from "yup";
-import Loading from "./loading";
-import {
-    Box,
-    Checkbox,
-    FormControlLabel,
-    IconButton,
-    InputAdornment,
-    Link,
-    Stack
-} from "@mui/material";
-import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
+import {Box, Stack} from "@mui/material";
+import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
+import {RoutesEnum} from "../../Routes";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -53,12 +44,12 @@ const ForgotPasswordForm = () => {
         onSubmit: (values, actions) => {
 
             setTimeout(() => {
-                navigate(from, { replace: true });
+                navigate(from, {replace: true});
             }, 2000);
         },
     });
 
-    const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
         formik;
 
     return (
@@ -79,7 +70,7 @@ const ForgotPasswordForm = () => {
                             gap: 3,
                         }}
                         component={motion.div}
-                        initial={{ opacity: 0, y: 40 }}
+                        initial={{opacity: 0, y: 40}}
                         animate={animate}
                     >
                         <ThemedTextField
@@ -95,14 +86,14 @@ const ForgotPasswordForm = () => {
 
                     <Box
                         component={motion.div}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{opacity: 0, y: 20}}
                         animate={animate}
                     >
                         <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            sx={{ my: 2 }}
+                            sx={{my: 2}}
                         >
                         </Stack>
 
@@ -112,10 +103,8 @@ const ForgotPasswordForm = () => {
                             size="large"
                             type="submit"
                             variant="contained"
-                            loading={isSubmitting}
-                            onClick={() => navigate("/Password")}
+                            onClick={() => navigate(`/${RoutesEnum.PASSWORD}`)}
                         >
-                            {isSubmitting ? <Loading /> : "Send Link"}
                         </ThemedButton>
                     </Box>
                 </Box>

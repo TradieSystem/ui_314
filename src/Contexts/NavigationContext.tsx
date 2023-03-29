@@ -3,6 +3,8 @@ import {SideNavigationMenuItemProps} from "../Components/SideNavigation/SideNavi
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddBox from '@mui/icons-material/AddBox';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 import {RoutesEnum} from "../Routes";
 import {useAuthContext} from "./AuthContext";
 import {UserType} from "../Types/Account";
@@ -38,6 +40,11 @@ export const NavigationContextContextProvider = ({children}: any) => {
             text: user?.usertype === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
+        {
+            icon: <AccountCircle />,
+            text: 'Profile',
+            route: RoutesEnum.USER_MANAGEMENT
+        },
         //TODO we want this at the bottom of the side nav bar, not rendered as part of the top navigation group
         {
             icon: <LogoutIcon />,
@@ -49,7 +56,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
     //If the usertype is a client, render the client icons too
     if(user?.usertype === UserType.CLIENT) {
         const createRequest : SideNavigationMenuItemProps = {
-            icon: <AddIcon />,
+            icon: <AddBox />,
             text: 'Create Requests',
             route: RoutesEnum.CREATE_REQUEST
         }

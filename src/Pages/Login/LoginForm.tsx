@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import Loading from "./loading";
+import Loading from "../../Effects/loading";
 import {
     Box,
     Checkbox,
@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { animate } from "../../Effects/Animations";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
+import {RoutesEnum} from "../../Routes";
 
 const LoginForm = () => {
 
@@ -120,21 +121,23 @@ const LoginForm = () => {
                             sx={{ my: 2 }}
                         >
                             <FormControlLabel
+                                style={{color:"black"}}
                                 control={
                                     <Checkbox
-                                        style={{ borderColor:"#DB5B13", color: "#DB5B13"}}
+                                        inputProps={{ 'aria-label': 'controlled'}}
                                         {...getFieldProps("remember")}
                                         checked={values.remember}
                                         color={"warning"}
                                     />
                                 }
+
                                 label="Remember me"
                             />
 
                           <Link
                                 component={RouterLink}
                                 variant="subtitle2"
-                                to="/ForgotPassword"
+                                to={`/${RoutesEnum.PASSWORD}`}
                                 underline="hover"
                             >
                                 Forgot password?
