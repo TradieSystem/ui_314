@@ -10,7 +10,7 @@ import {useAuthContext} from "./AuthContext";
 import {UserType} from "../Types/Account";
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
-import Person from '@mui/icons-material/Menu';
+import Person from '@mui/icons-material/Person';
 
 const NavigationContext = createContext({} as NavigationContextState);
 

@@ -43,9 +43,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
     },
     // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
+    '&:last-child td:first-of-type': {
+        borderBottomLeftRadius: 10,
     },
+    '&:last-child td:last-child': {
+        borderBottomRightRadius: 10,
+    },
+
 }));
 
 
