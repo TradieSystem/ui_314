@@ -1,4 +1,5 @@
 import {ServiceType} from "./ServiceType";
+import {User} from "./User";
 
 /**
  * Interface to describe a service request.
@@ -20,6 +21,22 @@ export interface ServiceRequest {
      * The status of the service request
      */
     status: ServiceRequestStatus;
+    /**
+     * Postcode of the service being conducted
+     */
+    postcode: string;
+    /**
+     * Suburb of the service being conducted
+     */
+    suburb: string;
+    /**
+     * Client who has made the service request
+     */
+    client: User;
+    /**
+     * (Optional) Professional who has been assigned to the service request
+     */
+    professional?: User;
     /**
      * Cost if a Client is on {@link MembershipOption.PAY_AS_YOU_GO}
      */

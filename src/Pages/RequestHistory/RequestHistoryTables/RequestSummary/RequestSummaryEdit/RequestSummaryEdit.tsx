@@ -1,9 +1,9 @@
 import React from 'react';
-import {ServiceRequest} from "../../../../../../Types/ServiceRequest";
+import {ServiceRequest} from "../../../../../Types/ServiceRequest";
 import {Box, Grid, MenuItem, TextareaAutosize, Typography} from "@mui/material";
-import ThemedSelect from "../../../../../../Components/ThemedSelect/ThemedSelect";
-import {ServiceType} from "../../../../../../Types/ServiceType";
-import ThemedTextField from "../../../../../../Components/TextField/ThemedTextField";
+import ThemedSelect from "../../../../../Components/ThemedSelect/ThemedSelect";
+import {ServiceType} from "../../../../../Types/ServiceType";
+import ThemedTextField from "../../../../../Components/TextField/ThemedTextField";
 
 export interface RequestSummaryEditProps {
     /**

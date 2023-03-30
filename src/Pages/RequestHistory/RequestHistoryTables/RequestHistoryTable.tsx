@@ -10,12 +10,14 @@ import {
     TableSortLabel,
     Typography
 } from "@mui/material";
-import styles from './ClientRequestHistory.module.css';
-import {dummyServiceRequests} from "./ClientRequestHistoryDummyData";
+import styles from './RequestHistoryTable.module.css';
 import {format} from 'date-fns'
-import {StatusIcon} from "../../../../Components/StatusIcon/StatusIcon";
-import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
-import {ThemedButton} from "../../../../Components/Button/ThemedButton";
+import {StatusIcon} from "../../../Components/StatusIcon/StatusIcon";
+import {ServiceRequest, ServiceRequestStatus} from "../../../Types/ServiceRequest";
+import {ThemedButton} from "../../../Components/Button/ThemedButton";
+import {useAuthContext} from "../../../Contexts/AuthContext";
+import {UserType} from "../../../Types/Account";
+import {generateDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
 import {RequestSummary} from "./RequestSummary/RequestSummary";
 
 enum ClientRequestHistoryColumn {
@@ -23,6 +25,18 @@ enum ClientRequestHistoryColumn {
     ApplicationDate = 'ApplicationDate',
     ServiceType = 'ServiceType',
     Status = 'Status',
+    Cost = 'Cost',
+    Manage = 'Manage',
+    Review = 'Review'
+}
+
+enum ProfessionalRequestHistoryColumn {
+    ApplicationNumber = 'ApplicationNumber',
+    ApplicationDate = 'ApplicationDate',
+    Location = 'Location',
+    ServiceType = 'ServiceType',
+    Status = 'Status',
+    Client = 'Client',
     Cost = 'Cost',
     Manage = 'Manage',
     Review = 'Review'
@@ -60,12 +74,16 @@ enum SortDirection {
 /**
  * Table representing the client request history of their {@link ServiceRequest}s.
  */
-export const ClientRequestHistory = (): JSX.Element => {
+export const RequestHistoryTable = (): JSX.Element => {
+    const {user} = useAuthContext();
+    const userType = user?.usertype;
+    const headersToUse = userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
+
     //TODO remove dummyServiceRequests when endpoint returns backend data
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(dummyServiceRequests);
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateDummyServiceRequests(userType !== UserType.PROFESSIONAL));
 
     //Table sorting
-    const [sortColumn, setSortColumn] = useState<ClientRequestHistoryColumn>(ClientRequestHistoryColumn.ApplicationNumber);
+    const [sortColumn, setSortColumn] = useState<ProfessionalRequestHistoryColumn>(ProfessionalRequestHistoryColumn.ApplicationNumber);
     const [sortDirection, setSortDirection] = useState<SortDirection>();
 
     //Table pagination
@@ -90,7 +108,7 @@ export const ClientRequestHistory = (): JSX.Element => {
         setPage(0);
     };
 
-    const handleSort = (sortField: ClientRequestHistoryColumn) => {
+    const handleSort = (sortField: ProfessionalRequestHistoryColumn) => {
         //Change the sort label direction (arrow in the table header)
         let newSortDirection = SortDirection.ASC;       //State has a delay to update - temporarily store this here to sort data properly
         if (sortColumn === sortField) {
@@ -104,43 +122,57 @@ export const ClientRequestHistory = (): JSX.Element => {
         sortServiceRequests(sortField, newSortDirection);
     };
 
-    const sortServiceRequests = (sortField: ClientRequestHistoryColumn, sortDirection: SortDirection) => {
+    const sortServiceRequests = (sortField: ProfessionalRequestHistoryColumn, sortDirection: SortDirection) => {
         //Sort the data by the property
         let orderedServiceRequests = serviceRequests;
-        switch (ClientRequestHistoryColumn[sortField]) {
-            case ClientRequestHistoryColumn.ApplicationNumber:
+        switch (ProfessionalRequestHistoryColumn[sortField]) {
+            case ProfessionalRequestHistoryColumn.ApplicationNumber:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber > b.applicationNumber ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber < b.applicationNumber ? 1 : -1);
                 }
                 break;
-            case ClientRequestHistoryColumn.ApplicationDate:
+            case ProfessionalRequestHistoryColumn.ApplicationDate:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate > b.applicationDate ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate < b.applicationDate ? 1 : -1);
                 }
                 break;
-            case ClientRequestHistoryColumn.ServiceType:
+            case ProfessionalRequestHistoryColumn.ServiceType:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
                 }
                 break;
-            case ClientRequestHistoryColumn.Status:
+            case ProfessionalRequestHistoryColumn.Status:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.status > b.status ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.status < b.status ? 1 : -1);
                 }
                 break;
-            case ClientRequestHistoryColumn.Cost:
+            case ProfessionalRequestHistoryColumn.Cost:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost > b.cost) ? 1 : -1));
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost < b.cost)) ? 1 : -1);
+                }
+                break;
+            case ProfessionalRequestHistoryColumn.Client:
+                if (sortDirection === SortDirection.ASC) {
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname > b.client.lastname ? 1 : -1);
+                } else {
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname < b.client.lastname ? 1 : -1);
+                }
+                break;
+            case ProfessionalRequestHistoryColumn.Location:
+                if (sortDirection === SortDirection.ASC) {
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb > b.suburb ? 1 : -1);
+                } else {
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb < b.suburb ? 1 : -1);
                 }
                 break;
             default:
@@ -156,7 +188,7 @@ export const ClientRequestHistory = (): JSX.Element => {
         //TODO call setServiceRequests when data returned
 
         //Sort by Application Number, ascending
-        handleSort(ClientRequestHistoryColumn.ApplicationNumber);
+        handleSort(ProfessionalRequestHistoryColumn.ApplicationNumber);
     }, []);
 
     return (
@@ -164,7 +196,7 @@ export const ClientRequestHistory = (): JSX.Element => {
             <Table>
                 <TableHead>
                     <TableRow sx={{backgroundColor: "#B9B9B9"}}>
-                        {Object.entries(ClientRequestHistoryColumn).map(([key, value]) => {
+                        {Object.entries(headersToUse).map(([key, value]) => {
                             return (
                                 <TableCell
                                     key={key}
@@ -183,7 +215,7 @@ export const ClientRequestHistory = (): JSX.Element => {
                                             active={sortColumn === key}
                                             direction={sortColumn === key ? sortDirection : SortDirection.ASC}
                                             onClick={() => {
-                                                handleSort(key as ClientRequestHistoryColumn)
+                                                handleSort(key as ProfessionalRequestHistoryColumn)
                                             }}
                                         >
                                             <Typography variant={'h6'} fontWeight={"bold"}>
@@ -217,6 +249,14 @@ export const ClientRequestHistory = (): JSX.Element => {
                                 <TableCell>
                                     {format(request.applicationDate, "dd/MM/yyyy")}
                                 </TableCell>
+                                {/*Location column only renders for professionals viewing their confirmed service requests*/}
+                                {
+                                    userType === UserType.PROFESSIONAL &&
+                                    <TableCell sx={{display: "grid"}}>
+                                        <>{request.suburb}</>
+                                        <><b>{request.postcode}</b></>
+                                    </TableCell>
+                                }
                                 <TableCell>
                                     {request.serviceType}
                                 </TableCell>
@@ -226,6 +266,13 @@ export const ClientRequestHistory = (): JSX.Element => {
                                         <b>{request.status}</b>
                                     </div>
                                 </TableCell>
+                                {/*Show client attached to the service request only if we are viewing as a professional*/}
+                                {
+                                    userType === UserType.PROFESSIONAL &&
+                                    <TableCell>
+                                        {`${request.client.firstname} ${request.client.lastname}`}
+                                    </TableCell>
+                                }
                                 <TableCell>
                                     {request.cost ? `$${request.cost}` : '-'}
                                 </TableCell>
@@ -239,7 +286,7 @@ export const ClientRequestHistory = (): JSX.Element => {
                                                 setRequestToView(request);
                                             }}
                                         >
-                                            {request.status === ServiceRequestStatus.NEW ? `View / Edit` : `View`}
+                                            {(request.status === ServiceRequestStatus.NEW && userType === UserType.CLIENT) ? `View / Edit` : `View`}
                                         </ThemedButton>
                                 </TableCell>
                                 <TableCell>
