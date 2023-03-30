@@ -11,6 +11,8 @@ export enum RoutesEnum {
     AVAILABLE_REQUESTS = "available_requests",
     EDIT_PROFILE = "edit_profile",
     PASSWORD = 'password',
+    Pro_Profile = "Professional"
+
 }
 
 /**

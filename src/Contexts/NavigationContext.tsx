@@ -10,6 +10,7 @@ import {useAuthContext} from "./AuthContext";
 import {UserType} from "../Types/Account";
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
+import Person from '@mui/icons-material/Menu';
 
 const NavigationContext = createContext({} as NavigationContextState);
 
@@ -50,6 +51,11 @@ export const NavigationContextContextProvider = ({children}: any) => {
             icon: <LogoutIcon />,
             text: 'Logout',
             route: RoutesEnum.LOGIN
+        },
+        {
+            icon: <Person />,
+            text: 'Tradie Profile',
+            route: RoutesEnum.Pro_Profile
         }
     ];
 

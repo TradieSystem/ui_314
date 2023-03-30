@@ -41,7 +41,7 @@ export const AuthContextContextProvider = ({children}: any) => {
             suburb: "Liverpool"
         },
         mobile: "0411222333",
-        usertype: UserType.CLIENT
+        usertype: UserType.PROFESSIONAL
     }
 
     const dummyProfessionalUser : User = {
