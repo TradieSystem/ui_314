@@ -20,16 +20,16 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     const {errors, values, touched, getFieldProps} = useFormikContext();
 
     function stepsComplete() {
-        return ((errors as SignUpFields).username === undefined) &&
+        return (
             ((errors as SignUpFields).firstname === undefined) &&
             ((errors as SignUpFields).lastname === undefined) &&
             ((errors as SignUpFields).email === undefined) &&
             ((errors as SignUpFields).mobile === undefined) &&
-            ((values as SignUpFields).username !== "") &&
             ((values as SignUpFields).firstname !== "") &&
             ((values as SignUpFields).lastname !== "") &&
             ((values as SignUpFields).email !== "") &&
-            ((values as SignUpFields).mobile !== "");
+            ((values as SignUpFields).mobile !== "")
+        );
     }
 
     function emailValid() {
@@ -67,16 +67,6 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <ThemedTextField
-                                fullWidth
-                                autoComplete="username"
-                                type="username"
-                                label="Username"
-                                required
-                                error={Boolean((touched as SignUpFields).username && (errors as SignUpFields).username)}
-                                helperText={(touched as SignUpFields).username && (errors as SignUpFields).username}
-                                {...getFieldProps("username")}
-                            />
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="first name"
@@ -166,7 +156,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                                         //Clear alerts
                                         setAlert(<></>);
 
-                                        //TODO need to hit endpoint to check username is not taken, and set alert if it is
+                                        //TODO need to hit endpoint to check email is not taken, and set alert if it is
 
                                         setCurrentStep(1);
                                     } else {

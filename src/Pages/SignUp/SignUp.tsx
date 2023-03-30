@@ -13,7 +13,6 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const numericRegExp = /^\d+$/;
 
 const SignUpSchema = Yup.object().shape({
-    username: Yup.string().required("Username is required"),
     firstname: Yup.string().required("First name is required"),
     lastname: Yup.string().required("Last name is required"),
     email: Yup.string()
@@ -44,7 +43,6 @@ const SignUpSchema = Yup.object().shape({
 });
 
 export interface SignUpFields {
-    username: string;
     firstname: string;
     lastname: string;
     email: string;
@@ -84,7 +82,6 @@ export const SignUp = () => {
     const [currentStep, setCurrentStep] = useState<number>(0);
 
     const initialValues: SignUpFields = {
-        username: "",
         firstname: "",
         lastname: "",
         email: "",

@@ -29,7 +29,7 @@ interface AuthContextState{
 export const AuthContextContextProvider = ({children}: any) => {
     //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
     const dummyClientUser : User = {
-        username: "client1",
+        userId: 1,
         firstname: "Adam",
         lastname: "Adams",
         email: "adam@adam.com",
@@ -45,7 +45,7 @@ export const AuthContextContextProvider = ({children}: any) => {
     }
 
     const dummyProfessionalUser : User = {
-        username: "professional1",
+        userId: 2,
         firstname: "Bob",
         lastname: "Bobby",
         email: "bob@bob.com",

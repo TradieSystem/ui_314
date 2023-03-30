@@ -4,7 +4,7 @@ import {UserType} from "./Account";
  * Interface to describe the attributes of User
  */
 export interface User {
-    username: string;
+    userId: number;
     firstname: string;
     lastname: string;
     email: string;
