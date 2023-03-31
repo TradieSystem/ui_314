@@ -16,6 +16,7 @@ const NavigationContext = createContext({} as NavigationContextState);
 
 interface NavigationContextState {
     //Current state of side navigation bar
+
     isExpanded: boolean;
     setIsExpanded: (isExpanded: boolean) => void;
 
@@ -37,26 +38,22 @@ export const NavigationContextContextProvider = ({children}: any) => {
             route: RoutesEnum.HOME
         },
         {
+
             icon: <ArticleIcon />,
             text: user?.usertype === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
         {
             icon: <AccountCircle />,
-            text: 'Profile',
+            text: 'Account Profile',
             route: RoutesEnum.USER_MANAGEMENT
         },
         //TODO we want this at the bottom of the side nav bar, not rendered as part of the top navigation group
         {
             icon: <LogoutIcon />,
             text: 'Logout',
-            route: RoutesEnum.LOGIN
+            route: RoutesEnum.LOGIN,
         },
-        {
-            icon: <Person />,
-            text: 'Tradie Profile',
-            route: RoutesEnum.Pro_Profile
-        }
     ];
 
     //If the usertype is a client, render the client icons too
@@ -77,6 +74,18 @@ export const NavigationContextContextProvider = ({children}: any) => {
         }
         sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
     }
+    if(user?.usertype === UserType.PROFESSIONAL) {
+        const userSpecificNavigation : SideNavigationMenuItemProps = {
+
+            icon: <Person/>,
+            text: 'Profile Page',
+            route: RoutesEnum.Pro_Profile
+
+
+        }
+        sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
+    }
+
 
     const value = {
         isExpanded,
