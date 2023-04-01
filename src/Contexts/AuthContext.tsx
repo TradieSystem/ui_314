@@ -26,40 +26,40 @@ interface AuthContextState{
     setRefreshToken?: (token: string) => void;
 }
 
+//TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
+const dummyClientUser : User = {
+    userId: 1,
+    firstname: "Adam",
+    lastname: "Adams",
+    email: "adam@adam.com",
+    password: "adam",
+    address: {
+        streetNumber: "1",
+        streetName: "Adamson Street",
+        postcode: "2170",
+        suburb: "Liverpool"
+    },
+    mobile: "0411222333",
+    usertype: UserType.CLIENT
+}
+
+export const dummyProfessionalUser : User = {
+    userId: 2,
+    firstname: "Bob",
+    lastname: "Bobby",
+    email: "bob@bob.com",
+    password: "bob",
+    address: {
+        streetNumber: "2",
+        streetName: "Bobby Street",
+        postcode: "2170",
+        suburb: "Liverpool"
+    },
+    mobile: "0499888777",
+    usertype: UserType.PROFESSIONAL
+}
+
 export const AuthContextContextProvider = ({children}: any) => {
-    //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
-    const dummyClientUser : User = {
-        userId: 1,
-        firstname: "Adam",
-        lastname: "Adams",
-        email: "adam@adam.com",
-        password: "adam",
-        address: {
-            streetNumber: "1",
-            streetName: "Adamson Street",
-            postcode: "2170",
-            suburb: "Liverpool"
-        },
-        mobile: "0411222333",
-        usertype: UserType.CLIENT
-    }
-
-    const dummyProfessionalUser : User = {
-        userId: 2,
-        firstname: "Bob",
-        lastname: "Bobby",
-        email: "bob@bob.com",
-        password: "bob",
-        address: {
-            streetNumber: "2",
-            streetName: "Bobby Street",
-            postcode: "2170",
-            suburb: "Liverpool"
-        },
-        mobile: "0499888777",
-        usertype: UserType.PROFESSIONAL
-    }
-
     /**
      * Current state of user
      */

@@ -1,8 +1,9 @@
 import React from 'react';
 import {User} from "../Types/User";
-import {UserType} from "../Types/Account";
+import {MembershipOption, UserType} from "../Types/Account";
 import {ServiceRequest, ServiceRequestStatus} from "../Types/ServiceRequest";
 import {ServiceType} from "../Types/ServiceType";
+import {dummyProfessionalUser} from "../Contexts/AuthContext";
 
 /**
  * Function to generate a list of dummy data containing a list of clients
@@ -10,7 +11,8 @@ import {ServiceType} from "../Types/ServiceType";
 export function generateClients() : User[] {
     let clients : User[] = [];
 
-    for(let i=1; i<51; i++) {
+    //Starting from 3 as ids 1 and 2 are in the AuthContext
+    for(let i=3; i<51; i++) {
         const newClient : User = {
             userId: i,
             firstname: `Firstname ${i}`,
@@ -24,7 +26,8 @@ export function generateClients() : User[] {
                 postcode: `12${i}`
             },
             mobile: `12345678${i}`,
-            usertype: UserType.CLIENT
+            usertype: UserType.CLIENT,
+            membershipOption: (i%2 === 0) ? MembershipOption.SUBSCRIPTION : MembershipOption.PAY_AS_YOU_GO
         }
 
         clients.push(newClient);
@@ -86,7 +89,8 @@ const dummyServiceRequests : ServiceRequest[] = [
         postcode: "2444",
         client: generateClients().at(0) as User,
         suburb: "Sydney",
-        cost: 0
+        cost: 0,
+        description: 'The tree is in the way'
     },
     {
         applicationNumber: 6,
@@ -94,6 +98,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.PLUMBING,
         status: ServiceRequestStatus.NEW,
         client: generateClients().at(0) as User,
+        applicantIds: [dummyProfessionalUser.userId],       //Pretending this has already had 1 applicant - this dummyProfessionalUser
         postcode: "2555",
         suburb: "Moorebank",
         cost: 0
@@ -186,4 +191,8 @@ export function generateProfessionals() : User[] {
  */
 export function generateDummyServiceRequests(showNew: boolean) {
     return !showNew ? dummyServiceRequests.filter((request) => request.status !== ServiceRequestStatus.NEW) : dummyServiceRequests;
+}
+
+export function generateNewDummyServiceRequests() {
+    return dummyServiceRequests.filter((request) => request.status === ServiceRequestStatus.NEW);
 }

@@ -13,7 +13,7 @@ import SignUp from "./Pages/SignUp/SignUp";
 import EditProfile from './Pages/UserProfile/EditProfile';
 import {RequestHistory} from "./Pages/RequestHistory/RequestHistory";
 import ProfessionalProfileDisplay from "./Pages/ProfessionalProfile/ProfessionalProfileDisplay";
-
+import {AvailableRequests} from "./Pages/AvailableRequests/AvailableRequests";
 
 function App() {
     return (
@@ -27,6 +27,7 @@ function App() {
                         <Route path={RoutesEnum.USER_MANAGEMENT} element={<UserProfileDisplay />}/>
                         <Route path={RoutesEnum.REQUEST_HISTORY} element={<RequestHistory />}/>
                         <Route path={RoutesEnum.CREATE_REQUEST} element={<CreateRequest />} />
+                        <Route path={RoutesEnum.AVAILABLE_REQUESTS} element={<AvailableRequests />} />
                         <Route path={RoutesEnum.PASSWORD} element={<Password/>}/>
                         <Route path={RoutesEnum.EDIT_PROFILE} element={<EditProfile/>}/>
                         <Route path={RoutesEnum.Pro_Profile} element={<ProfessionalProfileDisplay />}/>

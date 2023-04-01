@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import {useAuthContext} from "../../../Contexts/AuthContext";
+import {ServiceRequest} from "../../../Types/ServiceRequest";
+import {generateNewDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
+import {SortDirection} from "../../../Utilities/TableUtils";
+import styles from './AvailableRequestsTable.module.css';
 import {
-    Backdrop,
+    Backdrop, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
     Table,
     TableBody,
     TableCell,
@@ -8,78 +13,56 @@ import {
     TablePagination,
     TableRow,
     TableSortLabel,
+    Tooltip,
     Typography
 } from "@mui/material";
-import styles from './RequestHistoryTable.module.css';
-import {format} from 'date-fns'
-import {StatusIcon} from "../../../Components/StatusIcon/StatusIcon";
-import {ServiceRequest, ServiceRequestStatus} from "../../../Types/ServiceRequest";
+import {format} from "date-fns";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
-import {useAuthContext} from "../../../Contexts/AuthContext";
-import {UserType} from "../../../Types/Account";
-import {generateDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
-import {RequestSummary} from "./RequestSummary/RequestSummary";
-import {SortDirection} from "../../../Utilities/TableUtils";
+import {RequestSummary} from "../../RequestHistory/RequestHistoryTables/RequestSummary/RequestSummary";
+import {ApplicationConfirmationDialog} from "./ApplicationConfirmationDialog/ApplicationConfirmationDialog";
 
-enum ClientRequestHistoryColumn {
-    ApplicationNumber = 'ApplicationNumber',
-    ApplicationDate = 'ApplicationDate',
-    ServiceType = 'ServiceType',
-    Status = 'Status',
-    Cost = 'Cost',
-    Manage = 'Manage',
-    Review = 'Review'
-}
-
-enum ProfessionalRequestHistoryColumn {
+enum AvailableRequestsTableColumn {
     ApplicationNumber = 'ApplicationNumber',
     ApplicationDate = 'ApplicationDate',
     Location = 'Location',
     ServiceType = 'ServiceType',
-    Status = 'Status',
     Client = 'Client',
-    Cost = 'Cost',
-    Manage = 'Manage',
-    Review = 'Review'
+    Details = 'Details',
+    Apply = 'Apply'
 }
 
-const mapColumnName = (columnEnum: ClientRequestHistoryColumn): string => {
+const mapColumnName = (columnEnum: AvailableRequestsTableColumn): string => {
     switch (columnEnum) {
-        case ClientRequestHistoryColumn.ApplicationNumber:
+        case AvailableRequestsTableColumn.ApplicationNumber:
             return 'Application Number';
-        case ClientRequestHistoryColumn.ApplicationDate:
+        case AvailableRequestsTableColumn.ApplicationDate:
             return 'Application Date';
-        case ClientRequestHistoryColumn.ServiceType:
+        case AvailableRequestsTableColumn.ServiceType:
             return 'Service Type';
         default:
             return columnEnum.valueOf();
     }
 }
 
-const getHeaderBorderRadius = (columnEnum: ClientRequestHistoryColumn): string => {
+const getHeaderBorderRadius = (columnEnum: AvailableRequestsTableColumn): string => {
     switch (columnEnum) {
-        case ClientRequestHistoryColumn.ApplicationNumber:
+        case AvailableRequestsTableColumn.ApplicationNumber:
             return '12px 0 0 0';
-        case ClientRequestHistoryColumn.Review:
+        case AvailableRequestsTableColumn.Apply:
             return '0 12px 0 0';
         default:
             return '';
     }
 }
 
-/**
- * Table representing the client request history of their {@link ServiceRequest}s.
- */
-export const RequestHistoryTable = (): JSX.Element => {
+export const AvailableRequestsTable = () => {
     const {user} = useAuthContext();
-    const userType = user?.usertype;
-    const headersToUse = userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
 
-    //TODO remove dummyServiceRequests when endpoint returns backend data
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateDummyServiceRequests(userType !== UserType.PROFESSIONAL));
+    //TODO set to actual data
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateNewDummyServiceRequests());
 
     //Table sorting
-    const [sortColumn, setSortColumn] = useState<ProfessionalRequestHistoryColumn>(ProfessionalRequestHistoryColumn.ApplicationNumber);
+    const [sortColumn, setSortColumn] = useState<AvailableRequestsTableColumn>(AvailableRequestsTableColumn.ApplicationNumber);
     const [sortDirection, setSortDirection] = useState<SortDirection>();
 
     //Table pagination
@@ -90,6 +73,9 @@ export const RequestHistoryTable = (): JSX.Element => {
     const [showRequestSummary, setShowRequestSummary] = useState(false);
     const [requestToView, setRequestToView] = useState<ServiceRequest>();
 
+    //Dialog confirming if the professional would like to apply for the service request
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
@@ -97,74 +83,39 @@ export const RequestHistoryTable = (): JSX.Element => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
-    const handleSort = (sortField: ProfessionalRequestHistoryColumn) => {
-        //Change the sort label direction (arrow in the table header)
-        let newSortDirection = SortDirection.ASC;       //State has a delay to update - temporarily store this here to sort data properly
-        if (sortColumn === sortField) {
-            newSortDirection = sortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC;
-            setSortDirection(newSortDirection);
-        } else {
-            setSortColumn(sortField);
-            setSortDirection(newSortDirection);
-        }
-
-        sortServiceRequests(sortField, newSortDirection);
-    };
-
-    const sortServiceRequests = (sortField: ProfessionalRequestHistoryColumn, sortDirection: SortDirection) => {
+    const sortServiceRequests = (sortField: AvailableRequestsTableColumn, sortDirection: SortDirection) => {
         //Sort the data by the property
         let orderedServiceRequests = serviceRequests;
-        switch (ProfessionalRequestHistoryColumn[sortField]) {
-            case ProfessionalRequestHistoryColumn.ApplicationNumber:
+        switch (AvailableRequestsTableColumn[sortField]) {
+            case AvailableRequestsTableColumn.ApplicationNumber:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber > b.applicationNumber ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber < b.applicationNumber ? 1 : -1);
                 }
                 break;
-            case ProfessionalRequestHistoryColumn.ApplicationDate:
+            case AvailableRequestsTableColumn.ApplicationDate:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate > b.applicationDate ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate < b.applicationDate ? 1 : -1);
                 }
                 break;
-            case ProfessionalRequestHistoryColumn.ServiceType:
+            case AvailableRequestsTableColumn.ServiceType:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
                 }
                 break;
-            case ProfessionalRequestHistoryColumn.Status:
-                if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.status > b.status ? 1 : -1);
-                } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.status < b.status ? 1 : -1);
-                }
-                break;
-            case ProfessionalRequestHistoryColumn.Cost:
-                if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost > b.cost) ? 1 : -1));
-                } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost < b.cost)) ? 1 : -1);
-                }
-                break;
-            case ProfessionalRequestHistoryColumn.Client:
+            case AvailableRequestsTableColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname > b.client.lastname ? 1 : -1);
                 } else {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname < b.client.lastname ? 1 : -1);
                 }
                 break;
-            case ProfessionalRequestHistoryColumn.Location:
+            case AvailableRequestsTableColumn.Location:
                 if (sortDirection === SortDirection.ASC) {
                     orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb > b.suburb ? 1 : -1);
                 } else {
@@ -178,13 +129,34 @@ export const RequestHistoryTable = (): JSX.Element => {
         setServiceRequests(orderedServiceRequests);
     }
 
+    const handleSort = (sortField: AvailableRequestsTableColumn) => {
+        //Change the sort label direction (arrow in the table header)
+        let newSortDirection = SortDirection.ASC;       //State has a delay to update - temporarily store this here to sort data properly
+        if (sortColumn === sortField) {
+            newSortDirection = sortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC;
+            setSortDirection(newSortDirection);
+        } else {
+            setSortColumn(sortField);
+            setSortDirection(newSortDirection);
+        }
+
+        sortServiceRequests(sortField, newSortDirection);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+
     useEffect(() => {
-        //TODO make axios call to get all requests associated with a client
+        //TODO make axios call to get all available new requests
 
         //TODO call setServiceRequests when data returned
 
         //Sort by Application Number, ascending
-        handleSort(ProfessionalRequestHistoryColumn.ApplicationNumber);
+        handleSort(AvailableRequestsTableColumn.ApplicationNumber);
     }, []);
 
     return (
@@ -192,18 +164,18 @@ export const RequestHistoryTable = (): JSX.Element => {
             <Table>
                 <TableHead>
                     <TableRow>
-                        {Object.entries(headersToUse).map(([key, value]) => {
+                        {Object.entries(AvailableRequestsTableColumn).map(([key, value]) => {
                             return (
                                 <TableCell
                                     key={key}
                                     sx={{
-                                        borderRadius: getHeaderBorderRadius(key as ClientRequestHistoryColumn),
+                                        borderRadius: getHeaderBorderRadius(key as AvailableRequestsTableColumn),
                                         backgroundColor: "#d3733c",
                                         color: "white"
                                     }}
                                 >
-                                    {/*Manage and Review columns aren't sortable*/}
-                                    {(key === ClientRequestHistoryColumn.Manage || key === ClientRequestHistoryColumn.Review) ?
+                                    {/*Apply and Details columns aren't sortable*/}
+                                    {(key === AvailableRequestsTableColumn.Apply || key === AvailableRequestsTableColumn.Details) ?
                                         <Typography variant={'h6'} fontWeight={"bold"}>
                                             {mapColumnName(value)}
                                         </Typography> :
@@ -211,7 +183,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                                             active={sortColumn === key}
                                             direction={sortColumn === key ? sortDirection : SortDirection.ASC}
                                             onClick={() => {
-                                                handleSort(key as ProfessionalRequestHistoryColumn)
+                                                handleSort(key as AvailableRequestsTableColumn)
                                             }}
                                         >
                                             <Typography variant={'h6'} fontWeight={"bold"}>
@@ -245,49 +217,50 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 <TableCell>
                                     {format(request.applicationDate, "dd/MM/yyyy")}
                                 </TableCell>
-                                {/*Location column only renders for professionals viewing their confirmed service requests*/}
-                                {
-                                    userType === UserType.PROFESSIONAL &&
-                                    <TableCell sx={{display: "grid"}}>
-                                        <>{request.suburb}</>
-                                        <><b>{request.postcode}</b></>
-                                    </TableCell>
-                                }
+                                <TableCell sx={{display: "grid"}}>
+                                    <>{request.suburb}</>
+                                    <><b>{request.postcode}</b></>
+                                </TableCell>
                                 <TableCell>
                                     {request.serviceType}
                                 </TableCell>
                                 <TableCell>
-                                    <div className={styles['status-cell']}>
-                                        <StatusIcon status={request.status}/>
-                                        <b>{request.status}</b>
-                                    </div>
+                                    {`${request.client.firstname} ${request.client.lastname}`}
                                 </TableCell>
-                                {/*Show client attached to the service request only if we are viewing as a professional*/}
-                                {
-                                    userType === UserType.PROFESSIONAL &&
-                                    <TableCell>
-                                        {`${request.client.firstname} ${request.client.lastname}`}
-                                    </TableCell>
+                                <TableCell>
+                                    <ThemedButton
+                                        variantOverride={'text'}
+                                        onClick={() => {
+                                            setShowRequestSummary(true);
+                                            setRequestToView(request);
+                                        }}
+                                    >
+                                        View
+                                    </ThemedButton>
+                                </TableCell>
+                                <TableCell>
+                                    <Tooltip title={user?.userId && request.applicantIds?.includes(user?.userId) ? 'Application to request already submitted' : ''}>
+                                        <span>
+                                             <ThemedButton
+                                                 variantOverride={'text'}
+                                                 disabled={user?.userId ? request.applicantIds?.includes(user?.userId) : false}
+                                                 onClick={() => {
+                                                     setRequestToView(request)
+                                                     setShowConfirmDialog(true);
+                                                 }}
+                                             >
+                                                 Apply
+                                            </ThemedButton>
+                                        </span>
+                                    </Tooltip>
+                                </TableCell>
+                                {showConfirmDialog && requestToView &&
+                                    <ApplicationConfirmationDialog
+                                        request={requestToView}
+                                        setShowConfirmationDialog={setShowConfirmDialog}
+                                        showConfirmationDialog={showConfirmDialog}
+                                    />
                                 }
-                                <TableCell>
-                                    {request.cost ? `$${request.cost}` : '-'}
-                                </TableCell>
-                                <TableCell>
-                                    {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
-                                    {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
-                                        <ThemedButton
-                                            variantOverride={'text'}
-                                            onClick={() => {
-                                                setShowRequestSummary(true);
-                                                setRequestToView(request);
-                                            }}
-                                        >
-                                            {(request.status === ServiceRequestStatus.NEW && userType === UserType.CLIENT) ? `View / Edit` : `View`}
-                                        </ThemedButton>
-                                </TableCell>
-                                <TableCell>
-                                    {/*    Iteration 4 work     */}
-                                </TableCell>
                             </TableRow>
                         )
                     })}
@@ -307,5 +280,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                 </Backdrop>
             }
         </div>
-    );
+    )
 }
+
+export default AvailableRequestsTable;

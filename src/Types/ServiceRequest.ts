@@ -38,6 +38,10 @@ export interface ServiceRequest {
      */
     professional?: User;
     /**
+     * (Optional) List of Professional {@link User} id's who have applied for the job listing
+     */
+    applicantIds?: number[];
+    /**
      * Cost if a Client is on {@link MembershipOption.PAY_AS_YOU_GO}
      */
     cost: number;
