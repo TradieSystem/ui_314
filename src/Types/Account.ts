@@ -1,7 +1,6 @@
 export enum UserType {
     CLIENT = 'Client',
-    PROFESSIONAL = 'Professional',
-    BOTH = 'Both'
+    PROFESSIONAL = 'Professional'
 }
 
 export enum MembershipOption {

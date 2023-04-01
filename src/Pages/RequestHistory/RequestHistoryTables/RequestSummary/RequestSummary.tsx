@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Box, Grid, Typography} from "@mui/material";
-import {ServiceRequest, ServiceRequestStatus} from "../../../../../Types/ServiceRequest";
+import {Box, Typography} from "@mui/material";
+import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
-import {ThemedButton} from "../../../../../Components/Button/ThemedButton";
-import {format} from 'date-fns'
-import {RequestSummaryView} from "./RequestSummaryView/RequestSummaryView";
+import {ThemedButton} from "../../../../Components/Button/ThemedButton";
+import {RequestSummaryView} from "../RequestSummaryView/RequestSummaryView";
 import {RequestSummaryEdit} from "./RequestSummaryEdit/RequestSummaryEdit";
+import {useAuthContext} from "../../../../Contexts/AuthContext";
+import {UserType} from "../../../../Types/Account";
 
 export interface RequestSummaryProps {
     /**
@@ -29,6 +30,9 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
 
     }
 
+    const {user} = useAuthContext();
+    const userType = user?.usertype;
+
     return (
         /*
                 Iteration 3 - showing the tradies that are:
@@ -41,7 +45,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
         <Box
             sx={{
                 minWidth: "50%",
-                // minHeight: "30%",
                 backgroundColor: "#D8CECD",
                 borderRadius: "12px"
             }}
@@ -72,7 +75,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     </ThemedButton>
                 }
                 {
-                    (request.status === ServiceRequestStatus.NEW) &&
+                    ((request.status === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) &&
                     <ThemedButton onClick={() => setShowEdit(!showEdit)}>
                         {!showEdit ? `Edit` : `Confirm`}
                     </ThemedButton>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import {format} from "date-fns";
-import {ServiceRequest} from "../../../../../../Types/ServiceRequest";
+import {ServiceRequest} from "../../../../Types/ServiceRequest";
 
 
 export interface RequestSummaryViewProps {

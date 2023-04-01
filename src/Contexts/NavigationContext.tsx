@@ -8,7 +8,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import {RoutesEnum} from "../Routes";
 import {useAuthContext} from "./AuthContext";
 import {UserType} from "../Types/Account";
-import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import Person from '@mui/icons-material/Person';
 
@@ -19,7 +18,6 @@ interface NavigationContextState {
 
     isExpanded: boolean;
     setIsExpanded: (isExpanded: boolean) => void;
-
     //Menu items in the side navigation
     sideNavigationMenuItems: SideNavigationMenuItemProps[];
 }
