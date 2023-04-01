@@ -12,6 +12,8 @@ import {AuthContextContextProvider} from "./Contexts/AuthContext";
 import SignUp from "./Pages/SignUp/SignUp";
 import EditProfile from './Pages/UserProfile/EditProfile';
 import {RequestHistory} from "./Pages/RequestHistory/RequestHistory";
+import ProfessionalProfileDisplay from "./Pages/ProfessionalProfile/ProfessionalProfileDisplay";
+
 
 function App() {
     return (
@@ -27,6 +29,7 @@ function App() {
                         <Route path={RoutesEnum.CREATE_REQUEST} element={<CreateRequest />} />
                         <Route path={RoutesEnum.PASSWORD} element={<Password/>}/>
                         <Route path={RoutesEnum.EDIT_PROFILE} element={<EditProfile/>}/>
+                        <Route path={RoutesEnum.Pro_Profile} element={<ProfessionalProfileDisplay />}/>
                         <Route path={'*'} element={<HomePage/>}/>
                     </Routes>
                 </HashRouter>
