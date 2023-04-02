@@ -51,6 +51,12 @@ const UserProfile = () => {
                         <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p>
                         </div>
                         </Box>
+                        <Box sx={{ direction:"row",
+                            alignItems:"center",
+                            justifyContent:"space-between",
+                            my: 5
+                        }}
+                        >
                         <ThemedButton
                             fullWidth
                             size="large"
@@ -59,7 +65,7 @@ const UserProfile = () => {
                         >
                             Edit Profile <ManageAccounts/>
                         </ThemedButton>
-
+                        </Box>
 
                     </Stack>
                     </Box>
