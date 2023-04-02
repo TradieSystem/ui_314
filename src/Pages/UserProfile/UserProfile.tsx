@@ -28,6 +28,12 @@ const UserProfile = () => {
                         <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}</p>
                             <p style={{textAlign: "center",fontSize: "20px"}}> {user.usertype}</p>
                         </div>
+                        <Box sx={{ direction:"row",
+                            alignItems:"center",
+                            justifyContent:"space-between",
+                            my: 5
+                        }}
+                        >
 
                     <div style={{textAlign: "center",
                         background: "#d9c8c6",
@@ -44,12 +50,7 @@ const UserProfile = () => {
                         <p style={{fontSize: "20px"}}> {user.address.streetNumber && user.address.streetName}</p>
                         <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p>
                         </div>
-                        <Box sx={{ direction:"row",
-                            alignItems:"center",
-                            justifyContent:"space-between",
-                            my: 4
-                        }}
-                        >
+                        </Box>
                         <ThemedButton
                             fullWidth
                             size="large"
@@ -59,7 +60,6 @@ const UserProfile = () => {
                             Edit Profile <ManageAccounts/>
                         </ThemedButton>
 
-</Box>
 
                     </Stack>
                     </Box>
