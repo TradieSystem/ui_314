@@ -2,12 +2,13 @@ import React, {useCallback, useState} from 'react';
 import {Form, Formik} from "formik";
 import UserDetails from "./SignUpWizard/UserDetails";
 import * as Yup from "yup";
-import {UserType, MembershipOption} from "../../Types/Account";
+import {MembershipOption, SecurityQuestion, UserType} from "../../Types/Account";
 import UserAddressDetails from "./SignUpWizard/UserAddressDetails";
 import AccountDetails from "./SignUpWizard/AccountDetails";
 import {PaymentDetails} from "./SignUpWizard/PaymentDetails/PaymentDetails";
 import PaymentDetailsTradie from "./SignUpWizard/PaymentDetails/PaymentDetailsTradie";
 import {ServiceType} from "../../Types/ServiceType";
+import {SecurityQuestions} from "./SignUpWizard/SecurityQuestions";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numericRegExp = /^\d+$/;
@@ -40,6 +41,9 @@ const SignUpSchema = Yup.object().shape({
         .required("Card number is required"),
     incomingCCCVV: Yup.string().required("CVV number is required"),
     outgoingCCCVV: Yup.string().required("CVV number is required"),
+    securityAnswer1: Yup.string().required("Answer required"),
+    securityAnswer2: Yup.string().required("Answer required"),
+    securityAnswer3: Yup.string().required("Answer required"),
 });
 
 export interface SignUpFields {
@@ -47,6 +51,12 @@ export interface SignUpFields {
     lastname: string;
     email: string;
     password: string;
+    securityQuestion1?: SecurityQuestion;
+    securityAnswer1: string;
+    securityQuestion2?: SecurityQuestion;
+    securityAnswer2: string;
+    securityQuestion3?: SecurityQuestion;
+    securityAnswer3: string;
     streetNumber: string;
     streetName: string;
     suburb: string;
@@ -86,6 +96,12 @@ export const SignUp = () => {
         lastname: "",
         email: "",
         password: "",
+        securityQuestion1: undefined,        //default values for questions
+        securityAnswer1: "",
+        securityQuestion2: undefined,
+        securityAnswer2: "",
+        securityQuestion3: undefined,
+        securityAnswer3: "",
         streetNumber: "",
         streetName: "",
         suburb: "",
@@ -131,18 +147,19 @@ export const SignUp = () => {
             validationSchema={SignUpSchema}
             onSubmit={handleSubmit}
         >
-
             <Form>
                 {/*First step - general user details*/}
                 {(currentStep === 0) && <UserDetails setCurrentStep={setCurrentStep}/>}
                 {/* Second step - address details*/}
                 {(currentStep === 1) && <UserAddressDetails setCurrentStep={setCurrentStep}/>}
-                {/* Third step - Account details, in a horizontally populated wizard*/}
-                {(currentStep === 2) && <AccountDetails setCurrentStep={setCurrentStep} />}
-                {/* Fourth step - Taking payment details (outgoing) - for both clients and professionals*/}
-                {(currentStep === 3) && <PaymentDetails setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
-                {/* Fifth step - Taking payment details (incoming) - for professionals only*/}
-                {(currentStep === 4) && <PaymentDetailsTradie setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
+                {/* Third step - Security questions for account recovery */}
+                {(currentStep === 2) && <SecurityQuestions setCurrentStep={setCurrentStep}/>}
+                {/* Fourth step - Account details, in a horizontally populated wizard*/}
+                {(currentStep === 3) && <AccountDetails setCurrentStep={setCurrentStep} />}
+                {/* Fifth step - Taking payment details (outgoing) - for both clients and professionals*/}
+                {(currentStep === 4) && <PaymentDetails setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
+                {/* Sixth step - Taking payment details (incoming) - for professionals only*/}
+                {(currentStep === 5) && <PaymentDetailsTradie setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
             </Form>
         </Formik>
     )

@@ -121,7 +121,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                 }}
                             >
                                 <ThemedButton
-                                    onClick={() => setCurrentStep(3)}
+                                    onClick={() => setCurrentStep(4)}
                                 >
                                     Back
                                 </ThemedButton>

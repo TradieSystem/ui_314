@@ -111,7 +111,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                 }}
                             >
                                 <ThemedButton
-                                    onClick={() => setCurrentStep(2)}
+                                    onClick={() => setCurrentStep(3)}
                                 >
                                     Back
                                 </ThemedButton>
@@ -124,7 +124,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                                 handleSubmit(enteredFields);
                                             }
                                         } else {
-                                            setCurrentStep(4);
+                                            setCurrentStep(5);
                                         }
                                     }}
                                 >

@@ -31,7 +31,7 @@ function App() {
                         <Route path={RoutesEnum.PASSWORD} element={<Password/>}/>
                         <Route path={RoutesEnum.EDIT_PROFILE} element={<EditProfile/>}/>
                         <Route path={RoutesEnum.Pro_Profile} element={<ProfessionalProfileDisplay />}/>
-                        <Route path={'*'} element={<HomePage/>}/>
+                        <Route path={'*'} element={<Login/>}/>
                     </Routes>
                 </HashRouter>
             </NavigationContextContextProvider>
