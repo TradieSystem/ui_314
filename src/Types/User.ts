@@ -1,4 +1,4 @@
-import {UserType} from "./Account";
+import {MembershipOption, UserType} from "./Account";
 
 /**
  * Interface to describe the attributes of User
@@ -11,7 +11,14 @@ export interface User {
     password: string;
     address: Address;
     mobile: string;
+    /**
+     * Client vs. Professional
+     */
     usertype: UserType;
+    /**
+     Optional {@link MembershipOption} if the user is a Client
+     */
+    membershipOption?: MembershipOption;
 }
 
 export interface Address {
