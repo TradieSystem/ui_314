@@ -6,7 +6,7 @@ import {Box, Stack} from "@mui/material";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import {RoutesEnum} from "../../Routes";
 import  {ManageAccounts} from "@mui/icons-material";
-import  {AccountBoxSharp} from "@mui/icons-material";
+import  {AccountCircleSharp} from "@mui/icons-material";
 
 
 const UserProfile = () => {
@@ -16,76 +16,38 @@ const UserProfile = () => {
 
         return (
             <PageContainer title={''}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                    }}>
-
+                    <Box>
                     <Stack sx={{
-                        justifyContent: "center"
-                        , display: "grid"
+                        display: "grid"
                     }}>
-                        <AccountBoxSharp style={{ width:"150px",height:"150px"}}/>
-                        <h1 style={{ fontSize: "30px"}}>User Page</h1>
-                    </Stack>
+                        <h1 style={{textAlign: "center",fontSize: "30px"}}>Profile</h1>
+                        <div style={{justifyContent: "center", display: "flex"}}>
+                        <AccountCircleSharp style={{width:"150px",height:"150px"}}/>
+                            </div>
+                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}
+                              <p style={{fontSize: "20px"}}>{user.usertype}</p></p>
 
                     <div style={{textAlign: "center",
-                        background: "rgb(220,220,220)",
+                        background: "#d9c8c6",
                         borderRadius: "20px",
                         border: "2px solid #DB5B13",
-                        height: "70px",
-                        width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>First & Last Name: {user.firstname} {user.lastname}</p>
-                    </div>
-                    <div style={{textAlign: "center",
-                        background: "rgb(220,220,220)",
-                        borderRadius: "20px",
-                        border: "2px solid #DB5B13",
-                        height: "70px",
-                        width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>Mobile: {user.mobile} </p>
-                    </div>
-                    <div style={{textAlign: "center",
-                        background: "rgb(220,220,220)",
-                        borderRadius: "20px",
-                        border: "2px solid #DB5B13",
-                        height: "70px",
-                        width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>Street: {user.address.streetNumber && user.address.streetName} </p>
-                    </div>
-                    <div style={{textAlign: "center",
-                        background: "rgb(220,220,220)",
-                        borderRadius: "20px",
-                        border: "2px solid #DB5B13",
-                        height: "70px",
-                        width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>Suburb: {user.address.suburb} </p>
-                    </div>
-                    <div style={{textAlign: "center",
-                        background: "rgb(220,220,220)",
-                        borderRadius: "20px",
-                        border: "2px solid #DB5B13",
-                        height: "70px",
-                        width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>postcode: {user.address.postcode} </p>
-                    </div>
-                    <div style={{textAlign: "center",
-                            background: "rgb(220,220,220)",
-                            borderRadius: "20px",
-                            border: "2px solid #DB5B13",
-                            height: "70px",
-                            width: "360px"}}>
-                        <p style={{fontSize: "20px"}}>User Type: {user.usertype} </p>
-                    </div>
-                    <Box
-                        marginTop={3}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between"
+                        height: "300px",
+                        width: "460px",
+                        padding:"30px"}}>
+                        <p style={{textAlign: "left",fontSize: "20px"}}>Contact Details:</p>
+                        <p style={{fontSize: "20px"}}> Mobile: {user.mobile} </p>
+                        <p style={{fontSize: "20px"}}> Email: {user.email} </p>
+
+                        <p style={{textAlign: "left",fontSize: "20px"}}>Address:</p>
+                        <p style={{fontSize: "20px"}}> {user.address.streetNumber && user.address.streetName}
+                            <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p> </p>
+                        </div>
+                        <Box sx={{ direction:"row",
+                            alignItems:"center",
+                            justifyContent:"space-between",
+                            my: 4
                         }}
-                    >
+                        >
                         <ThemedButton
                             fullWidth
                             size="large"
@@ -94,8 +56,11 @@ const UserProfile = () => {
                         >
                             Edit Profile <ManageAccounts/>
                         </ThemedButton>
+
+</Box>
+
+                    </Stack>
                     </Box>
-                </Box>
             </PageContainer>
         );
     }
