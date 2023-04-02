@@ -63,7 +63,7 @@ const UserProfile = () => {
                             type="button"
                             onClick={() => navigate(`/${RoutesEnum.EDIT_PROFILE}`)}
                         >
-                            Edit Profile <ManageAccounts/>
+                            Edit Profile&nbsp;<ManageAccounts/>
                         </ThemedButton>
                         </Box>
 
