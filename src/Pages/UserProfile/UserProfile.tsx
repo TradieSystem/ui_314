@@ -24,8 +24,10 @@ const UserProfile = () => {
                         <div style={{justifyContent: "center", display: "flex"}}>
                         <AccountCircleSharp style={{width:"150px",height:"150px"}}/>
                             </div>
-                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}
-                              <p style={{fontSize: "20px"}}>{user.usertype}</p></p>
+                        <div>
+                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}</p>
+                            <p style={{textAlign: "center",fontSize: "20px"}}> {user.usertype}</p>
+                        </div>
 
                     <div style={{textAlign: "center",
                         background: "#d9c8c6",
@@ -34,13 +36,13 @@ const UserProfile = () => {
                         height: "300px",
                         width: "460px",
                         padding:"30px"}}>
-                        <p style={{textAlign: "left",fontSize: "20px"}}>Contact Details:</p>
+                        <p style={{fontWeight: "bold",textAlign: "left",fontSize: "20px"}}>Contact Details:</p>
                         <p style={{fontSize: "20px"}}> Mobile: {user.mobile} </p>
                         <p style={{fontSize: "20px"}}> Email: {user.email} </p>
 
-                        <p style={{textAlign: "left",fontSize: "20px"}}>Address:</p>
-                        <p style={{fontSize: "20px"}}> {user.address.streetNumber && user.address.streetName}
-                            <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p> </p>
+                        <p style={{fontWeight: "bold",textAlign: "left",fontSize: "20px"}}>Address:</p>
+                        <p style={{fontSize: "20px"}}> {user.address.streetNumber && user.address.streetName}</p>
+                        <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p>
                         </div>
                         <Box sx={{ direction:"row",
                             alignItems:"center",
