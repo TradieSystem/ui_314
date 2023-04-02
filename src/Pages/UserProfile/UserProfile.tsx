@@ -2,63 +2,73 @@ import React from "react";
 import {useNavigate} from 'react-router-dom';
 import {useAuthContext} from "../../Contexts/AuthContext";
 import PageContainer from "../../Components/PageContainer/PageContainer";
-import {Box} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import {RoutesEnum} from "../../Routes";
+import  {ManageAccounts} from "@mui/icons-material";
+import  {AccountCircleSharp} from "@mui/icons-material";
+
 
 const UserProfile = () => {
     const navigate = useNavigate();
     const {user} = useAuthContext();
     if (user) {
+
         return (
             <PageContainer title={''}>
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 3,
+                    <Box>
+                    <Stack sx={{
+                        display: "grid"
                     }}>
-                    <div style={{textAlign: "center"}}>
-                        <h1>User Page</h1>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>First Name: {user.firstname}</p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>Last Name: {user.lastname} </p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>Mobile: {user.mobile} </p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>Street: {user.address.streetNumber && user.address.streetName} </p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>Suburb: {user.address.suburb} </p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>postcode: {user.address.postcode} </p>
-                    </div>
-                    <div style={{textAlign: "center"}}>
-                        <p style={{fontSize: "20px"}}>User Type: {user.usertype} </p>
-                    </div>
-                    <Box
-                        marginTop={3}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between"
+                        <h1 style={{textAlign: "center",fontSize: "30px"}}>Profile</h1>
+                        <div style={{justifyContent: "center", display: "flex"}}>
+                        <AccountCircleSharp style={{width:"150px",height:"150px"}}/>
+                            </div>
+                        <div>
+                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}</p>
+                            <p style={{textAlign: "center",fontSize: "20px"}}> {user.usertype}</p>
+                        </div>
+                        <Box sx={{ direction:"row",
+                            alignItems:"center",
+                            justifyContent:"space-between",
+                            my: 5
                         }}
-                    >
+                        >
+
+                    <div style={{textAlign: "center",
+                        background: "#d9c8c6",
+                        borderRadius: "20px",
+                        border: "2px solid #DB5B13",
+                        height: "300px",
+                        width: "460px",
+                        padding:"30px"}}>
+                        <p style={{fontWeight: "bold",textAlign: "left",fontSize: "20px"}}>Contact Details:</p>
+                        <p style={{fontSize: "20px"}}> Mobile: {user.mobile} </p>
+                        <p style={{fontSize: "20px"}}> Email: {user.email} </p>
+
+                        <p style={{fontWeight: "bold",textAlign: "left",fontSize: "20px"}}>Address:</p>
+                        <p style={{fontSize: "20px"}}> {user.address.streetNumber && user.address.streetName}</p>
+                        <p style={{fontSize: "20px"}}> {user.address.suburb} {user.address.postcode}</p>
+                        </div>
+                        </Box>
+                        <Box sx={{ direction:"row",
+                            alignItems:"center",
+                            justifyContent:"space-between",
+                            my: 5
+                        }}
+                        >
                         <ThemedButton
                             fullWidth
                             size="large"
                             type="button"
                             onClick={() => navigate(`/${RoutesEnum.EDIT_PROFILE}`)}
                         >
-                            Edit Profile
+                            Edit Profile&nbsp;<ManageAccounts/>
                         </ThemedButton>
+                        </Box>
+
+                    </Stack>
                     </Box>
-                </Box>
             </PageContainer>
         );
     }
