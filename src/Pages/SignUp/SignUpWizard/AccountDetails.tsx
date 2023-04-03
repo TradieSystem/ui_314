@@ -173,7 +173,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             }}
                         >
                             <ThemedButton
-                                onClick={() => setCurrentStep(1)}
+                                onClick={() => setCurrentStep(2)}
                             >
                                 Back
                             </ThemedButton>
@@ -182,7 +182,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 onClick={() => {
                                     if(stepsComplete()) {
                                         //Move to next step
-                                        setCurrentStep(3);
+                                        setCurrentStep(4);
                                     }
                                 }}
                             >
