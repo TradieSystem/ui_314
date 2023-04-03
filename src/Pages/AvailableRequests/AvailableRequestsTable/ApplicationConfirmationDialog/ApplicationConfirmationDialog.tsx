@@ -5,6 +5,7 @@ import {format} from "date-fns";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
 
+
 export interface ApplicationConfirmationDialogProps {
     /**
      * The {@link ServiceRequest} that is being applied for
@@ -37,6 +38,7 @@ export const ApplicationConfirmationDialog = ({
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={4} marginBottom={2}>
+
                         <Grid item>
                             <Typography fontWeight={'bold'}>Application Number:</Typography>
                         </Grid>

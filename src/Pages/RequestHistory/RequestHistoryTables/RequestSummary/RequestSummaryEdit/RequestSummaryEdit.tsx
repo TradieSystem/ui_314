@@ -5,14 +5,15 @@ import ThemedSelect from "../../../../../Components/ThemedSelect/ThemedSelect";
 import {ServiceType} from "../../../../../Types/ServiceType";
 import ThemedTextField from "../../../../../Components/TextField/ThemedTextField";
 
+
 export interface RequestSummaryEditProps {
+
     /**
      * The request to edit
      */
     request: ServiceRequest;
 }
 export const RequestSummaryEdit = ({request}: RequestSummaryEditProps) => {
-
     return (
         <>
             <Grid container spacing={3} marginBottom={2} gap={3}>

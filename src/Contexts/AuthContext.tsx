@@ -63,7 +63,7 @@ export const AuthContextContextProvider = ({children}: any) => {
     /**
      * Current state of user
      */
-    const [user, setUser] = useState<User | undefined>(dummyProfessionalUser); //edit this as needed between dummyClientUser and dummyProfessionalUser
+    const [user, setUser] = useState<User | undefined>(dummyClientUser); //edit this as needed between dummyClientUser and dummyProfessionalUser
     const [authToken, setAuthToken] = useState<string | undefined>();
     const [refreshToken, setRefreshToken] = useState<string | undefined>();
 

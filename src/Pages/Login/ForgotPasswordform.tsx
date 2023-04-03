@@ -7,6 +7,7 @@ import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {RoutesEnum} from "../../Routes";
+import { useAuthContext } from "../../Contexts/AuthContext";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -18,15 +19,23 @@ const animate = {
         delay: 0.16,
     },
 };
+const questions = [
+    "What is your mother's maiden name?",
+    "What is your favorite color?",
+    "What was the name of your first pet?",
+];
 
 
 const ForgotPasswordForm = () => {
-
+    const {user} = useAuthContext();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+
+
 
     const PasswordSchema = Yup.object().shape({
         email: Yup.string()
@@ -49,9 +58,8 @@ const ForgotPasswordForm = () => {
         },
     });
 
-    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
+    const {errors, touched, values, isSubmitting,handleSubmit, getFieldProps} =
         formik;
-
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -82,6 +90,9 @@ const ForgotPasswordForm = () => {
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
                         />
+                    if(user.email === email){
+
+                }
                     </Box>
 
                     <Box
@@ -114,3 +125,5 @@ const ForgotPasswordForm = () => {
 };
 
 export default ForgotPasswordForm;
+
+
