@@ -1,0 +1,30 @@
+
+.slick-next::before {
+
+     color: rgba(0,0,0,0.8);
+     transition: all 0.2s;
+ }
+.slick-next::after {
+     color: rgba(0,0,0,0.8);
+     transition: all 0.2s;
+ }
+.slick-next:hover::before {
+     top: -40%;
+ }
+.slick-next:hover::after {
+     top: 40%;
+ }
+.slick-prev::before {
+     color: rgba(0,0,0,0.8);
+     transition: all 0.2s;
+ }
+.slick-prev::after {
+     color: rgba(0,0,0,0.8);
+     transition: all 0.2s;
+ }
+.slick-prev:hover::before {
+     top: -40%;
+ }
+.slick-prev:hover::after {
+     top: 40%;
+ }

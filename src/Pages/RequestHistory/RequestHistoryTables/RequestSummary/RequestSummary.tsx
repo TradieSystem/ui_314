@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {Box, Typography} from "@mui/material";
+import {Box, styled, Typography} from "@mui/material";
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
+import  './Arrow.css';
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {RequestSummaryView} from "../RequestSummaryView/RequestSummaryView";
 import {RequestSummaryEdit} from "./RequestSummaryEdit/RequestSummaryEdit";
@@ -17,70 +18,36 @@ import {
     CardActions,
     CardContent,
     CardMedia,
-    Button,
-
+    Button
 } from "@mui/material";
-import { makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router";
 
 
 const lists = [
     {
-        Professional:"Bob",
         Rating:"5 stars",
-        Job_ID: "3",
-        Job_Name: "Tree Service",
-        Cost:"500"
     },
     {
-        Professional:"Dave",
         Rating:"2 stars",
-        Job_ID: "3",
-        Job_Name: "Tree Service",
-        Cost: "1000"
     },
     {
-        Professional:"Frank",
         Rating:"3.5 stars",
-        Job_ID: "3",
-        Job_Name: "Tree Service",
-        Cost: "360"
     },
     {
-        Professional:"Gavin",
-        Rating:"2.3 stars",
-        Job_ID: "3",
-        Job_Name: "Tree Service",
-        Cost: "360"
+        Rating:"2.3 stars"
+
     }
 ];
 
+
 const settings = {
     dots: true,
-    arrows:false,
+    styledarrows:true,
     infinite: false,
     speed: 500,
     slidesToShow: 2,
     slidesToScroll: 1
-
-
 };
-
-const useStyles = makeStyles({
-    root: {
-        margin: "8px",
-        borderRadius: "20px",
-        border: "2px solid #DB5B13",
-        width: "460px",
-    },
-    content: {
-        height: 200,
-        background: "#d9c8c6",
-        textAlign:"center"
-    },
-});
-
-
 
 export interface RequestSummaryProps {
     /**
@@ -106,28 +73,32 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
 
     const {user} = useAuthContext();
     const userType = user?.usertype;
-    const classes = useStyles();
     const navigate = useNavigate();
 
 
-    const listItems = lists.map((lists) => <li key={lists.Professional}>
+    const listItems = lists.map((lists) => <li key={lists.Rating}>
             <div>
-                <Card className={classes.root}>
-                    <CardContent className={classes.content}>
+                <Card style={{margin: "8px",
+                    borderRadius: "20px",
+                    border: "2px solid #DB5B13",
+                    width: "460px"}}>
+                    <CardContent style={{  height: 200,
+                        background: "#d9c8c6",
+                        textAlign:"center"}}>
                         <Typography variant="h5" component="h1">
-                            Tradie: {lists.Professional}
+                            Tradie:  {`${request.professional}`}
                         </Typography>
                         <Typography variant="h5" component="h2">
                             Rating: {lists.Rating}
                         </Typography>
                         <Typography variant="h5" component="h3">
-                            Job Number: {lists.Job_ID}
+                            Job Number: {`${request.status}`}
                         </Typography>
                         <Typography variant="h5" component="h4">
-                            Job Name: {lists.Job_Name}
+                            Job Name: {`${request.applicantIds}`}
                         </Typography>
                         <Typography variant="h5" component="h5">
-                            Job Cost: {lists.Cost}
+                            Job Cost: {`${request.cost}`}
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
@@ -142,6 +113,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
         </li>
     );
 
+    // @ts-ignore
     return (
         /*
                 Iteration 3 - showing the tradies that are:
@@ -177,7 +149,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 ((request.status === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) &&
                 <>
                     <div style={{width:"1000px", padding: "30px"}}>
-                        <Slider {...settings}>{listItems}</Slider>
+                        <Slider{...settings}>{listItems}</Slider>
                     </div>
                 </>
 
@@ -197,7 +169,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     </ThemedButton>
                 }
                 {
-                    ((request.status === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT) && (lists.length === 0)) &&
                     <ThemedButton onClick={() => setShowEdit(!showEdit)}>
                         {!showEdit ? `Edit` : `Confirm`}
                     </ThemedButton>
