@@ -282,7 +282,11 @@ export const RequestHistoryTable = (): JSX.Element => {
                                                 setRequestToView(request);
                                             }}
                                         >
-                                            {(request.status === ServiceRequestStatus.NEW && userType === UserType.CLIENT) ? `View / Edit` : `View`}
+                                            {
+                                                (request.status === ServiceRequestStatus.NEW && userType === UserType.CLIENT) && (!request.applicantIds || request.applicantIds?.length === 0) ?
+                                                `View / Edit` :
+                                                `View`
+                                            }
                                         </ThemedButton>
                                 </TableCell>
                                 <TableCell>

@@ -21,6 +21,7 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {RequestSummary} from "../../RequestHistory/RequestHistoryTables/RequestSummary/RequestSummary";
 import {ApplicationConfirmationDialog} from "./ApplicationConfirmationDialog/ApplicationConfirmationDialog";
 
+
 enum AvailableRequestsTableColumn {
     ApplicationNumber = 'ApplicationNumber',
     ApplicationDate = 'ApplicationDate',
@@ -247,6 +248,7 @@ export const AvailableRequestsTable = () => {
                                                  onClick={() => {
                                                      setRequestToView(request)
                                                      setShowConfirmDialog(true);
+
                                                  }}
                                              >
                                                  Apply
