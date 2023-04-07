@@ -72,7 +72,7 @@ const getHeaderBorderRadius = (columnEnum: ClientRequestHistoryColumn): string =
  */
 export const RequestHistoryTable = (): JSX.Element => {
     const {user} = useAuthContext();
-    const userType = user?.usertype;
+    const userType = user?.userType;
     const headersToUse = userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
 
     //TODO remove dummyServiceRequests when endpoint returns backend data
@@ -159,9 +159,9 @@ export const RequestHistoryTable = (): JSX.Element => {
                 break;
             case ProfessionalRequestHistoryColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname > b.client.lastname ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname < b.client.lastname ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.Location:
@@ -266,7 +266,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 {
                                     userType === UserType.PROFESSIONAL &&
                                     <TableCell>
-                                        {`${request.client.firstname} ${request.client.lastname}`}
+                                        {`${request.client.firstName} ${request.client.lastName}`}
                                     </TableCell>
                                 }
                                 <TableCell>

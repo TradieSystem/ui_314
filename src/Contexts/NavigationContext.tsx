@@ -38,7 +38,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         {
 
             icon: <ArticleIcon />,
-            text: user?.usertype === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
+            text: user?.userType === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
         {
@@ -55,7 +55,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
     ];
 
     //If the usertype is a client, render the client icons too
-    if(user?.usertype === UserType.CLIENT) {
+    if(user?.userType === UserType.CLIENT) {
         const createRequest : SideNavigationMenuItemProps = {
             icon: <AddBox />,
             text: 'Create Requests',
@@ -64,7 +64,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         sideNavigationMenuItems.splice(1, 0, createRequest);
     }
 
-    if(user?.usertype === UserType.PROFESSIONAL) {
+    if(user?.userType === UserType.PROFESSIONAL) {
         const userSpecificNavigation : SideNavigationMenuItemProps = {
             icon: <MenuIcon />,
             text: 'Available Requests',
@@ -72,7 +72,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         }
         sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
     }
-    if(user?.usertype === UserType.PROFESSIONAL) {
+    if(user?.userType === UserType.PROFESSIONAL) {
         const userSpecificNavigation : SideNavigationMenuItemProps = {
 
             icon: <Person/>,

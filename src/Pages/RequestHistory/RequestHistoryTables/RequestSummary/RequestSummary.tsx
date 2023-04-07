@@ -26,7 +26,7 @@ export interface RequestSummaryProps {
 export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) => {
     const [showEdit, setShowEdit] = useState(false);
     const {user} = useAuthContext();
-    const userType = user?.usertype;
+    const userType = user?.userType;
 
     const handleEdit = () => {
         //TODO send data to endpoint

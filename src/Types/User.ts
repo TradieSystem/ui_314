@@ -1,24 +1,47 @@
-import {MembershipOption, UserType} from "./Account";
+import {MembershipOption, SecurityQuestionSet, UserType} from "./Account";
+import {ServiceType} from "./ServiceType";
+import {CCDetails} from "./Payment";
 
 /**
  * Interface to describe the attributes of User
  */
 export interface User {
     userId: number;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
-    address: Address;
     mobile: string;
+    address: Address;
     /**
      * Client vs. Professional
      */
-    usertype: UserType;
+    userType?: UserType; //This isn't sent from the backend - we set this on frontend upon logging in
     /**
-     Optional {@link MembershipOption} if the user is a Client
+     * (Optional) The {@link ClientUserData} to describe properties of a client {@link User} -- sent from backend
      */
-    membershipOption?: MembershipOption;
+    client?: ClientUserData;
+    /**
+     * (Optional) The {@link ProfessionalUserData} to describe properties of a professional {@link User} -- sent from backend
+     */
+    professional?: ProfessionalUserData;
+    /**
+     * (Optional) CC details for system to charge the {@link User} -- set to optional as we don't receive this from backend on logging in
+     */
+    CCOut?: CCDetails;
+    /**
+     * (Optional) Security questions the {@link User} sets on {@link SignUp} -- set to optional as we don't receive this from backend on logging in
+     */
+    securityQuestions?: SecurityQuestionSet[];
+}
+
+export interface ClientUserData {
+    membershipType: MembershipOption;
+}
+
+export interface ProfessionalUserData {
+    services: ServiceType[];
+    CCIn: CCDetails;
 }
 
 export interface Address {

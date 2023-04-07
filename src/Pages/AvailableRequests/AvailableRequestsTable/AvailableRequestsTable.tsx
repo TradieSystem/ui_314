@@ -111,9 +111,9 @@ export const AvailableRequestsTable = () => {
                 break;
             case AvailableRequestsTableColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname > b.client.lastname ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastname < b.client.lastname ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.Location:
@@ -226,7 +226,7 @@ export const AvailableRequestsTable = () => {
                                     {request.serviceType}
                                 </TableCell>
                                 <TableCell>
-                                    {`${request.client.firstname} ${request.client.lastname}`}
+                                    {`${request.client.firstName} ${request.client.lastName}`}
                                 </TableCell>
                                 <TableCell>
                                     <ThemedButton

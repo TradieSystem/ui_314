@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {User} from "../Types/User";
-import {UserType} from "../Types/Account";
+import {MembershipOption, UserType} from "../Types/Account";
 
 const AuthContext = createContext({} as AuthContextState);
 
@@ -29,8 +29,8 @@ interface AuthContextState{
 //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
 const dummyClientUser : User = {
     userId: 1,
-    firstname: "Adam",
-    lastname: "Adams",
+    firstName: "Adam",
+    lastName: "Adams",
     email: "adam@adam.com",
     password: "adam",
     address: {
@@ -40,13 +40,16 @@ const dummyClientUser : User = {
         suburb: "Liverpool"
     },
     mobile: "0411222333",
-    usertype: UserType.CLIENT
+    userType: UserType.CLIENT,
+    client: {
+        membershipType: MembershipOption.PAY_AS_YOU_GO
+    },
 }
 
 export const dummyProfessionalUser : User = {
     userId: 2,
-    firstname: "Bob",
-    lastname: "Bobby",
+    firstName: "Bob",
+    lastName: "Bobby",
     email: "bob@bob.com",
     password: "bob",
     address: {
@@ -56,7 +59,7 @@ export const dummyProfessionalUser : User = {
         suburb: "Liverpool"
     },
     mobile: "0499888777",
-    usertype: UserType.PROFESSIONAL
+    userType: UserType.PROFESSIONAL
 }
 
 export const AuthContextContextProvider = ({children}: any) => {

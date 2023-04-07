@@ -18,7 +18,9 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
         return (
             (errors as SignUpFields).incomingCCName === undefined &&
             (errors as SignUpFields).incomingCCCVV === undefined &&
-            (errors as SignUpFields).incomingCCName === undefined
+            (errors as SignUpFields).incomingCCName === undefined &&
+            (errors as SignUpFields).incomingCCExpiryMonth === undefined &&
+            (errors as SignUpFields).incomingCCExpiryYear === undefined
         )
     }
 
@@ -68,7 +70,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                         type="incomingCCName"
                                         required
                                         error={Boolean((touched as SignUpFields).incomingCCName && (errors as SignUpFields).incomingCCName)}
-                                        helperText={(touched as SignUpFields).incomingCCName && (errors as SignUpFields).incomingCCName && "Name is required"}
+                                        helperText={(touched as SignUpFields).incomingCCName && (errors as SignUpFields).incomingCCName}
                                         {...getFieldProps("incomingCCName")}
                                     />
                                     <ThemedTextField
@@ -79,7 +81,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                         size={"medium"}
                                         required
                                         error={Boolean((touched as SignUpFields).incomingCCNumber && (errors as SignUpFields).incomingCCNumber)}
-                                        helperText={(touched as SignUpFields).incomingCCNumber && (errors as SignUpFields).incomingCCNumber && "Card number is required"}
+                                        helperText={(touched as SignUpFields).incomingCCNumber && (errors as SignUpFields).incomingCCNumber}
                                         {...getFieldProps("incomingCCNumber")}
                                     />
                                     <ThemedTextField
@@ -90,7 +92,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                         size={"medium"}
                                         required
                                         error={Boolean((touched as SignUpFields).incomingCCCVV && (errors as SignUpFields).incomingCCCVV)}
-                                        helperText={(touched as SignUpFields).incomingCCCVV && (errors as SignUpFields).incomingCCCVV && "CVV is required"}
+                                        helperText={(touched as SignUpFields).incomingCCCVV && (errors as SignUpFields).incomingCCCVV}
                                         {...getFieldProps("incomingCCCVV")}
                                         InputProps={{
                                             endAdornment: (
@@ -108,6 +110,40 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                             ),
                                         }}
                                     />
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            gap: 1,
+                                        }}
+                                        component={motion.div}
+                                        initial={{opacity: 0, y: 40}}
+                                        animate={animate}
+                                    >
+                                        <Box>
+                                            <ThemedTextField
+                                                autoComplete="incoming CC ExpiryMonth"
+                                                type="incomingCCExpiryMonth"
+                                                label="Expiry Month"
+                                                size={"small"}
+                                                required
+                                                error={Boolean((touched as SignUpFields).incomingCCExpiryMonth && (errors as SignUpFields).incomingCCExpiryMonth)}
+                                                helperText={(touched as SignUpFields).incomingCCExpiryMonth && (errors as SignUpFields).incomingCCExpiryMonth}
+                                                {...getFieldProps("incomingCCExpiryMonth")}
+                                            />
+                                        </Box>
+                                        <Box>
+                                            <ThemedTextField
+                                                autoComplete="incoming CC Expiry Year"
+                                                type="incomingCCExpiryYear"
+                                                label="Expiry Year"
+                                                size={"small"}
+                                                required
+                                                error={Boolean((touched as SignUpFields).incomingCCExpiryYear && (errors as SignUpFields).incomingCCExpiryYear)}
+                                                helperText={(touched as SignUpFields).incomingCCExpiryYear && (errors as SignUpFields).incomingCCExpiryYear}
+                                                {...getFieldProps("incomingCCExpiryYear")}
+                                            />
+                                        </Box>
+                                    </Box>
                                 </Box>
                             }
                             <Box

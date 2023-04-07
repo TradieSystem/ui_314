@@ -91,7 +91,7 @@ export const ProfessionalProfile = () => {
                         />
                     </div>
                     <Box style={{justifyContent: "center", display: "grid"}}>
-                        <h1>{user.firstname} {user.lastname}</h1>
+                        <h1>{user.firstName} {user.lastName}</h1>
                         <Rating name="read-only" value={value} readOnly sx={{marginLeft: 2}}/>
                     </Box>
                 </Box>

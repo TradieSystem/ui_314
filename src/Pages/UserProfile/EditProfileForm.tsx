@@ -22,6 +22,7 @@ import {useAuthContext} from "../../Contexts/AuthContext";
 import {RoutesEnum} from "../../Routes";
 
 
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -65,7 +66,8 @@ const EditProfileForm = () => {
             typeof value === 'string' ? value.split('') : value,
         );
     };
-    const PasswordSchema = Yup.object().shape({});
+    const EditSchema = Yup.object().shape({});
+
     // @ts-ignore
     //{ useEffect(() => {
     // const url = baseUrl + 'api/Users/';
@@ -84,11 +86,10 @@ const EditProfileForm = () => {
     const formik = useFormik({
         initialValues: {
             email: "",
-            password: "",
-            password1: "",
+            password: ""
 
         },
-        validationSchema: PasswordSchema,
+        validationSchema: EditSchema,
         onSubmit: (values, actions) => {
 
 
@@ -128,12 +129,12 @@ const EditProfileForm = () => {
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="firstname"
-                                value={user.firstname}
+                                value={user.firstName}
                                 type="text"
                             />
                             <ThemedTextField
                                 type="text"
-                                value={user.lastname}
+                                value={user.lastName}
                             />
                             <ThemedTextField
                                 type="text"
@@ -165,6 +166,32 @@ const EditProfileForm = () => {
                                 type="text"
                                 label="CVV"
                             />
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    gap: 1,
+                                }}
+                                component={motion.div}
+                                initial={{opacity: 0, y: 40}}
+                                animate={animate}
+                            >
+                            <Box>
+                                <ThemedTextField
+                                    autoComplete="outgoing CC ExpiryMonth"
+                                    type="outgoingCCExpiryMonth"
+                                    label="Expiry Month"
+                                    size={"small"}
+                                />
+                            </Box>
+                            <Box>
+                                <ThemedTextField
+                                    autoComplete="outgoing CC Expiry Year"
+                                    type="outgoingCCExpiryYear"
+                                    label="Expiry Year"
+                                    size={"small"}
+                                />
+                            </Box>
+                            </Box>
                             <FormControl sx={{
                                 background: "#dcdcdc",
                                 borderColor: "#dc7336",
@@ -188,7 +215,7 @@ const EditProfileForm = () => {
                             }}>
                                 <InputLabel id="MembershipType">Account Type</InputLabel>
                                 <Select
-                                    labelId={user.usertype}
+                                    labelId={user.userType}
                                     id="MembershipType"
                                     multiple
                                     value={membershipType}

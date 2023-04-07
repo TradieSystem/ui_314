@@ -15,8 +15,8 @@ export function generateClients() : User[] {
     for(let i=3; i<51; i++) {
         const newClient : User = {
             userId: i,
-            firstname: `Firstname ${i}`,
-            lastname: `Lastname ${i}`,
+            firstName: `Firstname ${i}`,
+            lastName: `Lastname ${i}`,
             email: `${i}@gmail.com`,
             password: "123",
             address: {
@@ -26,8 +26,10 @@ export function generateClients() : User[] {
                 postcode: `12${i}`
             },
             mobile: `12345678${i}`,
-            usertype: UserType.CLIENT,
-            membershipOption: (i%2 === 0) ? MembershipOption.SUBSCRIPTION : MembershipOption.PAY_AS_YOU_GO
+            userType: UserType.CLIENT,
+            client: {
+                membershipType: (i%2 === 0) ? MembershipOption.SUBSCRIPTION : MembershipOption.PAY_AS_YOU_GO
+            }
         }
 
         clients.push(newClient);
@@ -164,8 +166,8 @@ export function generateProfessionals() : User[] {
     for(let i=100; i<150; i++) {
         const newProfessional : User = {
             userId: i,
-            firstname: `Firstname ${i}`,
-            lastname: `Lastname ${i}`,
+            firstName: `Firstname ${i}`,
+            lastName: `Lastname ${i}`,
             email: `${i}@gmail.com`,
             password: "123",
             address: {
@@ -175,7 +177,7 @@ export function generateProfessionals() : User[] {
                 postcode: `12${i}`
             },
             mobile: `12345678${i}`,
-            usertype: UserType.PROFESSIONAL
+            userType: UserType.PROFESSIONAL
         }
 
         professionals.push(newProfessional);

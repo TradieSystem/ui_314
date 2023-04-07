@@ -55,7 +55,7 @@ const settings = {
 
 export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary}: RequestSummaryApplicantsCarouselProps) => {
     const {user} = useAuthContext();
-    const userType = user?.usertype;
+    const userType = user?.userType;
 
 
     const listItems = lists.map((lists) => <li key={lists.Rating}>
