@@ -25,8 +25,8 @@ const UserProfile = () => {
                         <AccountCircleSharp style={{width:"150px",height:"150px"}}/>
                             </div>
                         <div>
-                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstname} {user.lastname}</p>
-                            <p style={{textAlign: "center",fontSize: "20px"}}> {user.usertype}</p>
+                        <p style={{textAlign: "center",fontSize: "30px"}}> {user.firstName} {user.lastName}</p>
+                            <p style={{textAlign: "center",fontSize: "20px"}}> {user.userType}</p>
                         </div>
                         <Box sx={{ direction:"row",
                             alignItems:"center",

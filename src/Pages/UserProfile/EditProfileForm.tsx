@@ -128,12 +128,12 @@ const EditProfileForm = () => {
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="firstname"
-                                value={user.firstname}
+                                value={user.firstName}
                                 type="text"
                             />
                             <ThemedTextField
                                 type="text"
-                                value={user.lastname}
+                                value={user.lastName}
                             />
                             <ThemedTextField
                                 type="text"
@@ -188,7 +188,7 @@ const EditProfileForm = () => {
                             }}>
                                 <InputLabel id="MembershipType">Account Type</InputLabel>
                                 <Select
-                                    labelId={user.usertype}
+                                    labelId={user.userType}
                                     id="MembershipType"
                                     multiple
                                     value={membershipType}

@@ -1,6 +1,6 @@
 import React from "react";
 import {Container, Typography} from "@mui/material";
-import ForgotPasswordform from "../Login/ForgotPasswordform";
+import ForgotPasswordform from "./ForgotPasswordform";
 import {motion} from "framer-motion";
 import Logo from "../../Components/logo";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";

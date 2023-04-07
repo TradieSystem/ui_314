@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Container, Typography} from "@mui/material";
 import styled from "@emotion/styled";
-import Passwordform from "../Login/PasswordForm";
+import Passwordform from "./PasswordForm";
 import {motion} from "framer-motion";
 import Logo from "../../Components/logo";
 import {fadeInUp} from '../../Effects/Animations';

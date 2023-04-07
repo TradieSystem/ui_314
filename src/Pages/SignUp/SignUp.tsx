@@ -9,6 +9,8 @@ import {PaymentDetails} from "./SignUpWizard/PaymentDetails/PaymentDetails";
 import PaymentDetailsTradie from "./SignUpWizard/PaymentDetails/PaymentDetailsTradie";
 import {ServiceType} from "../../Types/ServiceType";
 import {SecurityQuestions} from "./SignUpWizard/SecurityQuestions";
+import {User} from "../../Types/User";
+import {CCBillingType} from "../../Types/Payment";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numericRegExp = /^\d+$/;
@@ -28,6 +30,7 @@ const SignUpSchema = Yup.object().shape({
     suburb: Yup.string().required("Suburb is required"),
     postcode: Yup.string()
         .matches(numericRegExp, 'Postcode is not valid')
+        .length(4, "Postcode should be 4 digits")
         .required("Postcode is required"),
     incomingCCName: Yup.string().required("CC Name is required"),
     outgoingCCName: Yup.string().required("CC Name is required"),
@@ -41,6 +44,22 @@ const SignUpSchema = Yup.object().shape({
         .required("Card number is required"),
     incomingCCCVV: Yup.string().required("CVV number is required"),
     outgoingCCCVV: Yup.string().required("CVV number is required"),
+    incomingCCExpiryMonth: Yup.string()
+        .matches(numericRegExp, 'Expiry month must be numeric value')
+        .length(2, 'Expiry month must be 2 numbers')
+        .required("Expiry month is required"),
+    incomingCCExpiryYear: Yup.string()
+        .matches(numericRegExp, 'Expiry year must be numeric value')
+        .length(4, 'Expiry year must be 4 numbers')
+        .required("Expiry year is required"),
+    outgoingCCExpiryMonth: Yup.string()
+        .matches(numericRegExp, 'Expiry month must be numeric value')
+        .length(2, 'Expiry month must be 2 numbers')
+        .required("Expiry month is required"),
+    outgoingCCExpiryYear: Yup.string()
+        .matches(numericRegExp, 'Expiry year must be numeric value')
+        .length(4, 'Expiry year must be 4 numbers')
+        .required("Expiry year is required"),
     securityAnswer1: Yup.string().required("Answer required"),
     securityAnswer2: Yup.string().required("Answer required"),
     securityAnswer3: Yup.string().required("Answer required"),
@@ -65,12 +84,16 @@ export interface SignUpFields {
     userType?: UserType;
     membershipOption?: MembershipOption;
     professionalServices?: ServiceType[];
-    incomingCCName?: string;
-    incomingCCNumber?: string;
-    incomingCCCVV?:string;
-    outgoingCCName?: string;
-    outgoingCCNumber?: string;
-    outgoingCCCVV?:string;
+    incomingCCName: string;
+    incomingCCNumber: string;
+    incomingCCCVV:string;
+    incomingCCExpiryMonth: string,
+    incomingCCExpiryYear: string,
+    outgoingCCName: string;
+    outgoingCCNumber: string;
+    outgoingCCCVV:string;
+    outgoingCCExpiryMonth: string,
+    outgoingCCExpiryYear: string,
 }
 
 /**
@@ -113,16 +136,79 @@ export const SignUp = () => {
         incomingCCName: "",
         incomingCCNumber: "",
         incomingCCCVV: "",
+        incomingCCExpiryMonth: "",
+        incomingCCExpiryYear: "",
         outgoingCCName: "",
         outgoingCCNumber: "",
-        outgoingCCCVV: ""
+        outgoingCCCVV: "",
+        outgoingCCExpiryMonth: "",
+        outgoingCCExpiryYear: ""
     };
 
     const handleSubmit = useCallback((fields: SignUpFields) => {
         //TODO sanitise the data
-        //if it is a client, delete populated services
-        console.log(fields);
+        let userObject : User = {
+            userId: -1,
+            firstName: fields.firstname,
+            lastName: fields.lastname,
+            email: fields.email,
+            password: fields.password,  //this needs to be hashed
+            mobile: fields.mobile,
+            address: {
+                streetNumber: fields.streetNumber,
+                streetName: fields.streetName,
+                suburb: fields.suburb,
+                postcode: fields.postcode
+            },
+            CCOut: {            //this needs to be encrypted
+                CCName: fields.outgoingCCName,
+                CCNumber: fields.outgoingCCNumber,
+                expiryDate: `${fields.outgoingCCExpiryMonth}/${fields.outgoingCCExpiryYear}`,
+                CVV: fields.outgoingCCCVV,
+                billingType: CCBillingType.OUT
+            },
+            securityQuestions: [
+                {
+                    securityQuestion: fields.securityQuestion1 || ("" as SecurityQuestion),
+                    answer: fields.securityAnswer1
+                },
+                {
+                    securityQuestion: fields.securityQuestion2 || ("" as SecurityQuestion),
+                    answer: fields.securityAnswer2
+                },
+                {
+                    securityQuestion: fields.securityQuestion3 || ("" as SecurityQuestion),
+                    answer: fields.securityAnswer3
+                }
+            ]
+        }
 
+        if(fields.userType === UserType.PROFESSIONAL) {
+            userObject = {
+                ...userObject,
+                professional: {
+                    services: fields.professionalServices || [],
+                    CCIn: {         //this needs to be encrypted
+                        CCName: fields.incomingCCName,
+                        CCNumber: fields.incomingCCNumber,
+                        expiryDate: `${fields.incomingCCExpiryMonth}/${fields.incomingCCExpiryYear}`,
+                        CVV: fields.incomingCCCVV,
+                        billingType: CCBillingType.IN
+                    }
+                }
+            }
+        }
+
+        if(fields.userType === UserType.CLIENT) {
+            userObject = {
+                ...userObject,
+                client: {
+                    membershipType: fields.membershipOption || MembershipOption.PAY_AS_YOU_GO
+                }
+            }
+        }
+
+        console.log(userObject);
         //if it is a professional, delete the membershipOption
 
         //TODO encrypt the CC details

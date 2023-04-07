@@ -12,7 +12,7 @@ export const RequestHistory = (): JSX.Element => {
     const {user} = useAuthContext();
 
     return (
-        <PageContainer title={user?.usertype === UserType.CLIENT ? 'My Requests' : 'Job History'}>
+        <PageContainer title={user?.userType === UserType.CLIENT ? 'My Requests' : 'Job History'}>
             <RequestHistoryTable />
         </PageContainer>
     )

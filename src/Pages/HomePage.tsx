@@ -9,7 +9,7 @@ import {useAuthContext} from "../Contexts/AuthContext";
 export const HomePage = () => {
     const {user} = useAuthContext();
     return (
-        <PageContainer title={'Home'} subtitle={user ? `${user.firstname} ${user.lastname}` : ''}>
+        <PageContainer title={'Home'} subtitle={user ? `${user.firstName} ${user.lastName}` : ''}>
            <></>
         </PageContainer>
     )

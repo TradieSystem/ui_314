@@ -5,7 +5,7 @@ import {HomePage} from "./Pages/HomePage";
 import Login from "./Pages/Login/Login";
 import UserProfileDisplay from "./Pages/UserProfile/UserProfileDisplay";
 import CreateRequest from "./Pages/CreateRequest/CreateRequest"
-import Password from "./Pages/Login/Password";
+import Password from "./Pages/ForgotPassword/Password";
 import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
