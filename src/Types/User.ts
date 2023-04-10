@@ -1,4 +1,4 @@
-import {MembershipOption, SecurityQuestionSet, UserType} from "./Account";
+import {MembershipOption, SecurityQuestionResponse, SecurityQuestionSet, UserType} from "./Account";
 import {ServiceType} from "./ServiceType";
 import {CCDetails} from "./Payment";
 
@@ -6,7 +6,7 @@ import {CCDetails} from "./Payment";
  * Interface to describe the attributes of User
  */
 export interface User {
-    userId: number;
+    user_id: number;
     firstName: string;
     lastName: string;
     email: string;
@@ -32,7 +32,7 @@ export interface User {
     /**
      * (Optional) Security questions the {@link User} sets on {@link SignUp} -- set to optional as we don't receive this from backend on logging in
      */
-    securityQuestions?: SecurityQuestionSet[];
+    securityQuestions?: SecurityQuestionResponse;
 }
 
 export interface ClientUserData {

@@ -11,9 +11,18 @@ import {ServiceType} from "../../Types/ServiceType";
 import {SecurityQuestions} from "./SignUpWizard/SecurityQuestions";
 import {User} from "../../Types/User";
 import {CCBillingType} from "../../Types/Payment";
+import {JSEncrypt} from "jsencrypt";
+import axios from "axios";
+import {DEV_PATH} from "../../Routes";
+import {Alert, Typography} from "@mui/material";
+import {InfoOutlined} from "@mui/icons-material";
+import SignUpConfirmation from "./SignUpConfirmation";
+
+var md5Hash = require("md5-hash")
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numericRegExp = /^\d+$/;
+const alphabeticRegExp = /^[A-Z]+$/i;
 
 const SignUpSchema = Yup.object().shape({
     firstname: Yup.string().required("First name is required"),
@@ -26,8 +35,12 @@ const SignUpSchema = Yup.object().shape({
         .matches(phoneRegExp, 'Phone number is not valid')
         .required("Phone number is required"),
     streetNumber: Yup.string().required("Street number is required"),
-    streetName: Yup.string().required("Street name is required"),
-    suburb: Yup.string().required("Suburb is required"),
+    streetName: Yup.string()
+        .matches(alphabeticRegExp, "Street name must contain only alphabetic characters")
+        .required("Street name is required"),
+    suburb: Yup.string()
+        .matches(alphabeticRegExp, "Suburb must contain only alphabetic characters")
+        .required("Suburb is required"),
     postcode: Yup.string()
         .matches(numericRegExp, 'Postcode is not valid')
         .length(4, "Postcode should be 4 digits")
@@ -86,14 +99,15 @@ export interface SignUpFields {
     professionalServices?: ServiceType[];
     incomingCCName: string;
     incomingCCNumber: string;
-    incomingCCCVV:string;
+    incomingCCCVV: string;
     incomingCCExpiryMonth: string,
     incomingCCExpiryYear: string,
     outgoingCCName: string;
     outgoingCCNumber: string;
-    outgoingCCCVV:string;
+    outgoingCCCVV: string;
     outgoingCCExpiryMonth: string,
     outgoingCCExpiryYear: string,
+    ccPK: string;       //the PK to encrypt CC details
 }
 
 /**
@@ -113,6 +127,8 @@ export interface SignUpProps {
 
 export const SignUp = () => {
     const [currentStep, setCurrentStep] = useState<number>(0);
+    const [alert, setAlert] = useState<JSX.Element>(<></>);
+    const [createdUser, setCreatedUser] = useState<User>();
 
     const initialValues: SignUpFields = {
         firstname: "",
@@ -142,17 +158,20 @@ export const SignUp = () => {
         outgoingCCNumber: "",
         outgoingCCCVV: "",
         outgoingCCExpiryMonth: "",
-        outgoingCCExpiryYear: ""
+        outgoingCCExpiryYear: "",
+        ccPK: ""
     };
 
     const handleSubmit = useCallback((fields: SignUpFields) => {
-        //TODO sanitise the data
-        let userObject : User = {
-            userId: -1,
+        const encrypt = new JSEncrypt();
+        encrypt.setPublicKey(fields.ccPK);
+
+        let userObject: User = {
+            user_id: -1,
             firstName: fields.firstname,
             lastName: fields.lastname,
             email: fields.email,
-            password: fields.password,  //this needs to be hashed
+            password: md5Hash.default(fields.password),  //this needs to be hashed
             mobile: fields.mobile,
             address: {
                 streetNumber: fields.streetNumber,
@@ -160,46 +179,50 @@ export const SignUp = () => {
                 suburb: fields.suburb,
                 postcode: fields.postcode
             },
-            CCOut: {            //this needs to be encrypted
+            CCOut: {            //encrypt fields individually (number and ccv)
                 CCName: fields.outgoingCCName,
                 CCNumber: fields.outgoingCCNumber,
+                //CCNumber: encrypt.encrypt(fields.outgoingCCNumber).toString(),              //currently commented out, as DB doesn't support the length - will come back when there is an update
                 expiryDate: `${fields.outgoingCCExpiryMonth}/${fields.outgoingCCExpiryYear}`,
-                CVV: fields.outgoingCCCVV,
+                CCV: fields.outgoingCCCVV,
+                //CCV: encrypt.encrypt(fields.outgoingCCCVV).toString(),
                 billingType: CCBillingType.OUT
             },
-            securityQuestions: [
-                {
+            securityQuestions: {
+                securityQuestion1: {
                     securityQuestion: fields.securityQuestion1 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer1
                 },
-                {
+                securityQuestion2: {
                     securityQuestion: fields.securityQuestion2 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer2
                 },
-                {
+                securityQuestion3: {
                     securityQuestion: fields.securityQuestion3 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer3
                 }
-            ]
+            }
         }
 
-        if(fields.userType === UserType.PROFESSIONAL) {
+        if (fields.userType === UserType.PROFESSIONAL) {
             userObject = {
                 ...userObject,
                 professional: {
                     services: fields.professionalServices || [],
-                    CCIn: {         //this needs to be encrypted
+                    CCIn: {
                         CCName: fields.incomingCCName,
                         CCNumber: fields.incomingCCNumber,
+                        // CCNumber: encrypt.encrypt(fields.incomingCCNumber).toString(),
                         expiryDate: `${fields.incomingCCExpiryMonth}/${fields.incomingCCExpiryYear}`,
-                        CVV: fields.incomingCCCVV,
+                        CCV: fields.incomingCCCVV,
+                        //CCV: encrypt.encrypt(fields.incomingCCCVV).toString(),
                         billingType: CCBillingType.IN
                     }
                 }
             }
         }
 
-        if(fields.userType === UserType.CLIENT) {
+        if (fields.userType === UserType.CLIENT) {
             userObject = {
                 ...userObject,
                 client: {
@@ -208,47 +231,96 @@ export const SignUp = () => {
             }
         }
 
-        console.log(userObject);
-        //if it is a professional, delete the membershipOption
+        setAlert(
+            <Alert
+                severity={"info"}
+                variant={"outlined"}
+                icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
+                sx={{
+                    color: "#3f3f3f",
+                    backgroundColor: "#c7c7c7",
+                    border: "1.5px solid #3f3f3f",
+                }}
+            >
+                <Typography color={"black"}>
+                    Submitting details...
+                </Typography>
+            </Alert>
+        );
 
-        //TODO encrypt the CC details
-
-        //TODO construct user object to send to endpoint
-
-        //TODO send details to sign up endpoint
-
-        //TODO retrieve created user object
-
-        //TODO login with credentials
-
-        //TODO store auth token in context
-
-        //TODO Navigate to homepage
-    }, [])
-
+        //Send the details to the create user endpoint
+        axios
+            .post(`${DEV_PATH}/user/userCreate`, userObject, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                    try {
+                        //Checking for a field that should definitely be there
+                        if (response.data.firstName) {
+                            //Set the response user object
+                            setCreatedUser(response.data);
+                            //Remove any previous errors
+                            setAlert(<></>);
+                        } else {
+                            throw new Error();
+                        }
+                    } catch (error) {
+                        //This error will appear if we receive a 200, with an object that isn't a user
+                        setAlert(
+                            <Alert severity={"error"} onClose={() => setAlert(<></>)}>
+                                There was an issue creating the account with the provided details.
+                            </Alert>
+                        );
+                    }
+                } else {
+                    throw new Error();
+                }
+            })
+            .catch(() => {
+                //This error will appear if we receive a response that is not a 200 status
+                setAlert(
+                    <Alert severity={"error"}>
+                        There was an issue creating the account.
+                    </Alert>
+                );
+            });
+    }, []);
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={SignUpSchema}
-            onSubmit={handleSubmit}
-        >
-            <Form>
-                {/*First step - general user details*/}
-                {(currentStep === 0) && <UserDetails setCurrentStep={setCurrentStep}/>}
-                {/* Second step - address details*/}
-                {(currentStep === 1) && <UserAddressDetails setCurrentStep={setCurrentStep}/>}
-                {/* Third step - Security questions for account recovery */}
-                {(currentStep === 2) && <SecurityQuestions setCurrentStep={setCurrentStep}/>}
-                {/* Fourth step - Account details, in a horizontally populated wizard*/}
-                {(currentStep === 3) && <AccountDetails setCurrentStep={setCurrentStep} />}
-                {/* Fifth step - Taking payment details (outgoing) - for both clients and professionals*/}
-                {(currentStep === 4) && <PaymentDetails setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
-                {/* Sixth step - Taking payment details (incoming) - for professionals only*/}
-                {(currentStep === 5) && <PaymentDetailsTradie setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
-            </Form>
-        </Formik>
-    )
+        <>
+            {createdUser && <SignUpConfirmation createdUser={createdUser}/>}
+            {!createdUser &&
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={SignUpSchema}
+                    onSubmit={handleSubmit}
+                >
+                    <>
+                        {alert}
+                        <Form>
+                            {/*First step - general user details*/}
+                            {(currentStep === 0) && <UserDetails setCurrentStep={setCurrentStep}/>}
+                            {/* Second step - address details*/}
+                            {(currentStep === 1) && <UserAddressDetails setCurrentStep={setCurrentStep}/>}
+                            {/* Third step - Security questions for account recovery */}
+                            {(currentStep === 2) && <SecurityQuestions setCurrentStep={setCurrentStep}/>}
+                            {/* Fourth step - Account details, in a horizontally populated wizard*/}
+                            {(currentStep === 3) && <AccountDetails setCurrentStep={setCurrentStep}/>}
+                            {/* Fifth step - Taking payment details (outgoing) - for both clients and professionals*/}
+                            {(currentStep === 4) &&
+                                <PaymentDetails setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
+                            {/* Sixth step - Taking payment details (incoming) - for professionals only*/}
+                            {(currentStep === 5) &&
+                                <PaymentDetailsTradie setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
+                        </Form>
+                    </>
+                </Formik>}
+        </>
+    );
 };
 
 export default SignUp;
