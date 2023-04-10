@@ -5,7 +5,7 @@ export interface CCDetails {
     CCName: string;
     CCNumber: string;
     expiryDate: string;
-    CVV: string;
+    CCV: string;
     billingType: CCBillingType;
 }
 

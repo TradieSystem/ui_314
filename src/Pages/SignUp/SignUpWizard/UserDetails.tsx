@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {motion} from "framer-motion";
 import {Alert, Box, Container, IconButton, InputAdornment} from "@mui/material";
 import {animate} from "../../../Effects/Animations";
@@ -9,15 +9,53 @@ import {ThemedTextField} from "../../../Components/TextField/ThemedTextField";
 import Logo from "../../../Components/logo";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {useNavigate} from "react-router-dom";
-import {RoutesEnum} from "../../../Routes";
+import {DEV_PATH, RoutesEnum} from "../../../Routes";
 import {SignUpFields, SignUpProps} from "../SignUp";
+import axios from "axios";
 
 export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     const [showPassword, setShowPassword] = useState(false);
+    const [emailAvailable, setEmailAvailable] = useState(false);
     const [alert, setAlert] = useState(<></>);
     const navigate = useNavigate();
 
-    const {errors, values, touched, getFieldProps} = useFormikContext();
+    const {errors, values, touched, getFieldProps, setFieldValue} = useFormikContext();
+
+    useEffect(() => {
+        if((values as SignUpFields).email !== "" && (errors as SignUpFields).email === undefined) {
+            //Check if email is available
+            axios
+                .get((`${DEV_PATH}/user/validate?email=${(values as SignUpFields).email}`), {
+                    headers: {
+                        'content-type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                })
+                .then((response) => {
+                    //If the email is available, store the PK to encrypt the CC details
+                    if(response.data) {
+                        //'exists' is the property to say the username already exists
+                        if(response.data.exists === "False") {
+                            //set the PK that is used to encrypt the cc details
+                            setFieldValue('ccPK', response.data.pbkey);
+                            setEmailAvailable(true);
+                            setAlert(<></>);
+                        } else {
+                            setEmailAvailable(false);
+                            throw new Error('Email is taken');
+                        }
+                    }
+                })
+                .catch(() => {
+                    setEmailAvailable(false);
+                    setAlert(
+                        <Alert severity={'error'}>
+                            Email is already taken. Please choose a different email.
+                        </Alert>
+                    )
+                });
+        }
+    }, [errors, values])
 
     function stepsComplete() {
         return (
@@ -28,7 +66,8 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
             ((values as SignUpFields).firstname !== "") &&
             ((values as SignUpFields).lastname !== "") &&
             ((values as SignUpFields).email !== "") &&
-            ((values as SignUpFields).mobile !== "")
+            ((values as SignUpFields).mobile !== "") &&
+            emailAvailable
         );
     }
 
@@ -155,8 +194,6 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                                     if(stepsComplete() && emailValid() && mobileValid()) {
                                         //Clear alerts
                                         setAlert(<></>);
-
-                                        //TODO need to hit endpoint to check email is not taken, and set alert if it is
 
                                         setCurrentStep(1);
                                     } else {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {SignUpFields, SignUpProps} from "../../SignUp";
-import {Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../../../CommonStyles/SignUp_Login";
 import {motion} from "framer-motion";
 import {animate} from "../../../../Effects/Animations";
@@ -9,10 +8,12 @@ import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {useFormikContext} from "formik";
 import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
+import {Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 
-export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProps) => {
+export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps) => {
     const {values, touched, getFieldProps, errors} = useFormikContext();
     const [showCVV, setShowCVV] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     function stepsComplete() {
         return (
@@ -59,7 +60,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                     <Typography
                                         align={'center'}
                                         variant={'subtitle1'}
-                                        sx={{ fontWeight: 'bold' }}
+                                        sx={{fontWeight: 'bold'}}
                                     >
                                         Card details to receive payments
                                     </Typography>
@@ -162,10 +163,11 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit} : SignUpProp
                                     Back
                                 </ThemedButton>
                                 <ThemedButton
-                                    disabled={!stepsComplete()}
+                                    disabled={!stepsComplete() || submitting}
                                     onClick={() => {
                                         const enteredFields = values as SignUpFields;
-                                        if(enteredFields && handleSubmit) {
+                                        if (enteredFields && handleSubmit) {
+                                            setSubmitting(true);
                                             handleSubmit(enteredFields);
                                         }
                                     }}

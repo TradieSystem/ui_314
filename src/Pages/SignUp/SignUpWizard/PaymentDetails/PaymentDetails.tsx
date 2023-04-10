@@ -13,6 +13,7 @@ import {Icon} from "@iconify/react";
 export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => {
     const {values, touched, getFieldProps, errors} = useFormikContext();
     const [showCVV, setShowCVV] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     function stepsComplete() {
         return (
@@ -152,11 +153,13 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                     Back
                                 </ThemedButton>
                                 <ThemedButton
-                                    disabled={!stepsComplete()}
+                                    disabled={!stepsComplete() || submitting}
                                     onClick={() => {
                                         if((values as SignUpFields).userType === UserType.CLIENT) {
                                             const enteredFields = values as SignUpFields;
                                             if(enteredFields && handleSubmit) {
+                                                //If we were on the last stage (for a client) - disable the button while it is submitting
+                                                setSubmitting(true);
                                                 handleSubmit(enteredFields);
                                             }
                                         } else {
@@ -172,7 +175,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                 </Container>
             </RootStyle>
         </>
-    )
+    );
 }
 
 export default PaymentDetails;

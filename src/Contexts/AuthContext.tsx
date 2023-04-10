@@ -28,7 +28,7 @@ interface AuthContextState{
 
 //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
 const dummyClientUser : User = {
-    userId: 1,
+    user_id: 1,
     firstName: "Adam",
     lastName: "Adams",
     email: "adam@adam.com",
@@ -47,7 +47,7 @@ const dummyClientUser : User = {
 }
 
 export const dummyProfessionalUser : User = {
-    userId: 2,
+    user_id: 2,
     firstName: "Bob",
     lastName: "Bobby",
     email: "bob@bob.com",

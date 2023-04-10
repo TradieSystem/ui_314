@@ -240,11 +240,11 @@ export const AvailableRequestsTable = () => {
                                     </ThemedButton>
                                 </TableCell>
                                 <TableCell>
-                                    <Tooltip title={user?.userId && request.applicantIds?.includes(user?.userId) ? 'Application to request already submitted' : ''}>
+                                    <Tooltip title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>
                                         <span>
                                              <ThemedButton
                                                  variantOverride={'text'}
-                                                 disabled={user?.userId ? request.applicantIds?.includes(user?.userId) : false}
+                                                 disabled={user?.user_id ? request.applicantIds?.includes(user?.user_id) : false}
                                                  onClick={() => {
                                                      setRequestToView(request)
                                                      setShowConfirmDialog(true);

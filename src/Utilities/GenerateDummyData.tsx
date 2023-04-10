@@ -14,7 +14,7 @@ export function generateClients() : User[] {
     //Starting from 3 as ids 1 and 2 are in the AuthContext
     for(let i=3; i<51; i++) {
         const newClient : User = {
-            userId: i,
+            user_id: i,
             firstName: `Firstname ${i}`,
             lastName: `Lastname ${i}`,
             email: `${i}@gmail.com`,
@@ -100,7 +100,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.PLUMBING,
         status: ServiceRequestStatus.NEW,
         client: generateClients().at(0) as User,
-        applicantIds: [dummyProfessionalUser.userId],       //Pretending this has already had 1 applicant - this dummyProfessionalUser
+        applicantIds: [dummyProfessionalUser.user_id],       //Pretending this has already had 1 applicant - this dummyProfessionalUser
         postcode: "2555",
         suburb: "Moorebank",
         cost: 0
@@ -165,7 +165,7 @@ export function generateProfessionals() : User[] {
 
     for(let i=100; i<150; i++) {
         const newProfessional : User = {
-            userId: i,
+            user_id: i,
             firstName: `Firstname ${i}`,
             lastName: `Lastname ${i}`,
             email: `${i}@gmail.com`,
