@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SignUpFields, SignUpProps} from "../../SignUp";
-import {Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
+import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../../../CommonStyles/SignUp_Login";
 import {motion} from "framer-motion";
 import {animate} from "../../../../Effects/Animations";
@@ -14,6 +14,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
     const {values, touched, getFieldProps, errors} = useFormikContext();
     const [showCVV, setShowCVV] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [alert, setAlert] = useState(<></>);
 
     function stepsComplete() {
         return (
@@ -24,6 +25,24 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
             (errors as SignUpFields).outgoingCCExpiryYear === undefined
         )
     }
+
+
+    useEffect(() => {
+        const enteredDate = new Date(`${(values as SignUpFields).outgoingCCExpiryMonth}/28/${(values as SignUpFields).outgoingCCExpiryYear}`);
+        const currentDate = new Date();
+
+        if(currentDate > enteredDate) {
+            setAlert(
+                <Alert
+                    severity={"error"}
+                >
+                    Expiry should be a date in the future
+                </Alert>
+            )
+        } else {
+            setAlert(<></>);
+        }
+    }, [values]);
 
     return (
         <>
@@ -44,11 +63,13 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                             }}
                             sx={{marginTop: 2}}
                         >
+                            {alert}
                             <Box
                                 sx={{
                                     display: "flex",
                                     flexDirection: "column",
                                     gap: 1.5,
+                                    marginTop: 5
                                 }}
                                 component={motion.div}
                                 initial={{opacity: 0, y: 40}}

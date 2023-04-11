@@ -9,7 +9,7 @@ import {ThemedTextField} from "../../../Components/TextField/ThemedTextField";
 import Logo from "../../../Components/logo";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {useNavigate} from "react-router-dom";
-import {DEV_PATH, RoutesEnum} from "../../../Routes";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../Routes";
 import {SignUpFields, SignUpProps} from "../SignUp";
 import axios from "axios";
 
@@ -26,10 +26,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
             //Check if email is available
             axios
                 .get((`${DEV_PATH}/user/validate?email=${(values as SignUpFields).email}`), {
-                    headers: {
-                        'content-type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                    },
+                    headers: CORS_HEADER,
                 })
                 .then((response) => {
                     //If the email is available, store the PK to encrypt the CC details
@@ -55,7 +52,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                     )
                 });
         }
-    }, [errors, values])
+    }, [errors, values]);
 
     function stepsComplete() {
         return (

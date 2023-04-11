@@ -21,3 +21,8 @@ export enum RoutesEnum {
  */
 
 export const DEV_PATH = "https://63ssyxp81l.execute-api.us-east-1.amazonaws.com/dev";
+
+export const CORS_HEADER = {
+    'content-type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+}
