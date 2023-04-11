@@ -13,16 +13,17 @@ import {User} from "../../Types/User";
 import {CCBillingType} from "../../Types/Payment";
 import {JSEncrypt} from "jsencrypt";
 import axios from "axios";
-import {DEV_PATH} from "../../Routes";
+import {CORS_HEADER, DEV_PATH} from "../../Routes";
 import {Alert, Typography} from "@mui/material";
 import {InfoOutlined} from "@mui/icons-material";
 import SignUpConfirmation from "./SignUpConfirmation";
 
-var md5Hash = require("md5-hash")
+const md5Hash = require("md5-hash");
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const numericRegExp = /^\d+$/;
-const alphabeticRegExp = /^[A-Z]+$/i;
+const alphabeticRegExp = /^[A-Za-z\s]*$/;
+const monthRegExp = /0[1-9]|1[012]/i;
 
 const SignUpSchema = Yup.object().shape({
     firstname: Yup.string().required("First name is required"),
@@ -59,6 +60,7 @@ const SignUpSchema = Yup.object().shape({
     outgoingCCCVV: Yup.string().required("CVV number is required"),
     incomingCCExpiryMonth: Yup.string()
         .matches(numericRegExp, 'Expiry month must be numeric value')
+        .matches(monthRegExp, 'Not a valid month')
         .length(2, 'Expiry month must be 2 numbers')
         .required("Expiry month is required"),
     incomingCCExpiryYear: Yup.string()
@@ -67,6 +69,7 @@ const SignUpSchema = Yup.object().shape({
         .required("Expiry year is required"),
     outgoingCCExpiryMonth: Yup.string()
         .matches(numericRegExp, 'Expiry month must be numeric value')
+        .matches(monthRegExp, 'Not a valid month')
         .length(2, 'Expiry month must be 2 numbers')
         .required("Expiry month is required"),
     outgoingCCExpiryYear: Yup.string()
@@ -251,10 +254,7 @@ export const SignUp = () => {
         //Send the details to the create user endpoint
         axios
             .post(`${DEV_PATH}/user/userCreate`, userObject, {
-                headers: {
-                    'content-type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
+                headers: CORS_HEADER,
             })
             .then((response) => {
                 if (response.status === 200) {

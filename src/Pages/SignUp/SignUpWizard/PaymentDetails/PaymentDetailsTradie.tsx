@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SignUpFields, SignUpProps} from "../../SignUp";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../../../CommonStyles/SignUp_Login";
 import {motion} from "framer-motion";
@@ -8,12 +8,13 @@ import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {useFormikContext} from "formik";
 import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
-import {Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
+import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 
 export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps) => {
     const {values, touched, getFieldProps, errors} = useFormikContext();
     const [showCVV, setShowCVV] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [alert, setAlert] = useState(<></>);
 
     function stepsComplete() {
         return (
@@ -24,6 +25,23 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
             (errors as SignUpFields).incomingCCExpiryYear === undefined
         )
     }
+
+    useEffect(() => {
+        const enteredDate = new Date(`${(values as SignUpFields).incomingCCExpiryMonth}/28/${(values as SignUpFields).incomingCCExpiryYear}`);
+        const currentDate = new Date();
+
+        if(currentDate > enteredDate) {
+            setAlert(
+                <Alert
+                    severity={"error"}
+                >
+                    Expiry should be a date in the future
+                </Alert>
+            )
+        } else {
+            setAlert(<></>);
+        }
+    }, [values]);
 
     return (
         <>
@@ -44,6 +62,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                             }}
                             sx={{marginTop: 2}}
                         >
+                            {alert}
                             {
                                 ((values as SignUpFields).userType === UserType.PROFESSIONAL) &&
                                 <Box
