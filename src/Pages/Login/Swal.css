@@ -1,0 +1,33 @@
+.swal-modal{
+    background-color: #d9c8c6;
+    borderRadius : 30px;
+    border : 2px solid #DB5B13;
+    height : 360px;
+    width: 460px ;
+    padding:30px;
+}
+.swal-icon::before{
+    background-color: #d9c8c6;
+}
+.swal-icon::after {
+    background-color: #d9c8c6;
+
+}
+.swal-icon--success__hide-corners{
+    background-color: #d9c8c6;
+}
+.swal-icon--success__line.swal-icon--success__line--long{
+    background-color: #DB5B13;
+}
+.swal-icon--success__line.swal-icon--success__line--tip{
+    background-color: #DB5B13;
+}
+.swal-icon--success__ring{
+    border : 2px solid #DB5B13;
+    borderRadius : 40px;
+}
+.swal-icon.swal-icon--success{
+    border : 2px solid #DB5B13;
+    borderRadius : 40px;
+}
+
