@@ -77,24 +77,23 @@ const LoginForm = () => {
                     }
                     if (response.data.user) {
                         try {
-                            setUser(response.data.user);
-                            setUser(userObject);
-                            setAuthToken(response.data.access_token);
-                            setRefreshToken(response.data.refresh_token);
+                            localStorage.setItem("user", JSON.stringify(userObject));
+                            localStorage.setItem("access_token", response.data.access_token );
+                            localStorage.setItem("refresh_token", response.data.refresh_token);
                             swal("Good job!", "You Have Signed In!", "success");
                             navigate("/" + RoutesEnum.HOME)
 
                         } catch (error) {
                             //This error will appear if we receive a 200, with an object that isn't a user
-                            swal("Cant Sign in wrong email/password!")
+                            swal("Wrong Credentials", "Cant Sign in wrong email/password!", "error")
                         }
                     } else {
                         throw new Error();
                     }
                 })
                 .catch(() => {
-                    swal("Cant Sign in wrong email/password!" );
-
+                    swal("Wrong Credentials", "Cant Sign in wrong email/password!");
+                    window.location.reload();
                 });
         }
 });
