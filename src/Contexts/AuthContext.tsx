@@ -12,18 +12,18 @@ interface AuthContextState{
      * Logged in user (optional), will be populated on login
      */
     user?: User;
-    setUser?: (user: User) => void;
+    setUser: (user: User) => void;
     /**
      * Auth token will be received on successful login, and used for all requests
      */
     authToken?: string;
-    setAuthToken?: (token: string) => void;
+    setAuthToken: (token: string) => void;
 
     /**
      * Refresh token will be used to submit a request for a new auth token before expiry
      */
     refreshToken?: string;
-    setRefreshToken?: (token: string) => void;
+    setRefreshToken: (token: string) => void;
 }
 
 //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
@@ -66,7 +66,7 @@ export const AuthContextContextProvider = ({children}: any) => {
     /**
      * Current state of user
      */
-    const [user, setUser] = useState<User | undefined>(dummyClientUser); //edit this as needed between dummyClientUser and dummyProfessionalUser
+    const [user, setUser] = useState<User | undefined>(); //edit this as needed between dummyClientUser and dummyProfessionalUser
     const [authToken, setAuthToken] = useState<string | undefined>();
     const [refreshToken, setRefreshToken] = useState<string | undefined>();
 
