@@ -92,8 +92,9 @@ const LoginForm = () => {
                     }
                 })
                 .catch(() => {
-                    swal("Wrong Credentials", "Cant Sign in wrong email/password!");
-                    window.location.reload();
+                    swal("Wrong Credentials", "Cant Sign in wrong email/password!","error").then(function() {
+                        window.location.reload();
+                    });
                 });
         }
 });
