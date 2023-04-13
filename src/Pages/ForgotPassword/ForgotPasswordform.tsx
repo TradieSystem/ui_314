@@ -7,7 +7,7 @@ import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {RoutesEnum} from "../../Routes";
-import { useAuthContext } from "../../Contexts/AuthContext";
+import {User} from "../../Types/User";
 
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
@@ -27,14 +27,12 @@ const questions = [
 
 
 const ForgotPasswordForm = () => {
-    const {user} = useAuthContext();
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [email, setEmail] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
-
 
 
     const PasswordSchema = Yup.object().shape({
@@ -58,7 +56,7 @@ const ForgotPasswordForm = () => {
         },
     });
 
-    const {errors, touched, values, isSubmitting,handleSubmit, getFieldProps} =
+    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
         formik;
     return (
         <FormikProvider value={formik}>
@@ -90,9 +88,9 @@ const ForgotPasswordForm = () => {
                             error={Boolean(touched.email && errors.email)}
                             helperText={touched.email && errors.email}
                         />
-                    if(user.email === email){
+                        if(user.email === email){
 
-                }
+                    }
                     </Box>
 
                     <Box

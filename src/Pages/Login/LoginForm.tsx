@@ -1,32 +1,19 @@
-import React, {useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Form, FormikProvider, useFormik } from "formik";
+import React, {useState} from "react";
+import {Link as RouterLink, useLocation, useNavigate} from "react-router-dom";
+import {Form, FormikProvider, useFormik} from "formik";
 import * as Yup from "yup";
 import Loading from "../../Effects/loading";
-import {
-    Alert,
-    Box,
-    Checkbox,
-    FormControlLabel,
-    IconButton,
-    InputAdornment,
-    Link,
-    Stack
-} from "@mui/material";
-import {Link as RouterLink} from "react-router-dom";
-import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
-import { animate } from "../../Effects/Animations";
+import {Box, Checkbox, FormControlLabel, IconButton, InputAdornment, Link, Stack} from "@mui/material";
+import {Icon} from "@iconify/react";
+import {motion} from "framer-motion";
+import {animate} from "../../Effects/Animations";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
-import {DEV_PATH, RoutesEnum} from "../../Routes";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../Routes";
 import axios from "axios";
-import { useAuthContext } from "../../Contexts/AuthContext";
-import { User } from "../../Types/User";
 import swal from 'sweetalert';
 import "./Swal.css";
-import { UserType } from "../../Types/Account";
-
+import {UserType} from "../../Types/Account";
 
 
 const LoginForm = () => {
@@ -35,11 +22,6 @@ const LoginForm = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [showPassword, setShowPassword] = useState(false);
-
-    const {setUser, setAuthToken,setRefreshToken}= useAuthContext();
-
-
-
 
     const LoginSchema = Yup.object().shape({
         email: Yup.string()
@@ -56,29 +38,26 @@ const LoginForm = () => {
         },
 
 
-    validationSchema: LoginSchema,
-        onSubmit: ({email,password}) => {
+        validationSchema: LoginSchema,
+        onSubmit: ({email, password}) => {
             axios.post((`${DEV_PATH}/user/login?email=${email}&password=${password}`), {
-                headers: {
-                    'content-type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                },
+                headers: CORS_HEADER,
             })
                 .then((response) => {
                     let userObject = response.data.user;
-                    if(response.data.user.professional === null && response.data.user.client !== null) {
+                    if (response.data.user.professional === null && response.data.user.client !== null) {
                         userObject.userType = UserType.CLIENT
                     }
-                    if(response.data.user.client === null && response.data.user.professional !== null) {
+                    if (response.data.user.client === null && response.data.user.professional !== null) {
                         userObject.userType = UserType.PROFESSIONAL
                     }
-                    if(response.data.user.client !== null && response.data.user.professional !== null) {
+                    if (response.data.user.client !== null && response.data.user.professional !== null) {
                         userObject.userType = UserType.PROFESSIONAL
                     }
                     if (response.data.user) {
                         try {
                             localStorage.setItem("user", JSON.stringify(userObject));
-                            localStorage.setItem("access_token", response.data.access_token );
+                            localStorage.setItem("access_token", response.data.access_token);
                             localStorage.setItem("refresh_token", response.data.refresh_token);
                             swal("Good job!", "You Have Signed In!", "success");
                             navigate("/" + RoutesEnum.HOME)
@@ -92,15 +71,15 @@ const LoginForm = () => {
                     }
                 })
                 .catch(() => {
-                    swal("Wrong Credentials", "Cant Sign in wrong email/password!","error").then(function() {
+                    swal("Wrong Credentials", "Cant Sign in wrong email/password!", "error").then(function () {
                         window.location.reload();
                     });
                 });
         }
-});
+    });
 
 
-    const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
+    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
         formik;
 
     return (
@@ -121,7 +100,7 @@ const LoginForm = () => {
                             gap: 3,
                         }}
                         component={motion.div}
-                        initial={{ opacity: 0, y: 40 }}
+                        initial={{opacity: 0, y: 40}}
                         animate={animate}
                     >
                         <ThemedTextField
@@ -153,9 +132,9 @@ const LoginForm = () => {
                                             onClick={() => setShowPassword((prev) => !prev)}
                                         >
                                             {showPassword ? (
-                                                <Icon icon="eva:eye-fill" />
+                                                <Icon icon="eva:eye-fill"/>
                                             ) : (
-                                                <Icon icon="eva:eye-off-fill" />
+                                                <Icon icon="eva:eye-off-fill"/>
                                             )}
                                         </IconButton>
                                     </InputAdornment>
@@ -166,20 +145,20 @@ const LoginForm = () => {
 
                     <Box
                         component={motion.div}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{opacity: 0, y: 20}}
                         animate={animate}
                     >
                         <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            sx={{ my: 2 }}
+                            sx={{my: 2}}
                         >
                             <FormControlLabel
-                                style={{color:"black"}}
+                                style={{color: "black"}}
                                 control={
                                     <Checkbox
-                                        inputProps={{ 'aria-label': 'controlled'}}
+                                        inputProps={{'aria-label': 'controlled'}}
                                         {...getFieldProps("remember")}
                                         checked={values.remember}
                                         color={"warning"}
@@ -189,7 +168,7 @@ const LoginForm = () => {
                                 label="Remember me"
                             />
 
-                          <Link
+                            <Link
                                 component={RouterLink}
                                 variant="subtitle2"
                                 to={`/${RoutesEnum.PASSWORD}`}
@@ -206,7 +185,7 @@ const LoginForm = () => {
                             type="submit"
                             loading={isSubmitting}
                         >
-                            {isSubmitting ? <Loading /> : "Login"}
+                            {isSubmitting ? <Loading/> : "Login"}
                         </ThemedButton>
                     </Box>
                 </Box>

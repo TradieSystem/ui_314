@@ -27,7 +27,7 @@ interface AuthContextState{
 }
 
 //TODO REMOVE THESE WHEN BACKEND WORKING -- pass whichever is needed into the initial state of user/setUser useState
-const dummyClientUser : User = {
+export const dummyClientUser : User = {
     user_id: 1,
     firstName: "Adam",
     lastName: "Adams",

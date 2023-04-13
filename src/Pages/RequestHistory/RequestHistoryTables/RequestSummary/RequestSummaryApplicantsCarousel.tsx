@@ -2,10 +2,10 @@ import React from 'react';
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
-import {useAuthContext} from "../../../../Contexts/AuthContext";
 import {Card, CardActions, CardContent, Typography} from "@mui/material";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import './Arrow.css';
+import {User} from "../../../../Types/User";
 
 export interface RequestSummaryApplicantsCarouselProps {
     /**
@@ -54,7 +54,7 @@ const settings = {
 };
 
 export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary}: RequestSummaryApplicantsCarouselProps) => {
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const userType = user?.userType;
 
 

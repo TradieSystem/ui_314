@@ -4,10 +4,13 @@ import {useNavigationContext} from "../../Contexts/NavigationContext";
 import styles from './SideNavigation.module.css';
 import {Drawer} from "@mui/material";
 import {ChevronLeft, ChevronRight} from "@mui/icons-material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import {useNavigate} from "react-router-dom";
+import {RoutesEnum} from "../../Routes";
 
 export const SideNavigation = () => {
     const {isExpanded, setIsExpanded, sideNavigationMenuItems} = useNavigationContext();
-
+    const navigate = useNavigate();
     return (
         <>
             <Drawer
@@ -38,6 +41,16 @@ export const SideNavigation = () => {
                         )
                     })
                 }
+                <SideNavigationMenuItem
+                    icon={<LogoutIcon />}
+                    text={"Logout"}
+                    onClick={() => {
+                        localStorage.setItem("user", "{}");
+                        localStorage.setItem("access_token", "{}");
+                        localStorage.setItem("refresh_token", "{}");
+                        navigate(`/${RoutesEnum.LOGIN}`);
+                    }}
+                />
             </Drawer>
         </>
     )

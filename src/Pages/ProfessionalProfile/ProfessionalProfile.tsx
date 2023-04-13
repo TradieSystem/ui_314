@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import {useAuthContext} from '../../Contexts/AuthContext';
 import {
     Avatar,
     Stack,
@@ -14,6 +13,7 @@ import {
     TableHead,
     TableRow,
 } from "@mui/material";
+import {User} from "../../Types/User";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -70,7 +70,7 @@ const rows = [
 //</IconButton>
 
 export const ProfessionalProfile = () => {
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const [value, setValue] = React.useState<number | null>(2);
 
     if (user) {
@@ -92,7 +92,7 @@ export const ProfessionalProfile = () => {
                     </div>
                     <Box style={{justifyContent: "center", display: "grid"}}>
                         <h1>{user.firstName} {user.lastName}</h1>
-                        <Rating name="read-only" value={value} readOnly sx={{marginLeft: 2}}/>
+                        <center><Rating name="read-only" value={value} readOnly/></center>
                     </Box>
                 </Box>
                 <Stack

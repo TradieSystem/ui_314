@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useAuthContext} from "../../../Contexts/AuthContext";
 import {ServiceRequest} from "../../../Types/ServiceRequest";
 import {generateNewDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
 import {SortDirection} from "../../../Utilities/TableUtils";
 import styles from './AvailableRequestsTable.module.css';
 import {
-    Backdrop, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+    Backdrop,
     Table,
     TableBody,
     TableCell,
@@ -20,6 +19,7 @@ import {format} from "date-fns";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {RequestSummary} from "../../RequestHistory/RequestHistoryTables/RequestSummary/RequestSummary";
 import {ApplicationConfirmationDialog} from "./ApplicationConfirmationDialog/ApplicationConfirmationDialog";
+import {User} from "../../../Types/User";
 
 
 enum AvailableRequestsTableColumn {
@@ -57,7 +57,7 @@ const getHeaderBorderRadius = (columnEnum: AvailableRequestsTableColumn): string
 }
 
 export const AvailableRequestsTable = () => {
-    const {user} = useAuthContext();
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
 
     //TODO set to actual data
     const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateNewDummyServiceRequests());
@@ -240,7 +240,8 @@ export const AvailableRequestsTable = () => {
                                     </ThemedButton>
                                 </TableCell>
                                 <TableCell>
-                                    <Tooltip title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>
+                                    <Tooltip
+                                        title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>
                                         <span>
                                              <ThemedButton
                                                  variantOverride={'text'}
