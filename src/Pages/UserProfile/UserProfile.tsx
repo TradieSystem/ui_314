@@ -1,17 +1,17 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom';
-import {useAuthContext} from "../../Contexts/AuthContext";
 import PageContainer from "../../Components/PageContainer/PageContainer";
 import {Box, Stack} from "@mui/material";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import {RoutesEnum} from "../../Routes";
 import  {ManageAccounts} from "@mui/icons-material";
 import  {AccountCircleSharp} from "@mui/icons-material";
+import {User} from "../../Types/User";
 
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     if (user) {
 
         return (

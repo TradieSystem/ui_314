@@ -18,8 +18,8 @@ import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import {animate} from "../../Effects/Animations";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
-import {useAuthContext} from "../../Contexts/AuthContext";
 import {RoutesEnum} from "../../Routes";
+import {User} from "../../Types/User";
 
 
 
@@ -49,7 +49,7 @@ function getStyles(membership: string, membershipType: string[], theme: Theme) {
 }
 
 const EditProfileForm = () => {
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";

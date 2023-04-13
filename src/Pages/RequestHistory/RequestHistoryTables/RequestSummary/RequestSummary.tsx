@@ -8,8 +8,8 @@ import {RequestSummaryEdit} from "./RequestSummaryEdit/RequestSummaryEdit";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {RequestSummaryApplicantsCarousel} from "./RequestSummaryApplicantsCarousel";
-import {useAuthContext} from "../../../../Contexts/AuthContext";
 import {UserType} from "../../../../Types/Account";
+import {User} from "../../../../Types/User";
 
 export interface RequestSummaryProps {
     /**
@@ -25,7 +25,7 @@ export interface RequestSummaryProps {
 
 export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) => {
     const [showEdit, setShowEdit] = useState(false);
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const userType = user?.userType;
 
     const handleEdit = () => {

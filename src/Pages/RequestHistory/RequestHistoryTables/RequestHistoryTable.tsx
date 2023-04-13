@@ -15,11 +15,11 @@ import {format} from 'date-fns'
 import {StatusIcon} from "../../../Components/StatusIcon/StatusIcon";
 import {ServiceRequest, ServiceRequestStatus} from "../../../Types/ServiceRequest";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
-import {useAuthContext} from "../../../Contexts/AuthContext";
 import {UserType} from "../../../Types/Account";
 import {generateDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
 import {RequestSummary} from "./RequestSummary/RequestSummary";
 import {SortDirection} from "../../../Utilities/TableUtils";
+import {User} from "../../../Types/User";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -71,7 +71,7 @@ const getHeaderBorderRadius = (columnEnum: ClientRequestHistoryColumn): string =
  * Table representing the client request history of their {@link ServiceRequest}s.
  */
 export const RequestHistoryTable = (): JSX.Element => {
-    const {user} = useAuthContext();
+    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const userType = user?.userType;
     const headersToUse = userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
 
