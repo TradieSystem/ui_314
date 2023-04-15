@@ -14,8 +14,8 @@ const NavigationContext = createContext({} as NavigationContextState);
 
 interface NavigationContextState {
     //Current state of side navigation bar
-
     isExpanded: boolean;
+    //Callback to set the state of the side navigation bar
     setIsExpanded: (isExpanded: boolean) => void;
     //Menu items in the side navigation
     sideNavigationMenuItems: SideNavigationMenuItemProps[];
@@ -45,16 +45,10 @@ export const NavigationContextContextProvider = ({children}: any) => {
             text: 'Account Profile',
             route: RoutesEnum.USER_MANAGEMENT
         },
-        //TODO we want this at the bottom of the side nav bar, not rendered as part of the top navigation group
-        // {
-        //     icon: <LogoutIcon />,
-        //     text: 'Logout',
-        //     route: RoutesEnum.LOGIN,
-        // },
     ];
 
     //If the usertype is a client, render the client icons too
-    if (user?.userType === UserType.CLIENT) {
+    if (user.userType === UserType.CLIENT) {
         const createRequest: SideNavigationMenuItemProps = {
             icon: <AddBox/>,
             text: 'Create Requests',
@@ -63,7 +57,7 @@ export const NavigationContextContextProvider = ({children}: any) => {
         sideNavigationMenuItems.splice(1, 0, createRequest);
     }
 
-    if (user?.userType === UserType.PROFESSIONAL) {
+    if (user.userType === UserType.PROFESSIONAL) {
         const userSpecificNavigation: SideNavigationMenuItemProps = {
             icon: <MenuIcon/>,
             text: 'Available Requests',
@@ -71,18 +65,14 @@ export const NavigationContextContextProvider = ({children}: any) => {
         }
         sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
     }
-    if (user?.userType === UserType.PROFESSIONAL) {
+    if (user.userType === UserType.PROFESSIONAL) {
         const userSpecificNavigation: SideNavigationMenuItemProps = {
-
             icon: <Person/>,
             text: 'Profile Page',
             route: RoutesEnum.Pro_Profile
-
-
         }
         sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
     }
-
 
     const value = {
         isExpanded,

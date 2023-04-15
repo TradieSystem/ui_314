@@ -1,7 +1,7 @@
 import React from 'react';
 import {User} from "../Types/User";
 import {MembershipOption, UserType} from "../Types/Account";
-import {ServiceRequest, ServiceRequestStatus} from "../Types/ServiceRequest";
+import {ServiceRequest, ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
 import {ServiceType} from "../Types/ServiceType";
 import {dummyProfessionalUser} from "../Contexts/AuthContext";
 
@@ -43,117 +43,105 @@ export function generateClients() : User[] {
  */
 const dummyServiceRequests : ServiceRequest[] = [
     {
-        applicationNumber: 2,
-        applicationDate: new Date("01/02/2022"),
+        requestID: 2,
+        requestDate: new Date("01/02/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
-        status: ServiceRequestStatus.COMPLETE,
-        cost: 101.55,
-        suburb: "Sydney",
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.COMPLETE,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2000",
         description: "I want a new fence please"
     },
     {
-        applicationNumber: 1,
-        applicationDate: new Date("01/01/2021"),
+        requestID: 1,
+        requestDate: new Date("01/01/2021"),
         serviceType: ServiceType.PLUMBING,
-        status: ServiceRequestStatus.ARCHIVED,
+        requestStatus: ServiceRequestStatus.ARCHIVED,
         postcode: "2111",
-        client: generateClients().at(0) as User,
-        suburb: "Liverpool",
-        cost: 250.95
+        client: (generateClients().at(0) as User).user_id,
     },
     {
-        applicationNumber: 3,
-        applicationDate: new Date("03/03/2023"),
+        requestID: 3,
+        requestDate: new Date("03/03/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
-        status: ServiceRequestStatus.PENDING_COMPLETION,
+        requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
         postcode: "2222",
-        client: generateClients().at(0) as User,
-        suburb: "Moorebank",
-        cost: 143.15
+        client: (generateClients().at(0) as User).user_id,
     },
     {
-        applicationNumber: 4,
-        applicationDate: new Date("03/15/2023"),
+        requestID: 4,
+        requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
-        status: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2333",
-        suburb: "Liverpool",
-        cost: 32.50
     },
     {
-        applicationNumber: 5,
-        applicationDate: new Date("03/07/2023"),
+        requestID: 5,
+        requestDate: new Date("03/07/2023"),
         serviceType: ServiceType.TREE_REMOVAL,
-        status: ServiceRequestStatus.NEW,
+        requestStatus: ServiceRequestStatus.NEW,
         postcode: "2444",
-        client: generateClients().at(0) as User,
-        suburb: "Sydney",
-        cost: 0,
+        client: (generateClients().at(0) as User).user_id,
         description: 'The tree is in the way'
     },
     {
-        applicationNumber: 6,
-        applicationDate: new Date("03/10/2023"),
+        requestID: 6,
+        requestDate: new Date("03/10/2023"),
         serviceType: ServiceType.PLUMBING,
-        status: ServiceRequestStatus.NEW,
-        client: generateClients().at(0) as User,
-        applicantIds: [dummyProfessionalUser.user_id],       //Pretending this has already had 1 applicant - this dummyProfessionalUser
+        requestStatus: ServiceRequestStatus.NEW,
+        client: (generateClients().at(0) as User).user_id,
+        applications: [
+            {
+                requestID: 1,
+                applicationID: 1,
+                offerDate: new Date("05/05/2023"),
+                userID: dummyProfessionalUser.user_id,
+                cost: 50.50,
+                applicationStatus: ServiceRequestApplicationStatus.PENDING
+            }
+        ],
         postcode: "2555",
-        suburb: "Moorebank",
-        cost: 0
+
     },
     {
-        applicationNumber: 7,
-        applicationDate: new Date("03/11/2022"),
+        requestID: 7,
+        requestDate: new Date("03/11/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
-        status: ServiceRequestStatus.ARCHIVED,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.ARCHIVED,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2666",
-        suburb: "Wollongong",
-        cost: 22.24
     },
     {
-        applicationNumber: 10,
-        applicationDate: new Date("03/07/2023"),
+        requestID: 10,
+        requestDate: new Date("03/07/2023"),
         serviceType: ServiceType.TREE_REMOVAL,
-        status: ServiceRequestStatus.COMPLETE,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.COMPLETE,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2777",
-        suburb: "Liverpool",
-        cost: 101.23
     },
     {
-        applicationNumber: 8,
-        applicationDate: new Date("03/12/2023"),
+        requestID: 8,
+        requestDate: new Date("03/12/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
-        status: ServiceRequestStatus.PENDING_COMPLETION,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2888",
-        suburb: "Wollongong",
-        cost: 114.34
     },
     {
-        applicationNumber: 9,
-        applicationDate: new Date("03/15/2023"),
+        requestID: 9,
+        requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
-        status: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2999",
-        suburb: "Liverpool",
-        cost: 87.23
     },
     {
-        applicationNumber: 11,
-        applicationDate: new Date("12/15/2020"),
+        requestID: 11,
+        requestDate: new Date("12/15/2020"),
         serviceType: ServiceType.OVEN_REPAIRS,
-        status: ServiceRequestStatus.ARCHIVED,
-        client: generateClients().at(0) as User,
+        requestStatus: ServiceRequestStatus.ARCHIVED,
+        client: (generateClients().at(0) as User).user_id,
         postcode: "2001",
-        suburb: "Sydney",
-        cost: 51.40
     },
 ]
 
@@ -192,9 +180,9 @@ export function generateProfessionals() : User[] {
  * NOTE: Only should be required for the mock data - the backend should be sending us the actual list we want from the endpoint
  */
 export function generateDummyServiceRequests(showNew: boolean) {
-    return !showNew ? dummyServiceRequests.filter((request) => request.status !== ServiceRequestStatus.NEW) : dummyServiceRequests;
+    return !showNew ? dummyServiceRequests.filter((request) => request.requestStatus !== ServiceRequestStatus.NEW) : dummyServiceRequests;
 }
 
 export function generateNewDummyServiceRequests() {
-    return dummyServiceRequests.filter((request) => request.status === ServiceRequestStatus.NEW);
+    return dummyServiceRequests.filter((request) => request.requestStatus === ServiceRequestStatus.NEW);
 }

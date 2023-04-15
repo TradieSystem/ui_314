@@ -43,7 +43,7 @@ export const ApplicationConfirmationDialog = ({
                             <Typography fontWeight={'bold'}>Application Number:</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography>{`${request.applicationNumber}`}</Typography>
+                            <Typography>{`${request.requestID}`}</Typography>
                         </Grid>
                     </Grid>
                     <Grid container spacing={7} marginBottom={2}>
@@ -51,7 +51,7 @@ export const ApplicationConfirmationDialog = ({
                             <Typography fontWeight={'bold'}>Application Date:</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography>{`${format(request.applicationDate, 'dd/MM/yyyy')}`}</Typography>
+                            <Typography>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
                         </Grid>
                     </Grid>
                     <Grid container spacing={11} marginBottom={2}>

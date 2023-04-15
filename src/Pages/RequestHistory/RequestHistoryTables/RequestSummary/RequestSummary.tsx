@@ -54,11 +54,11 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
         >
             <div className={styles['title']}>
                 <Typography variant={'h3'}>
-                    {request.status === ServiceRequestStatus.NEW && `New Service Request`}
-                    {request.status === ServiceRequestStatus.PENDING_ACCEPTANCE && `Request Pending Acceptance`}
-                    {request.status === ServiceRequestStatus.COMPLETE && `Completed Request`}
-                    {request.status === ServiceRequestStatus.PENDING_COMPLETION && `Request Pending Completion`}
-                    {request.status === ServiceRequestStatus.ARCHIVED && `Finalised Request`}
+                    {request.requestStatus === ServiceRequestStatus.NEW && `New Service Request`}
+                    {request.requestStatus === ServiceRequestStatus.PENDING_ACCEPTANCE && `Request Pending Acceptance`}
+                    {request.requestStatus === ServiceRequestStatus.COMPLETE && `Completed Request`}
+                    {request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION && `Request Pending Completion`}
+                    {request.requestStatus === ServiceRequestStatus.ARCHIVED && `Finalised Request`}
                 </Typography>
             </div>
             <div className={styles['request-overview']}>
@@ -74,7 +74,10 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 }
             </div>
 
-            {request.applicantIds && request.applicantIds?.length > 0 && <RequestSummaryApplicantsCarousel request={request} setShowRequestSummary={setShowRequestSummary}/>}
+            {
+                request.applications && request.applications?.length > 0 &&
+                <RequestSummaryApplicantsCarousel request={request} setShowRequestSummary={setShowRequestSummary}/>
+            }
 
             <div className={styles['control-buttons']}>
                 {!showEdit &&
@@ -89,7 +92,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     </ThemedButton>
                 }
                 {
-                    ((request.status === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT) && (!request.applicantIds || request.applicantIds?.length === 0)) &&
+                    ((request.requestStatus === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) && (!request.applications || request.applications?.length === 0) &&
                     <ThemedButton onClick={() => setShowEdit(!showEdit)}>
                         {!showEdit ? `Edit` : `Confirm`}
                     </ThemedButton>

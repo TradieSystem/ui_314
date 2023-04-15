@@ -1,4 +1,4 @@
-import {MembershipOption, SecurityQuestionResponse, SecurityQuestionSet, UserType} from "./Account";
+import {MembershipOption, SecurityQuestionSet, UserType} from "./Account";
 import {ServiceType} from "./ServiceType";
 import {CCDetails} from "./Payment";
 
@@ -12,7 +12,7 @@ export interface User {
     email: string;
     password: string;
     mobile: string;
-    address: Address;
+    address: Partial<Address>;
     /**
      * Client vs. Professional
      */
@@ -28,11 +28,11 @@ export interface User {
     /**
      * (Optional) CC details for system to charge the {@link User} -- set to optional as we don't receive this from backend on logging in
      */
-    CCOut?: CCDetails;
+    CCOut?: Partial<CCDetails>;
     /**
      * (Optional) Security questions the {@link User} sets on {@link SignUp} -- set to optional as we don't receive this from backend on logging in
      */
-    securityQuestions?: SecurityQuestionResponse;
+    securityQuestions?: SecurityQuestionSet[];
 }
 
 export interface ClientUserData {
@@ -40,8 +40,8 @@ export interface ClientUserData {
 }
 
 export interface ProfessionalUserData {
-    services: ServiceType[];
-    CCIn: CCDetails;
+    services?: ServiceType[];
+    CCIn: Partial<CCDetails>;
 }
 
 export interface Address {

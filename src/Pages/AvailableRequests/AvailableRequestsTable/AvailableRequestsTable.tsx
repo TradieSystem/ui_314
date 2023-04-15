@@ -90,16 +90,16 @@ export const AvailableRequestsTable = () => {
         switch (AvailableRequestsTableColumn[sortField]) {
             case AvailableRequestsTableColumn.ApplicationNumber:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber > b.applicationNumber ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID > b.requestID ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationNumber < b.applicationNumber ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID < b.requestID ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.ApplicationDate:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate > b.applicationDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate > b.requestDate ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.applicationDate < b.applicationDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate < b.requestDate ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.ServiceType:
@@ -111,16 +111,16 @@ export const AvailableRequestsTable = () => {
                 break;
             case AvailableRequestsTableColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
+                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
+                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.Location:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb > b.suburb ? 1 : -1);
+                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb > b.suburb ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb < b.suburb ? 1 : -1);
+                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb < b.suburb ? 1 : -1);
                 }
                 break;
             default:
@@ -201,7 +201,7 @@ export const AvailableRequestsTable = () => {
                     {serviceRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) => {
                         return (
                             <TableRow
-                                key={request.applicationNumber}
+                                key={request.requestID}
                                 sx={{
                                     backgroundColor: "white",
                                     '&:last-child td:first-of-type': {
@@ -213,20 +213,19 @@ export const AvailableRequestsTable = () => {
                                 }}
                             >
                                 <TableCell>
-                                    {request.applicationNumber}
+                                    {request.requestID}
                                 </TableCell>
                                 <TableCell>
-                                    {format(request.applicationDate, "dd/MM/yyyy")}
+                                    {format(request.requestDate, "dd/MM/yyyy")}
                                 </TableCell>
-                                <TableCell sx={{display: "grid"}}>
-                                    <>{request.suburb}</>
+                                <TableCell>
                                     <><b>{request.postcode}</b></>
                                 </TableCell>
                                 <TableCell>
                                     {request.serviceType}
                                 </TableCell>
                                 <TableCell>
-                                    {`${request.client.firstName} ${request.client.lastName}`}
+                                    <i>Hit endpoint to get user here</i>
                                 </TableCell>
                                 <TableCell>
                                     <ThemedButton
@@ -240,22 +239,22 @@ export const AvailableRequestsTable = () => {
                                     </ThemedButton>
                                 </TableCell>
                                 <TableCell>
-                                    <Tooltip
-                                        title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>
-                                        <span>
-                                             <ThemedButton
-                                                 variantOverride={'text'}
-                                                 disabled={user?.user_id ? request.applicantIds?.includes(user?.user_id) : false}
-                                                 onClick={() => {
-                                                     setRequestToView(request)
-                                                     setShowConfirmDialog(true);
+                                    {/*<Tooltip*/}
+                                    {/*    title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>*/}
+                                    {/*    <span>*/}
+                                    {/*         <ThemedButton*/}
+                                    {/*             variantOverride={'text'}*/}
+                                    {/*             disabled={user?.user_id ? request.applicantIds?.includes(user?.user_id) : false}*/}
+                                    {/*             onClick={() => {*/}
+                                    {/*                 setRequestToView(request)*/}
+                                    {/*                 setShowConfirmDialog(true);*/}
 
-                                                 }}
-                                             >
-                                                 Apply
-                                            </ThemedButton>
-                                        </span>
-                                    </Tooltip>
+                                    {/*             }}*/}
+                                    {/*         >*/}
+                                    {/*             Apply*/}
+                                    {/*        </ThemedButton>*/}
+                                    {/*    </span>*/}
+                                    {/*</Tooltip>*/}
                                 </TableCell>
                                 {showConfirmDialog && requestToView &&
                                     <ApplicationConfirmationDialog
