@@ -169,7 +169,7 @@ const LoginForm = () => {
                             <Link
                                 component={RouterLink}
                                 variant="subtitle2"
-                                to={`/${RoutesEnum.PASSWORD}`}
+                                to={`/${RoutesEnum.Security_question}`}
                                 underline="hover"
                             >
                                 Forgot password?
