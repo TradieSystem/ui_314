@@ -26,7 +26,6 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
         )
     }
 
-
     useEffect(() => {
         const enteredDate = new Date(`${(values as SignUpFields).outgoingCCExpiryMonth}/28/${(values as SignUpFields).outgoingCCExpiryYear}`);
         const currentDate = new Date();
@@ -155,7 +154,6 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                             {...getFieldProps("outgoingCCExpiryYear")}
                                         />
                                     </Box>
-
                                 </Box>
                             </Box>
                             <Box

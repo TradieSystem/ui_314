@@ -25,12 +25,6 @@ export enum SecurityQuestion {
     NICKNAME = 'What was your childhood nickname?'
 }
 
-export interface SecurityQuestionResponse {
-    securityQuestion1: SecurityQuestionSet;
-    securityQuestion2: SecurityQuestionSet;
-    securityQuestion3: SecurityQuestionSet;
-}
-
 export interface SecurityQuestionSet {
     securityQuestion: SecurityQuestion;
     answer: string;

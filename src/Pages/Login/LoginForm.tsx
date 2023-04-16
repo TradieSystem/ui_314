@@ -14,13 +14,11 @@ import axios from "axios";
 import swal from 'sweetalert';
 import "./Swal.css";
 import {UserType} from "../../Types/Account";
-
+const md5Hash = require("md5-hash");
 
 const LoginForm = () => {
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
@@ -40,8 +38,8 @@ const LoginForm = () => {
 
         validationSchema: LoginSchema,
         onSubmit: ({email, password}) => {
-            axios.post((`${DEV_PATH}/user/login?email=${email}&password=${password}`), {
-                headers: CORS_HEADER,
+            axios.post((`${DEV_PATH}/user/login?email=${email}&password=${md5Hash.default(password)}`), undefined, {
+                headers: CORS_HEADER
             })
                 .then((response) => {
                     let userObject = response.data.user;
@@ -57,21 +55,21 @@ const LoginForm = () => {
                     if (response.data.user) {
                         try {
                             localStorage.setItem("user", JSON.stringify(userObject));
-                            localStorage.setItem("access_token", response.data.access_token);
-                            localStorage.setItem("refresh_token", response.data.refresh_token);
-                            swal("Good job!", "You Have Signed In!", "success");
+                            localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
+                            localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
+                            swal("Welcome", "Successfully signed in", "success");
                             navigate("/" + RoutesEnum.HOME)
 
                         } catch (error) {
                             //This error will appear if we receive a 200, with an object that isn't a user
-                            swal("Wrong Credentials", "Cant Sign in wrong email/password!", "error")
+                            swal("Wrong Credentials", "Incorrect email/password", "error")
                         }
                     } else {
                         throw new Error();
                     }
                 })
                 .catch(() => {
-                    swal("Wrong Credentials", "Cant Sign in wrong email/password!", "error").then(function () {
+                    swal("Wrong Credentials", "Incorrect email/password", "error").then(function () {
                         window.location.reload();
                     });
                 });

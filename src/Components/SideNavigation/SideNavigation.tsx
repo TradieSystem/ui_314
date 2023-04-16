@@ -45,9 +45,9 @@ export const SideNavigation = () => {
                     icon={<LogoutIcon />}
                     text={"Logout"}
                     onClick={() => {
-                        localStorage.setItem("user", "{}");
-                        localStorage.setItem("access_token", "{}");
-                        localStorage.setItem("refresh_token", "{}");
+                        localStorage.setItem("user", "");
+                        localStorage.setItem("access_token", "");
+                        localStorage.setItem("refresh_token", "");
                         navigate(`/${RoutesEnum.LOGIN}`);
                     }}
                 />

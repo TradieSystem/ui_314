@@ -3,14 +3,14 @@ import './App.css';
 import {NavigationContextContextProvider} from "./Contexts/NavigationContext";
 import {HomePage} from "./Pages/HomePage";
 import Login from "./Pages/Login/Login";
-import UserProfileDisplay from "./Pages/UserProfile/UserProfileDisplay";
+import UserProfileDisplay from "./Pages/UserProfile/ViewProfile/UserProfileDisplay";
 import CreateRequest from "./Pages/CreateRequest/CreateRequest"
 import Password from "./Pages/ForgotPassword/Password";
 import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
 import SignUp from "./Pages/SignUp/SignUp";
-import EditProfile from './Pages/UserProfile/EditProfile';
+import EditProfile from './Pages/UserProfile/EditProfile/EditProfile';
 import {RequestHistory} from "./Pages/RequestHistory/RequestHistory";
 import ProfessionalProfileDisplay from "./Pages/ProfessionalProfile/ProfessionalProfileDisplay";
 import {AvailableRequests} from "./Pages/AvailableRequests/AvailableRequests";

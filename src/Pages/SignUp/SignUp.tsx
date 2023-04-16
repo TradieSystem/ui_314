@@ -13,17 +13,18 @@ import {User} from "../../Types/User";
 import {CCBillingType} from "../../Types/Payment";
 import {JSEncrypt} from "jsencrypt";
 import axios from "axios";
-import {CORS_HEADER, DEV_PATH} from "../../Routes";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../Routes";
 import {Alert, Typography} from "@mui/material";
 import {InfoOutlined} from "@mui/icons-material";
-import SignUpConfirmation from "./SignUpConfirmation";
+import swal from "sweetalert";
+import {useNavigate} from "react-router-dom";
 
 const md5Hash = require("md5-hash");
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-const numericRegExp = /^\d+$/;
-const alphabeticRegExp = /^[A-Za-z\s]*$/;
-const monthRegExp = /0[1-9]|1[012]/i;
+export const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+export const numericRegExp = /^\d+$/;
+export const alphabeticRegExp = /^[A-Za-z\s]*$/;
+export const monthRegExp = /0[1-9]|1[012]/i;
 
 const SignUpSchema = Yup.object().shape({
     firstname: Yup.string().required("First name is required"),
@@ -133,6 +134,8 @@ export const SignUp = () => {
     const [alert, setAlert] = useState<JSX.Element>(<></>);
     const [createdUser, setCreatedUser] = useState<User>();
 
+    const navigate = useNavigate();
+
     const initialValues: SignUpFields = {
         firstname: "",
         lastname: "",
@@ -191,20 +194,20 @@ export const SignUp = () => {
                 //CCV: encrypt.encrypt(fields.outgoingCCCVV).toString(),
                 billingType: CCBillingType.OUT
             },
-            securityQuestions: {
-                securityQuestion1: {
+            securityQuestions: [
+                {
                     securityQuestion: fields.securityQuestion1 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer1
                 },
-                securityQuestion2: {
+                {
                     securityQuestion: fields.securityQuestion2 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer2
                 },
-                securityQuestion3: {
+                {
                     securityQuestion: fields.securityQuestion3 || ("" as SecurityQuestion),
                     answer: fields.securityAnswer3
                 }
-            }
+            ]
         }
 
         if (fields.userType === UserType.PROFESSIONAL) {
@@ -256,6 +259,7 @@ export const SignUp = () => {
             .post(`${DEV_PATH}/user/userCreate`, userObject, {
                 headers: CORS_HEADER,
             })
+            //Sign up
             .then((response) => {
                 if (response.status === 200) {
                     try {
@@ -275,10 +279,49 @@ export const SignUp = () => {
                                 There was an issue creating the account with the provided details.
                             </Alert>
                         );
+                        throw new Error();
                     }
                 } else {
                     throw new Error();
                 }
+            })
+            .then((response) => {
+                axios.post((`${DEV_PATH}/user/login?email=${fields.email}&password=${md5Hash.default(fields.password)}`), undefined, {
+                    headers: CORS_HEADER,
+                })
+                    .then((response) => {
+                        let userObject = response.data.user;
+                        if (response.data.user.professional === null && response.data.user.client !== null) {
+                            userObject.userType = UserType.CLIENT
+                        }
+                        if (response.data.user.client === null && response.data.user.professional !== null) {
+                            userObject.userType = UserType.PROFESSIONAL
+                        }
+                        if (response.data.user.client !== null && response.data.user.professional !== null) {
+                            userObject.userType = UserType.PROFESSIONAL
+                        }
+                        if (response.data.user) {
+                            try {
+                                localStorage.setItem("user", JSON.stringify(userObject));
+                                localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
+                                localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
+                                swal("Welcome", "Your account has successfully been created.", "success")
+                                    .then(() => navigate(`/${RoutesEnum.HOME}`));
+
+                            } catch (error) {
+                                swal("Error", "An issue occurred when attempting to login to your account.", "error")
+                                    .then(() => navigate(`/${RoutesEnum.LOGIN}`))
+                            }
+                        } else {
+                            throw new Error();
+                        }
+                    })
+                    .catch(() => {
+                        swal("Error", "An issue occurred when attempting to login to your account.", "error")
+                            .then(() => {
+                                navigate("/" + RoutesEnum.LOGIN)
+                            });
+                    });
             })
             .catch(() => {
                 //This error will appear if we receive a response that is not a 200 status
@@ -292,8 +335,8 @@ export const SignUp = () => {
 
     return (
         <>
-            {createdUser && <SignUpConfirmation createdUser={createdUser}/>}
-            {!createdUser &&
+            {
+                !createdUser &&
                 <Formik
                     initialValues={initialValues}
                     validationSchema={SignUpSchema}
@@ -318,7 +361,8 @@ export const SignUp = () => {
                                 <PaymentDetailsTradie setCurrentStep={setCurrentStep} handleSubmit={handleSubmit}/>}
                         </Form>
                     </>
-                </Formik>}
+                </Formik>
+            }
         </>
     );
 };

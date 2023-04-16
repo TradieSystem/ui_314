@@ -78,7 +78,7 @@ export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary
                             Rating: {lists.Rating}
                         </Typography>
                         <Typography variant="h5" component="h3">
-                            Job Number: {`${request.status}`}
+                            Job Number: {`${request.requestStatus}`}
                         </Typography>
                         <Typography variant="h5" component="h4">
                             Job Name: {`${request.serviceType}`}
@@ -101,7 +101,7 @@ export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary
     return (
         <div>
             {
-                ((request.status === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) &&
+                ((request.requestStatus === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) &&
                 <>
                     <div style={{width: "1000px", padding: "30px"}}>
                         <Slider{...settings}>{listItems}</Slider>
