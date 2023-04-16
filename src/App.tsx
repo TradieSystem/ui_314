@@ -5,7 +5,6 @@ import {HomePage} from "./Pages/HomePage";
 import Login from "./Pages/Login/Login";
 import UserProfileDisplay from "./Pages/UserProfile/ViewProfile/UserProfileDisplay";
 import CreateRequest from "./Pages/CreateRequest/CreateRequest"
-import Password from "./Pages/ForgotPassword/Password";
 import {RoutesEnum} from "./Routes";
 import {HashRouter, Route, Routes} from "react-router-dom";
 import {AuthContextContextProvider} from "./Contexts/AuthContext";
@@ -29,7 +28,6 @@ function App() {
                         <Route path={RoutesEnum.REQUEST_HISTORY} element={<RequestHistory />}/>
                         <Route path={RoutesEnum.CREATE_REQUEST} element={<CreateRequest />} />
                         <Route path={RoutesEnum.AVAILABLE_REQUESTS} element={<AvailableRequests />} />
-                        <Route path={RoutesEnum.PASSWORD} element={<Password/>}/>
                         <Route path={RoutesEnum.Security_question} element={<ForgotPassword/>}/>
                         <Route path={RoutesEnum.EDIT_PROFILE} element={<EditProfile/>}/>
                         <Route path={RoutesEnum.Pro_Profile} element={<ProfessionalProfileDisplay />}/>
