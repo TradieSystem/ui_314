@@ -10,7 +10,7 @@ export enum RoutesEnum {
     USER_MANAGEMENT = "user_management",
     AVAILABLE_REQUESTS = "available_requests",
     EDIT_PROFILE = "edit_profile",
-    PASSWORD = 'password',
+    Security_question = 'question',
     Pro_Profile = "Professional"
 
 }

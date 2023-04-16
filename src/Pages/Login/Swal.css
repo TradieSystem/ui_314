@@ -30,4 +30,22 @@
     border : 2px solid #DB5B13;
     borderRadius : 40px;
 }
-
+.swal-button{
+    background: rgba(219, 91, 19, 0.3);
+    borderColor: #DB5B13;
+    borderWidth: 2px;
+    color: black;
+}swal-button:hover {
+     background: orange;
+ }
+.swal-button-container{
+    background: rgba(219,91,19,0.3);
+    borderColor: #DB5B13;
+    borderWidth: 2px;
+    color: black;
+}
+.swal-button.swal-button--confirm:hover{
+    background: rgba(219,91,19,0.3);
+    borderColor: #DB5B13;
+    borderWidth: 2px;
+}

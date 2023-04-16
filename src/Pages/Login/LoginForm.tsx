@@ -57,7 +57,7 @@ const LoginForm = () => {
                             localStorage.setItem("user", JSON.stringify(userObject));
                             localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
                             localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
-                            swal("Welcome", "Successfully signed in", "success");
+                            swal("Good job!", "You Have Signed In!", "success");
                             navigate("/" + RoutesEnum.HOME)
 
                         } catch (error) {
@@ -169,7 +169,7 @@ const LoginForm = () => {
                             <Link
                                 component={RouterLink}
                                 variant="subtitle2"
-                                to={`/${RoutesEnum.PASSWORD}`}
+                                to={`/${RoutesEnum.Security_question}`}
                                 underline="hover"
                             >
                                 Forgot password?

@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Form, FormikProvider, useFormik} from "formik";
-import * as Yup from "yup";
-import {Box, Stack} from "@mui/material";
+import {Box, createTheme, IconButton, InputAdornment, Stack} from "@mui/material";
 import {motion} from "framer-motion";
+import {Icon} from "@iconify/react";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
-import {RoutesEnum} from "../../Routes";
+import {DEV_PATH, RoutesEnum} from "../../Routes";
+import axios from "axios";
+import swal from 'sweetalert';
 import {User} from "../../Types/User";
-
+import { render } from "react-dom";
+import * as Yup from "yup";
+import {SecurityQuestionSet} from "../../Types/Account"
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
     opacity: 1,
@@ -19,109 +23,258 @@ const animate = {
         delay: 0.16,
     },
 };
-const questions = [
-    "What is your mother's maiden name?",
-    "What is your favorite color?",
-    "What was the name of your first pet?",
-];
+
+
+
+
 
 
 const ForgotPasswordForm = () => {
-    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [email, setEmail] = useState('');
+    const [securityQuestions, setSecurityQuestions] = useState<SecurityQuestionSet[]>([]);
+    const [isSecurityQuestionsValid, setIsSecurityQuestionsValid] = useState(false);
+    const [userId, setUserId] = useState<number>();
+    const [password, setPassword] = useState('');
+    const md5Hash = require("md5-hash");
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const PasswordSchema = Yup.object().shape({
-        email: Yup.string()
-            .label('Email')
-            .email("Provide a valid email address")
-            .required("Email is required"),
-    });
 
-    const formik = useFormik({
-        initialValues: {
-            email: " "
+    const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setPassword(event.target.value);
+    }
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const { value } = event.target;
+        setSecurityQuestions((prevQuestions) =>
+            prevQuestions.map((question, i) => (i === index ? { ...question, answer: value } : question))
+        );
+    };
 
-        },
-        validationSchema: PasswordSchema,
-        onSubmit: (values, actions) => {
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(event.target.value);
+    };
 
-            setTimeout(() => {
-                navigate(from, {replace: true});
-            }, 2000);
-        },
-    });
+    const data = securityQuestions.map((question) => ({
+        securityQuestion: question.securityQuestion,
+        answer: question.answer,
+    }));
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const userAnswers = securityQuestions
+            .map((question) => ({securityQuestion: question.securityQuestion, answer: question.answer}))
+            .filter((answer) => answer.answer !== null) as { securityQuestion: string, answer: string }[];
 
-    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
-        formik;
-    return (
-        <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Box
-                    component={motion.div}
-                    animate={{
-                        transition: {
-                            staggerChildren: 0.55,
-                        },
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 3,
-                        }}
-                        component={motion.div}
-                        initial={{opacity: 0, y: 40}}
-                        animate={animate}
-                    >
-                        <ThemedTextField
-                            fullWidth
-                            autoComplete="username"
-                            type="email"
-                            label="Email Address"
-                            {...getFieldProps("email")}
-                            error={Boolean(touched.email && errors.email)}
-                            helperText={touched.email && errors.email}
-                        />
-                        if(user.email === email){
+    }
 
+
+    const PasswordReset= () => {
+
+        const UserObject = {
+            user_id: userId ,
+            password: md5Hash.default(password)
+        };
+        axios
+            .put(`${DEV_PATH}/user/resetPassword`, UserObject, {
+                headers: {
+                    "content-type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+            .then((response) => {
+                if(response.data) {
+                    swal("Good job!", "You Have Changed Your Password!", "success");
+                    navigate("/" + RoutesEnum.LOGIN);
+                }else{
+                    swal("Error", "Try Again", "error");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    const handleQuestions = () => {
+
+            const requestData = {
+                user_id: userId ,
+                questions: data,
+            };
+            axios
+                .post(`${DEV_PATH}/user/resetPassword`, requestData, {
+                    headers: {
+                        "content-type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                    },
+                })
+                .then((response) => {
+                    if(response.data.matched == true) {
+                        setIsSecurityQuestionsValid(true);
+
+                     } else {
+                        swal("Wrong Security Questions", "Try Again", "error");
                     }
-                    </Box>
+                })
+                .catch((error) => {
+                    swal("Wrong Security Questions", "Try Again", "error");
+                });
+        }
 
-                    <Box
-                        component={motion.div}
-                        initial={{opacity: 0, y: 20}}
-                        animate={animate}
-                    >
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            sx={{my: 2}}
-                        >
-                        </Stack>
+    const handleGetQuestions = () => {
+        axios
+            .get(`${DEV_PATH}/user/resetPassword?email=${email}`, {
+                headers: {
+                    'content-type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                },
+            })
+            .then((response) => {
+                if (response.data && response.data.questions && response.data.questions.length > 0) {
+                    const questions: SecurityQuestionSet[] = response.data.questions;
+                    if (questions) {
+                        setSecurityQuestions(questions);
 
-                        <ThemedButton
-                            loadingButton
-                            fullWidth
-                            size="large"
-                            type="submit"
-                            variant="contained"
-                            onClick={() => navigate(`/${RoutesEnum.PASSWORD}`)}
-                        >
-                        </ThemedButton>
+                    } else {
+                        swal("Wrong Email", "Try Another Email", "error");
+                    }
+                } else {
+                    swal("Wrong Email", "Try Another Email", "error");
+                }
+            })
+            .catch((error) => {
+                swal("Wrong Email", "Try Another Email", "error");
+            });
+    };
+
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <Box
+                component={motion.div}
+                animate={{
+                    transition: {
+                        staggerChildren: 0.55,
+                    },
+                }}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 3,
+                    }}
+                    component={motion.div}
+                    initial={{opacity: 0, y: 40}}
+                    animate={animate}
+                >
+            <Box  style={{justifyContent: "center", display: "flex"}}>
+                <ThemedTextField
+                    fullWidth
+                    type="email"
+                    id="email"
+                    label="Email Address"
+                    value={email}
+                    onChange={handleEmailChange}>
+                </ThemedTextField>
+            </Box>
+                    <Box  style={{justifyContent: "center", display: "flex"}}>
+                <ThemedButton type="button" onClick={handleGetQuestions}>
+                    Get Security Questions
+                </ThemedButton>
                     </Box>
+            {securityQuestions.length > 0 && (
+                <>
+                    <p style={{justifyContent: "center", display: "flex"}}>Please answer the following security questions:</p>
+                    {securityQuestions.map((question, index) => (
+                        <div key={question.securityQuestion}>
+                            <Box  style={{justifyContent: "center", display: "flex"}}>
+                                <label htmlFor={`answer-${index}`}>{question.securityQuestion}</label>
+
+                                 <input style={{background: "#dcdcdc",
+                                     borderColor: "#dc7336",
+                                     borderRadius: 5,
+                                     border: "2px solid #DB5B13",
+                                     padding: "20px",
+                                     outline: "none",
+                                     height:"5px"
+                                   }}
+                                type="text"
+                                id={`answer-${index}`}
+                                value={question.answer ?? ''}
+                                onChange={(event) => handleInputChange(event, index)}/>
+                                </Box>
+                        </div>
+                    ))}
+
+
+                    <ThemedButton  type="button" onClick={handleQuestions}>Submit Form</ThemedButton>
+
+
+
+
+                </>
+            )}
+                    {isSecurityQuestionsValid ? (
+                        <Box
+                            component={motion.div}
+                            animate={{
+                                transition: {
+                                    staggerChildren: 0.55,
+                                },
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: 3,
+                                }}
+                                component={motion.div}
+                                initial={{opacity: 0, y: 40}}
+                                animate={animate}
+                            >
+                        <Box style={{justifyContent: "center", display: "flex"}}>
+                            <ThemedTextField
+                                fullWidth
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                value={password}
+                                label="Password"
+                                onChange={handlePasswordChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() => setShowPassword((prev) => !prev)}
+                                            >
+                                                {showPassword ? (
+                                                    <Icon icon="eva:eye-fill"/>
+                                                ) : (
+                                                    <Icon icon="eva:eye-off-fill"/>
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Box>
+                            <Box style={{justifyContent: "center", display: "flex"}}>
+                                <ThemedButton type="button" onClick={PasswordReset}>
+                                    Reset Password
+                                </ThemedButton>
+                            </Box>
+                            </Box>
+                        </Box>
+                    ) : null}
+
+
                 </Box>
-            </Form>
-        </FormikProvider>
+                </Box>
+        </form>
     );
 };
 
+
 export default ForgotPasswordForm;
-
-
