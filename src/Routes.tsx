@@ -20,7 +20,7 @@ export enum RoutesEnum {
  * use this for axios calls so we can easily change the path when we deploy
  */
 
-export const DEV_PATH = "https://63ssyxp81l.execute-api.us-east-1.amazonaws.com/dev";
+export const DEV_PATH = "https://63ssyxp81l.execute-api.us-east-1.amazonaws.com/v2";
 
 export const CORS_HEADER = {
     'content-type': 'application/json',
