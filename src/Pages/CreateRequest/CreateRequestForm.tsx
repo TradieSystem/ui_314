@@ -1,135 +1,139 @@
-import React from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {Form, FormikProvider, useFormik} from "formik";
-import * as Yup from "yup";
+import React, {useState} from "react";
 import Loading from "../../Effects/loading"
-import {Box, FormControl, FormControlLabel, Radio, RadioGroup, Stack} from "@mui/material";
+import {Box, FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {animate} from '../../Effects/Animations';
+import {ServiceType} from "../../Types/ServiceType";
+import {ServiceRequestCreate, ServiceRequestStatus} from "../../Types/ServiceRequest";
+import {User} from "../../Types/User";
+import {format} from "date-fns";
+import axios from "axios";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../Routes";
+import swal from "sweetalert";
+import {useNavigate} from "react-router-dom";
 
 const CreateRequestForm = () => {
+    const [serviceType, setServiceType] = useState<ServiceType>(ServiceType.TREE_REMOVAL);
+    const [description, setDescription] = useState<string>();
+    const [submitting, setSubmitting] = useState(false);
+
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("access_token") || "{}");
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
 
+    const handleSubmit = () => {
+        setSubmitting(true);
 
-    const ClientFormSchema = Yup.object().shape({
-        Description: Yup.string().required("Description is required")
-    });
+        const request : ServiceRequestCreate = {
+            requestID: -1,
+            requestDate: format(new Date(), 'dd/MM/yyyy'),
+            serviceType: serviceType,
+            requestStatus: ServiceRequestStatus.NEW,
+            postcode: user.address.postcode || "",
+            clientID: user.user_id,
+            jobDescription: description
+        }
 
-    const formik = useFormik({
-        initialValues: {
-            Description: " ",
-
-
-        },
-        validationSchema: ClientFormSchema,
-        onSubmit: (values, actions) => {
-
-            setTimeout(() => {
-                navigate(from, {replace: true});
-            }, 2000);
-        },
-    });
-
-    const {errors, touched, handleSubmit, isSubmitting, getFieldProps} =
-        formik;
+        axios
+            .post(`${DEV_PATH}/serviceRequest`, request, {
+                headers: {
+                    'Authorization': auth_token,
+                    ...CORS_HEADER
+                }
+            })
+            .then((response) => {
+                //Check if response was correct
+                if(response.data.statusCode === "200") {
+                    setSubmitting(false);
+                    swal("Created", "The service request was created successfully", "success")
+                        .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
+                } else {
+                    throw new Error();
+                }
+            })
+            .catch(() => {
+                swal("Error", "There was an error creating your request", "error")
+                    .then(() => navigate(`/${RoutesEnum.CREATE_REQUEST}`));
+            });
+    }
 
     return (
-
-        <FormikProvider value={formik}>
-            <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <Box
+            component={motion.div}
+            animate={{
+                transition: {
+                    staggerChildren: 0.55,
+                },
+            }}
+        >
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                }}
+                component={motion.div}
+                initial={{opacity: 0, y: 40}}
+                animate={animate}
+            >
+                <FormControl>
+                    <p style={{fontSize: "20px", fontWeight: "bold"}}>Pick a Job:</p>
+                    <RadioGroup
+                        aria-labelledby="Checkbutton"
+                        defaultValue="Tree Removal"
+                        name="CheckButton"
+                    >
+                        <RadioGroup
+                            aria-labelledby={"services__form-group"}
+                            value={serviceType}
+                            onChange={(event) => setServiceType(event.target.value as ServiceType)}
+                        >
+                            {Object.entries(ServiceType).map(([key, value]) => {
+                                return (
+                                    <FormControlLabel
+                                        name={"professionalServices"}
+                                        value={value}
+                                        key={key}
+                                        control={<Radio color={"warning"}/>}
+                                        label={value}
+                                    />
+                                );
+                            })}
+                        </RadioGroup>
+                    </RadioGroup>
+                </FormControl>
+                <ThemedTextField
+                    multiline
+                    rows={15}
+                    style={{height: "375px"}}
+                    autoComplete="Description"
+                    type="text"
+                    label="Description Of Job"
+                    onChange={(event) => setDescription(event.target.value)}
+                />
                 <Box
                     component={motion.div}
-                    animate={{
-                        transition: {
-                            staggerChildren: 0.55,
-                        },
+                    initial={{opacity: 0, y: 20}}
+                    animate={animate}
+                    marginTop={3}
+                    sx={{
+                        display: "flex",
+                        justifyContent: "right"
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: 3,
-                        }}
-                        component={motion.div}
-                        initial={{opacity: 0, y: 40}}
-                        animate={animate}
+                    <ThemedButton
+                        type="submit"
+                        loadingButton={submitting}
+                        onClick={handleSubmit}
                     >
-
-                        <FormControl>
-                            <p style={{fontSize: "20px"}}>Pick a Job:</p>
-                            <RadioGroup
-
-                                aria-labelledby="Checkbutton"
-                                defaultValue="Tree Removal"
-                                name="CheckButton"
-
-                            >
-                                <FormControlLabel value="Tree Removal" control={<Radio color={"warning"}/>}
-                                                  label="Tree Removal"/>
-                                <FormControlLabel value="Roof Cleaning" control={<Radio color={"warning"}/>}
-                                                  label="Roof Cleaning"/>
-                                <FormControlLabel value="Fence Installation" control={<Radio color={"warning"}/>}
-                                                  label="Fence Installation"/>
-                                <FormControlLabel value="Oven Repairs" control={<Radio color={"warning"}/>}
-                                                  label="Oven Repairs"/>
-                                <FormControlLabel value="Plumbing" control={<Radio color={"warning"}/>}
-                                                  label="Plumbing"/>
-                            </RadioGroup>
-                        </FormControl>
-
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            sx={{my: 2}}
-                        >
-                        </Stack>
-
-                        <ThemedTextField
-                            multiline
-                            rows={15}
-                            style={{height: "375px"}}
-                            autoComplete="Description"
-                            type="text"
-                            label="Description Of Job"
-                            {...getFieldProps("Description")}
-                            error={Boolean(touched.Description && errors.Description)}
-                            helperText={touched.Description && errors.Description}
-                        />
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
-                            sx={{my: 2}}
-                        >
-                        </Stack>
-                        <Box
-                            component={motion.div}
-                            initial={{opacity: 0, y: 20}}
-                            animate={animate}
-                            marginTop={3}
-                            sx={{
-                                display: "flex",
-                                justifyContent: "right"
-                            }}
-                        >
-                            <ThemedButton
-                                type="submit"
-                                loadingButton={isSubmitting}
-                            >
-                                {isSubmitting ? <Loading/> : "Send Request Form"}
-                            </ThemedButton>
-                        </Box>
-                    </Box>
+                        {submitting ? <Loading/> : "Send Request Form"}
+                    </ThemedButton>
                 </Box>
-            </Form>
-        </FormikProvider>
+            </Box>
+        </Box>
     );
 };
 

@@ -47,9 +47,9 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("01/02/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.COMPLETE,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2000",
-        description: "I want a new fence please"
+        jobDescription: "I want a new fence please"
     },
     {
         requestID: 1,
@@ -57,7 +57,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.ARCHIVED,
         postcode: "2111",
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
     },
     {
         requestID: 3,
@@ -65,14 +65,14 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
         postcode: "2222",
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
     },
     {
         requestID: 4,
         requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
         requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2333",
     },
     {
@@ -81,15 +81,15 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.TREE_REMOVAL,
         requestStatus: ServiceRequestStatus.NEW,
         postcode: "2444",
-        client: (generateClients().at(0) as User).user_id,
-        description: 'The tree is in the way'
+        clientID: (generateClients().at(0) as User).user_id,
+        jobDescription: 'The tree is in the way'
     },
     {
         requestID: 6,
         requestDate: new Date("03/10/2023"),
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.NEW,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         applications: [
             {
                 requestID: 1,
@@ -108,7 +108,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("03/11/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.ARCHIVED,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2666",
     },
     {
@@ -116,7 +116,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("03/07/2023"),
         serviceType: ServiceType.TREE_REMOVAL,
         requestStatus: ServiceRequestStatus.COMPLETE,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2777",
     },
     {
@@ -124,7 +124,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("03/12/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2888",
     },
     {
@@ -132,7 +132,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
         requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2999",
     },
     {
@@ -140,7 +140,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("12/15/2020"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.ARCHIVED,
-        client: (generateClients().at(0) as User).user_id,
+        clientID: (generateClients().at(0) as User).user_id,
         postcode: "2001",
     },
 ]

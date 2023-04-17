@@ -10,7 +10,9 @@ export const HomePage = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     return (
         <PageContainer title={'Home'} subtitle={user ? `${user.firstName} ${user.lastName}` : ''}>
-            <></>
+            <>
+                {user.userType} view
+            </>
         </PageContainer>
     )
 }
