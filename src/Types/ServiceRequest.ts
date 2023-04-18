@@ -68,7 +68,7 @@ export interface ServiceRequestApplication {
     /**
      * User ID of the applicant
      */
-    userID: number;
+    professionalID: number;
     /**
      * Cost that has been submitted as part of the service request
      */

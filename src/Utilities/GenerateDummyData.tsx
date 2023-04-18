@@ -95,7 +95,7 @@ const dummyServiceRequests : ServiceRequest[] = [
                 requestID: 1,
                 applicationID: 1,
                 offerDate: new Date("05/05/2023"),
-                userID: dummyProfessionalUser.user_id,
+                professionalID: dummyProfessionalUser.user_id,
                 cost: 50.50,
                 applicationStatus: ServiceRequestApplicationStatus.PENDING
             }
