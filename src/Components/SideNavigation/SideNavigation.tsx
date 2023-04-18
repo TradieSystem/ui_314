@@ -8,8 +8,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import {useNavigate} from "react-router-dom";
 import {RoutesEnum} from "../../Routes";
 import {User} from "../../Types/User";
-import { UserType } from "../../Types/Account";
-
+import {UserType} from "../../Types/Account";
 
 
 export const SideNavigation = () => {
@@ -49,8 +48,10 @@ export const SideNavigation = () => {
                     })
                 }
 
-                <div style={{ padding: "0.5px ",position: "absolute",
-                    bottom: "0" }}>
+                <div style={{
+                    padding: "1rem", position: "absolute",
+                    bottom: "0"
+                }}>
                     {
                         user.professional !== null && user.client !== null &&
                         <SideNavigationMenuItem
@@ -67,7 +68,8 @@ export const SideNavigation = () => {
                                 window.location.reload();
                             }}
                         />}
-                {user.userType === UserType.PROFESSIONAL &&
+                    {
+                        user.userType === UserType.PROFESSIONAL &&
 
                         <SideNavigationMenuItem
                             icon={<Person/>}
@@ -76,27 +78,27 @@ export const SideNavigation = () => {
                                 navigate(`/${RoutesEnum.Pro_Profile}`);
                             }}
                         />
-                }
-                        <SideNavigationMenuItem
-                            icon={<AccountCircle />}
-                            text= {'Account Profile'}
-                            onClick={() => {
-                                navigate(`/${RoutesEnum.USER_MANAGEMENT}`);
-                            }}
-                        />
-                        <SideNavigationMenuItem
-                            icon={<LogoutIcon />}
-                            text={"Logout"}
-                            onClick={() => {
-                                localStorage.setItem("user", "");
-                                localStorage.setItem("access_token", "");
-                                localStorage.setItem("refresh_token", "");
-                                navigate(`/${RoutesEnum.LOGIN}`);
-                            }}
-                        />
+                    }
+                    <SideNavigationMenuItem
+                        icon={<AccountCircle/>}
+                        text={'Account Profile'}
+                        onClick={() => {
+                            navigate(`/${RoutesEnum.USER_MANAGEMENT}`);
+                        }}
+                    />
+                    <SideNavigationMenuItem
+                        icon={<LogoutIcon/>}
+                        text={"Logout"}
+                        onClick={() => {
+                            localStorage.setItem("user", "");
+                            localStorage.setItem("access_token", "");
+                            localStorage.setItem("refresh_token", "");
+                            navigate(`/${RoutesEnum.LOGIN}`);
+                        }}
+                    />
 
-                {/*If the user has both PROFESSIONAL and CLIENT data, they should be able to toggle between the two*/}
-                    </div>
+                    {/*If the user has both PROFESSIONAL and CLIENT data, they should be able to toggle between the two*/}
+                </div>
 
             </Drawer>
         </>
