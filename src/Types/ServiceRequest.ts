@@ -28,7 +28,7 @@ export interface ServiceRequest {
     /**
      * Client who has made the service request
      */
-    client: number;
+    clientID: number;
     /**
      * An array of the {@link User} Professionals who have
      */
@@ -36,7 +36,20 @@ export interface ServiceRequest {
     /**
      * (Optional) description client has attached to the request
      */
-    description?: string;
+    jobDescription?: string;
+}
+
+/**
+ * DO NOT USE ON FRONTEND TO DISPLAY DATA / CAST TO TYPE - ONLY DEFINES THE OBJECT BEING SENT TO BACKEND WHEN WE CREATE A REQUEST
+ */
+export interface ServiceRequestCreate {
+    requestID: number;
+    requestDate: string;
+    serviceType: ServiceType;
+    requestStatus: ServiceRequestStatus;
+    postcode: string;
+    clientID: number;
+    jobDescription?: string;
 }
 
 export interface ServiceRequestApplication {
@@ -55,7 +68,7 @@ export interface ServiceRequestApplication {
     /**
      * User ID of the applicant
      */
-    userID: number;
+    professionalID: number;
     /**
      * Cost that has been submitted as part of the service request
      */

@@ -58,7 +58,7 @@ export const RequestSummaryView = ({request}: RequestSummaryViewProps) => {
                     <Typography fontWeight={'bold'}>Additional Description:</Typography>
                 </Grid>
                 <Grid item>
-                    {<Typography>{request.description ? `${request.description}` : '-'}</Typography>}
+                    {<Typography>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
                 </Grid>
             </Grid>
         </>
