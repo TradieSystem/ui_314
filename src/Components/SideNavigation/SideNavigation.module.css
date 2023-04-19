@@ -6,5 +6,4 @@
 .side-nav__closed {
     width: 5rem;
     transition: width 0.3s !important;
-    overflow-x: hidden;
 }

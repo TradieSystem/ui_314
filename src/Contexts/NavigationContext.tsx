@@ -40,11 +40,6 @@ export const NavigationContextContextProvider = ({children}: any) => {
             text: user?.userType === UserType.PROFESSIONAL ? 'Request History' : 'My Requests',
             route: RoutesEnum.REQUEST_HISTORY
         },
-        {
-            icon: <AccountCircle/>,
-            text: 'Account Profile',
-            route: RoutesEnum.USER_MANAGEMENT
-        },
     ];
 
     //If the usertype is a client, render the client icons too
@@ -62,14 +57,6 @@ export const NavigationContextContextProvider = ({children}: any) => {
             icon: <MenuIcon/>,
             text: 'Available Requests',
             route: RoutesEnum.AVAILABLE_REQUESTS
-        }
-        sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
-    }
-    if (user.userType === UserType.PROFESSIONAL) {
-        const userSpecificNavigation: SideNavigationMenuItemProps = {
-            icon: <Person/>,
-            text: 'Profile Page',
-            route: RoutesEnum.Pro_Profile
         }
         sideNavigationMenuItems.splice(1, 0, userSpecificNavigation);
     }
