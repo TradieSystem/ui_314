@@ -9,11 +9,11 @@ import {User} from "../../Types/User";
  * This page conditionally renders the table displayed based on the {@link UserType} of the currently logged in {@link User}
  */
 export const RequestHistory = (): JSX.Element => {
-    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
 
     return (
         <PageContainer title={user?.userType === UserType.CLIENT ? 'My Requests' : 'Job History'}>
-            <RequestHistoryTable />
+            <RequestHistoryTable/>
         </PageContainer>
     )
 }

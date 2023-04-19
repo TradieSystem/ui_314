@@ -1,19 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ServiceRequest} from "../../../../../Types/ServiceRequest";
-import {Box, Grid, MenuItem, TextareaAutosize, Typography} from "@mui/material";
+import {Box, Grid, MenuItem, Typography} from "@mui/material";
 import ThemedSelect from "../../../../../Components/ThemedSelect/ThemedSelect";
 import {ServiceType} from "../../../../../Types/ServiceType";
 import ThemedTextField from "../../../../../Components/TextField/ThemedTextField";
 
 
 export interface RequestSummaryEditProps {
-
     /**
      * The request to edit
      */
     request: ServiceRequest;
+    /**
+     * Callback to set the service type
+     */
+    setServiceTypeEdit:(type: ServiceType) => void;
+    /**
+     * Callback to set the service description
+     */
+    setServiceDescEdit:(desc: string) => void;
 }
-export const RequestSummaryEdit = ({request}: RequestSummaryEditProps) => {
+
+export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeEdit}: RequestSummaryEditProps) => {
     return (
         <>
             <Grid container spacing={3} marginBottom={2} gap={3}>
@@ -24,6 +32,7 @@ export const RequestSummaryEdit = ({request}: RequestSummaryEditProps) => {
                     <ThemedSelect
                         defaultValue={request.serviceType}
                         size={'small'}
+                        onChange={(event) => setServiceTypeEdit(event.target.value as ServiceType)}
                     >
                         {Object.entries(ServiceType).map(([key, value]) => {
                             return (
@@ -34,18 +43,16 @@ export const RequestSummaryEdit = ({request}: RequestSummaryEditProps) => {
                         })}
                     </ThemedSelect>
                 </Grid>
-                <Box width={"100%"} />
+                <Box width={"100%"}/>
                 <Grid item sx={{display: "flex", alignItems: "center"}}>
                     <Typography fontWeight={'bold'}>Description:</Typography>
                 </Grid>
                 <Grid item justifyContent={'right'} display={'flex'}>
                     <ThemedTextField
+                        onChange={(event) => setServiceDescEdit(event.target.value)}
                         multiline
                     />
                 </Grid>
-            </Grid>
-            <Grid container spacing={3} marginBottom={2}>
-
             </Grid>
         </>
     )

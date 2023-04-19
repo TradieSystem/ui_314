@@ -29,7 +29,7 @@ const CreateRequestForm = () => {
 
         const request : ServiceRequestCreate = {
             requestID: -1,
-            requestDate: format(new Date(), 'dd/MM/yyyy'),
+            requestDate: format(new Date(), 'MM/dd/yyyy'),
             serviceType: serviceType,
             requestStatus: ServiceRequestStatus.NEW,
             postcode: user.address.postcode || "",
