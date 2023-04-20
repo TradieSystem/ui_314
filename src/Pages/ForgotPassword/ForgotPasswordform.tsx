@@ -110,7 +110,7 @@ const ForgotPasswordForm = () => {
                     },
                 })
                 .then((response) => {
-                    if(response.data.matched == true) {
+                    if(response.data.matched === true) {
                         setIsSecurityQuestionsValid(true);
 
                      } else {
