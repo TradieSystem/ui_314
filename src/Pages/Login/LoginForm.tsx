@@ -186,6 +186,16 @@ const LoginForm = () => {
                         >
                             {isSubmitting ? <Loading/> : "Login"}
                         </ThemedButton>
+                        <ThemedButton
+                            loadingButton
+                            fullWidth
+                            size="large"
+                            type="submit"
+                            loading={isSubmitting}
+                        >
+                            {isSubmitting ? <Loading/> : "Login"}
+                        </ThemedButton>
+                    </Box>
                     </Box>
                 </Box>
             </Form>
