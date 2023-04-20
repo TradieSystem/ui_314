@@ -3,11 +3,9 @@ import {SideNavigationMenuItemProps} from "../Components/SideNavigation/SideNavi
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import AddBox from '@mui/icons-material/AddBox';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import {RoutesEnum} from "../Routes";
 import {UserType} from "../Types/Account";
 import MenuIcon from '@mui/icons-material/Menu';
-import Person from '@mui/icons-material/Person';
 import {User} from "../Types/User";
 
 const NavigationContext = createContext({} as NavigationContextState);

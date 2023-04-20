@@ -1,5 +1,5 @@
 import React from 'react';
-import {MembershipOption, UserType} from "../../../../Types/Account";
+import {MembershipOption} from "../../../../Types/Account";
 import {Box, FormControlLabel, Grid, Radio, RadioGroup, Typography} from "@mui/material";
 import {EditUserFields, panelStyling} from "../EditProfileForm";
 import {useFormikContext} from "formik";

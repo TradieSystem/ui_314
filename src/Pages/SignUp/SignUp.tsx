@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Form, Formik} from "formik";
 import UserDetails from "./SignUpWizard/UserDetails";
 import * as Yup from "yup";
@@ -246,6 +246,7 @@ export const SignUp = () => {
                     color: "#3f3f3f",
                     backgroundColor: "#c7c7c7",
                     border: "1.5px solid #3f3f3f",
+                    margin: 3
                 }}
             >
                 <Typography color={"black"}>
@@ -331,6 +332,7 @@ export const SignUp = () => {
                     </Alert>
                 );
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

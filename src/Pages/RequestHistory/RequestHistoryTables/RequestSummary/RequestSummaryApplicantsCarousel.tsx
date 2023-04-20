@@ -1,5 +1,5 @@
 import React from 'react';
-import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
+import {ServiceRequest, ServiceRequestApplication, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
 import {Card, CardActions, CardContent, Typography} from "@mui/material";
@@ -17,32 +17,12 @@ export interface RequestSummaryApplicantsCarouselProps {
      * Callback to handle closing the overlay
      */
     setShowRequestSummary: (showRequestSummary: boolean) => void;
+
+    /**
+     * Cards to display on the carousel
+     */
+    cards: ServiceRequestApplicationCard[];
 }
-
-
-const lists = [
-    {
-        professional: 'Freddie Freddie',
-        Rating: "5 stars",
-        cost: 105.50
-    },
-    {
-        professional: 'some other tradie',
-        Rating: "2 stars",
-        cost: 101.25
-    },
-    {
-        professional: 'jackson',
-        Rating: "3.5 stars",
-        cost: 122.12
-    },
-    {
-        professional: 'ahhh',
-        Rating: "2.3 stars",
-        cost: 10000.30
-    }
-];
-
 
 const settings = {
     dots: true,
@@ -53,12 +33,23 @@ const settings = {
     slidesToScroll: 1
 };
 
-export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary}: RequestSummaryApplicantsCarouselProps) => {
-    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+type ServiceRequestApplicationCardBase = Omit<ServiceRequestApplication, "offerDate">;
+
+export interface ServiceRequestApplicationCard extends ServiceRequestApplicationCardBase {
+    professionalName: string;
+    offerDate: string;
+}
+
+export const RequestSummaryApplicantsCarousel = ({
+                                                     request,
+                                                     setShowRequestSummary,
+                                                     cards
+                                                 }: RequestSummaryApplicantsCarouselProps) => {
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const userType = user?.userType;
 
-
-    const listItems = lists.map((lists) => <li key={lists.Rating}>
+    const listItems = cards.map((card) =>
+        <li key={card.applicationID}>
             <div>
                 <Card style={{
                     margin: "8px",
@@ -67,29 +58,29 @@ export const RequestSummaryApplicantsCarousel = ({request, setShowRequestSummary
                     width: "460px"
                 }}>
                     <CardContent style={{
-                        height: 200,
                         background: "#d9c8c6",
-                        textAlign: "center"
                     }}>
-                        <Typography variant="h5" component="h1">
-                            Tradie: {lists.professional}
+                        <Typography>
+                            <b>Professional Name:</b> {card.professionalName}
                         </Typography>
-                        <Typography variant="h5" component="h2">
-                            Rating: {lists.Rating}
+                        <Typography>
+                            <b>Application ID:</b> {`${card.applicationID}`}
                         </Typography>
-                        <Typography variant="h5" component="h3">
-                            Job Number: {`${request.requestStatus}`}
+                        <Typography>
+                            <b>Job Name:</b> {`${request.serviceType}`}
                         </Typography>
-                        <Typography variant="h5" component="h4">
-                            Job Name: {`${request.serviceType}`}
-                        </Typography>
-                        <Typography variant="h5" component="h5">
-                            Job Cost: {`${lists.cost}`}
+                        <Typography>
+                            <b>Job
+                                Cost:</b> {request.applications?.filter((application) => application.applicationID === card.applicationID).at(0) ?
+                            `$${request.applications?.filter((application) => application.applicationID === card.applicationID).at(0)?.cost}`
+                            : '-'
+                        }
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
                                 type="submit" onClick={() => setShowRequestSummary(false)}
-                            > Accept
+                            >
+                                Accept
                             </ThemedButton>
 
                         </CardActions>

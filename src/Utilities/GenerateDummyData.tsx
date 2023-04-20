@@ -1,4 +1,3 @@
-import React from 'react';
 import {User} from "../Types/User";
 import {MembershipOption, UserType} from "../Types/Account";
 import {ServiceRequest, ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
@@ -67,14 +66,14 @@ const dummyServiceRequests : ServiceRequest[] = [
         postcode: "2222",
         clientID: (generateClients().at(0) as User).user_id,
     },
-    {
-        requestID: 4,
-        requestDate: new Date("03/15/2023"),
-        serviceType: ServiceType.ROOF_CLEANING,
-        requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        clientID: (generateClients().at(0) as User).user_id,
-        postcode: "2333",
-    },
+    // {
+    //     requestID: 4,
+    //     requestDate: new Date("03/15/2023"),
+    //     serviceType: ServiceType.ROOF_CLEANING,
+    //     requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
+    //     clientID: (generateClients().at(0) as User).user_id,
+    //     postcode: "2333",
+    // },
     {
         requestID: 5,
         requestDate: new Date("03/07/2023"),
@@ -127,14 +126,14 @@ const dummyServiceRequests : ServiceRequest[] = [
         clientID: (generateClients().at(0) as User).user_id,
         postcode: "2888",
     },
-    {
-        requestID: 9,
-        requestDate: new Date("03/15/2023"),
-        serviceType: ServiceType.ROOF_CLEANING,
-        requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-        clientID: (generateClients().at(0) as User).user_id,
-        postcode: "2999",
-    },
+    // {
+    //     requestID: 9,
+    //     requestDate: new Date("03/15/2023"),
+    //     serviceType: ServiceType.ROOF_CLEANING,
+    //     requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
+    //     clientID: (generateClients().at(0) as User).user_id,
+    //     postcode: "2999",
+    // },
     {
         requestID: 11,
         requestDate: new Date("12/15/2020"),

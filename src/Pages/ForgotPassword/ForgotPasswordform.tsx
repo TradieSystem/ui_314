@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {Form, FormikProvider, useFormik} from "formik";
-import {Box, createTheme, IconButton, InputAdornment, Stack} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {Box, IconButton, InputAdornment} from "@mui/material";
 import {motion} from "framer-motion";
 import {Icon} from "@iconify/react";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
@@ -9,10 +8,8 @@ import ThemedTextField from "../../Components/TextField/ThemedTextField";
 import {DEV_PATH, RoutesEnum} from "../../Routes";
 import axios from "axios";
 import swal from 'sweetalert';
-import {User} from "../../Types/User";
-import { render } from "react-dom";
-import * as Yup from "yup";
 import {SecurityQuestionSet} from "../../Types/Account"
+
 let easing = [0.6, -0.05, 0.01, 0.99];
 const animate = {
     opacity: 1,
@@ -25,32 +22,24 @@ const animate = {
 };
 
 
-
-
-
-
 const ForgotPasswordForm = () => {
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
     const [email, setEmail] = useState('');
     const [securityQuestions, setSecurityQuestions] = useState<SecurityQuestionSet[]>([]);
     const [isSecurityQuestionsValid, setIsSecurityQuestionsValid] = useState(false);
-    const [userId, setUserId] = useState<number>();
+    const [userId,] = useState<number>();
     const [password, setPassword] = useState('');
     const md5Hash = require("md5-hash");
     const [showPassword, setShowPassword] = useState(false);
-
-
 
     const handlePasswordChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setPassword(event.target.value);
     }
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        const { value } = event.target;
+        const {value} = event.target;
         setSecurityQuestions((prevQuestions) =>
-            prevQuestions.map((question, i) => (i === index ? { ...question, answer: value } : question))
+            prevQuestions.map((question, i) => (i === index ? {...question, answer: value} : question))
         );
     };
 
@@ -64,6 +53,7 @@ const ForgotPasswordForm = () => {
     }));
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const userAnswers = securityQuestions
             .map((question) => ({securityQuestion: question.securityQuestion, answer: question.answer}))
             .filter((answer) => answer.answer !== null) as { securityQuestion: string, answer: string }[];
@@ -71,10 +61,10 @@ const ForgotPasswordForm = () => {
     }
 
 
-    const PasswordReset= () => {
+    const PasswordReset = () => {
 
         const UserObject = {
-            user_id: userId ,
+            user_id: userId,
             password: md5Hash.default(password)
         };
         axios
@@ -85,10 +75,10 @@ const ForgotPasswordForm = () => {
                 },
             })
             .then((response) => {
-                if(response.data) {
+                if (response.data) {
                     swal("Good job!", "You Have Changed Your Password!", "success");
                     navigate("/" + RoutesEnum.LOGIN);
-                }else{
+                } else {
                     swal("Error", "Try Again", "error");
                 }
             })
@@ -98,29 +88,29 @@ const ForgotPasswordForm = () => {
     }
     const handleQuestions = () => {
 
-            const requestData = {
-                user_id: userId ,
-                questions: data,
-            };
-            axios
-                .post(`${DEV_PATH}/user/resetPassword`, requestData, {
-                    headers: {
-                        "content-type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                })
-                .then((response) => {
-                    if(response.data.matched == true) {
-                        setIsSecurityQuestionsValid(true);
+        const requestData = {
+            user_id: userId,
+            questions: data,
+        };
+        axios
+            .post(`${DEV_PATH}/user/resetPassword`, requestData, {
+                headers: {
+                    "content-type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+            .then((response) => {
+                if (response.data.matched === true) {
+                    setIsSecurityQuestionsValid(true);
 
-                     } else {
-                        swal("Wrong Security Questions", "Try Again", "error");
-                    }
-                })
-                .catch((error) => {
+                } else {
                     swal("Wrong Security Questions", "Try Again", "error");
-                });
-        }
+                }
+            })
+            .catch((error) => {
+                swal("Wrong Security Questions", "Try Again", "error");
+            });
+    }
 
     const handleGetQuestions = () => {
         axios
@@ -169,53 +159,53 @@ const ForgotPasswordForm = () => {
                     initial={{opacity: 0, y: 40}}
                     animate={animate}
                 >
-            <Box  style={{justifyContent: "center", display: "flex"}}>
-                <ThemedTextField
-                    fullWidth
-                    type="email"
-                    id="email"
-                    label="Email Address"
-                    value={email}
-                    onChange={handleEmailChange}>
-                </ThemedTextField>
-            </Box>
-                    <Box  style={{justifyContent: "center", display: "flex"}}>
-                <ThemedButton type="button" onClick={handleGetQuestions}>
-                    Get Security Questions
-                </ThemedButton>
+                    <Box style={{justifyContent: "center", display: "flex"}}>
+                        <ThemedTextField
+                            fullWidth
+                            type="email"
+                            id="email"
+                            label="Email Address"
+                            value={email}
+                            onChange={handleEmailChange}>
+                        </ThemedTextField>
                     </Box>
-            {securityQuestions.length > 0 && (
-                <>
-                    <p style={{justifyContent: "center", display: "flex"}}>Please answer the following security questions:</p>
-                    {securityQuestions.map((question, index) => (
-                        <div key={question.securityQuestion}>
-                            <Box  style={{justifyContent: "center", display: "flex"}}>
-                                <label htmlFor={`answer-${index}`}>{question.securityQuestion}</label>
+                    <Box style={{justifyContent: "center", display: "flex"}}>
+                        <ThemedButton type="button" onClick={handleGetQuestions}>
+                            Get Security Questions
+                        </ThemedButton>
+                    </Box>
+                    {securityQuestions.length > 0 && (
+                        <>
+                            <p style={{justifyContent: "center", display: "flex"}}>Please answer the following security
+                                questions:</p>
+                            {securityQuestions.map((question, index) => (
+                                <div key={question.securityQuestion}>
+                                    <Box style={{justifyContent: "center", display: "flex"}}>
+                                        <label htmlFor={`answer-${index}`}>{question.securityQuestion}</label>
 
-                                 <input style={{background: "#dcdcdc",
-                                     borderColor: "#dc7336",
-                                     borderRadius: 5,
-                                     border: "2px solid #DB5B13",
-                                     padding: "20px",
-                                     outline: "none",
-                                     height:"5px"
-                                   }}
-                                type="text"
-                                id={`answer-${index}`}
-                                value={question.answer ?? ''}
-                                onChange={(event) => handleInputChange(event, index)}/>
-                                </Box>
-                        </div>
-                    ))}
+                                        <input style={{
+                                            background: "#dcdcdc",
+                                            borderColor: "#dc7336",
+                                            borderRadius: 5,
+                                            border: "2px solid #DB5B13",
+                                            padding: "20px",
+                                            outline: "none",
+                                            height: "5px"
+                                        }}
+                                               type="text"
+                                               id={`answer-${index}`}
+                                               value={question.answer ?? ''}
+                                               onChange={(event) => handleInputChange(event, index)}/>
+                                    </Box>
+                                </div>
+                            ))}
 
 
-                    <ThemedButton  type="button" onClick={handleQuestions}>Submit Form</ThemedButton>
+                            <ThemedButton type="button" onClick={handleQuestions}>Submit Form</ThemedButton>
 
 
-
-
-                </>
-            )}
+                        </>
+                    )}
                     {isSecurityQuestionsValid ? (
                         <Box
                             component={motion.div}
@@ -235,43 +225,43 @@ const ForgotPasswordForm = () => {
                                 initial={{opacity: 0, y: 40}}
                                 animate={animate}
                             >
-                        <Box style={{justifyContent: "center", display: "flex"}}>
-                            <ThemedTextField
-                                fullWidth
-                                type={showPassword ? "text" : "password"}
-                                id="password"
-                                value={password}
-                                label="Password"
-                                onChange={handlePasswordChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={() => setShowPassword((prev) => !prev)}
-                                            >
-                                                {showPassword ? (
-                                                    <Icon icon="eva:eye-fill"/>
-                                                ) : (
-                                                    <Icon icon="eva:eye-off-fill"/>
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Box>
-                            <Box style={{justifyContent: "center", display: "flex"}}>
-                                <ThemedButton type="button" onClick={PasswordReset}>
-                                    Reset Password
-                                </ThemedButton>
-                            </Box>
+                                <Box style={{justifyContent: "center", display: "flex"}}>
+                                    <ThemedTextField
+                                        fullWidth
+                                        type={showPassword ? "text" : "password"}
+                                        id="password"
+                                        value={password}
+                                        label="Password"
+                                        onChange={handlePasswordChange}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={() => setShowPassword((prev) => !prev)}
+                                                    >
+                                                        {showPassword ? (
+                                                            <Icon icon="eva:eye-fill"/>
+                                                        ) : (
+                                                            <Icon icon="eva:eye-off-fill"/>
+                                                        )}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </Box>
+                                <Box style={{justifyContent: "center", display: "flex"}}>
+                                    <ThemedButton type="button" onClick={PasswordReset}>
+                                        Reset Password
+                                    </ThemedButton>
+                                </Box>
                             </Box>
                         </Box>
                     ) : null}
 
 
                 </Box>
-                </Box>
+            </Box>
         </form>
     );
 };

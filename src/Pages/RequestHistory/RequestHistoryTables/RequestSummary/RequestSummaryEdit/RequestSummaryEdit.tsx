@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ServiceRequest} from "../../../../../Types/ServiceRequest";
 import {Box, Grid, MenuItem, Typography} from "@mui/material";
 import ThemedSelect from "../../../../../Components/ThemedSelect/ThemedSelect";
@@ -14,11 +14,11 @@ export interface RequestSummaryEditProps {
     /**
      * Callback to set the service type
      */
-    setServiceTypeEdit:(type: ServiceType) => void;
+    setServiceTypeEdit: (type: ServiceType) => void;
     /**
      * Callback to set the service description
      */
-    setServiceDescEdit:(desc: string) => void;
+    setServiceDescEdit: (desc: string) => void;
 }
 
 export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeEdit}: RequestSummaryEditProps) => {

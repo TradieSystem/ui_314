@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
-import {ServiceRequest} from "../../../../Types/ServiceRequest";
+import {
+    ServiceRequest,
+    ServiceRequestApplication,
+    ServiceRequestApplicationStatus
+} from "../../../../Types/ServiceRequest";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typography} from "@mui/material";
 import {format} from "date-fns";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
+import {User} from "../../../../Types/User";
+import axios from "axios";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../../Routes";
+import swal from "sweetalert";
+import {useNavigate} from "react-router-dom";
 
 
 export interface ApplicationConfirmationDialogProps {
@@ -23,13 +32,61 @@ export interface ApplicationConfirmationDialogProps {
     showConfirmationDialog: boolean;
 }
 
+type ServiceRequestApplicationBase = Omit<ServiceRequestApplication, "offerDate">;
+
+interface ServiceRequestApplicationCreate extends ServiceRequestApplicationBase{
+    offerDate: string;
+}
+
 export const ApplicationConfirmationDialog = ({
                                                   request,
                                                   setShowConfirmationDialog,
                                                   showConfirmationDialog
                                               }: ApplicationConfirmationDialogProps) => {
+
     const [requestCharge, setRequestCharge] = useState<string>('');
-    console.log()
+
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
+
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = () => {
+        setLoading(true);
+        const application : ServiceRequestApplicationCreate = {
+            requestID: request.requestID,
+            applicationID: -1,              //-1 when we are creating applications
+            offerDate: format(new Date(), "MM/dd/yyyy"),
+            professionalID: user.user_id,
+            cost: Number(requestCharge),
+            applicationStatus: ServiceRequestApplicationStatus.PENDING
+        }
+        axios.post(`${DEV_PATH}/serviceRequest/application`, application, {
+            headers: {
+                'Authorization': auth_token,
+                ...CORS_HEADER
+            }
+        })
+        .then((response) => {
+            if(response.data.requestID) {
+                swal("Success", "You have successfully applied for the service request.", "success")
+                    .then(() => {
+                        setLoading(false);
+                        setShowConfirmationDialog(false);
+                        window.location.reload();
+                    })
+            } else {
+                throw new Error();
+            }
+        })
+        .catch(() => {
+            swal("Error", "There was an error submitting an application.", "error")
+                .then(() => navigate(`/${RoutesEnum.AVAILABLE_REQUESTS}`));
+        });
+    }
+
     return (
         <Dialog open={showConfirmationDialog}>
             <div style={{backgroundColor: "#D8CECD", padding: "12px"}}>
@@ -96,11 +153,12 @@ export const ApplicationConfirmationDialog = ({
                     >
                         Cancel
                     </ThemedButton>
-                    {/*TODO add onClick functionality to submit an application to the service request*/}
                     <ThemedButton
-                        onClick={() => setShowConfirmationDialog(false)}
+                        onClick={() => {
+                            handleSubmit();
+                        }}
                         autoFocus
-                        disabled={(isNaN(Number(requestCharge)) || (requestCharge === ''))}
+                        disabled={(isNaN(Number(requestCharge)) || (requestCharge === '') || loading)}
                     >
                         Confirm
                     </ThemedButton>

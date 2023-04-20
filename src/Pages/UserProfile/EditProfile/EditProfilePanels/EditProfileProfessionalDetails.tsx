@@ -106,6 +106,7 @@ export const EditProfileProfessionalDetails = ({setProfessionalDetailsValid}: Ed
                 }
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [values, errors]);
 
     return (

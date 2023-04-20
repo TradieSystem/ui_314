@@ -22,7 +22,7 @@ export const EditProfileAddress = ({setAddressValid}: EditProfileAddressProps): 
         } else {
             setAddressValid(false);
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [values, errors]);
 
     return (

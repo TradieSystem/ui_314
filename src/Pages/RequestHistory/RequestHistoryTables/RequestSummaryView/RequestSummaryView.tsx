@@ -1,7 +1,11 @@
 import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import {format} from "date-fns";
-import {ServiceRequest} from "../../../../Types/ServiceRequest";
+import {
+    ServiceRequest,
+    ServiceRequestApplication,
+    ServiceRequestApplicationStatus
+} from "../../../../Types/ServiceRequest";
 
 
 export interface RequestSummaryViewProps {
@@ -10,7 +14,10 @@ export interface RequestSummaryViewProps {
      */
     request: ServiceRequest;
 }
+
 export const RequestSummaryView = ({request}: RequestSummaryViewProps) => {
+    const approvedApplication: ServiceRequestApplication | undefined = request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
+
     return (
         <>
             <Grid container spacing={2} marginBottom={2}>
@@ -50,7 +57,7 @@ export const RequestSummaryView = ({request}: RequestSummaryViewProps) => {
                     <Typography fontWeight={'bold'}>Cost:</Typography>
                 </Grid>
                 <Grid item>
-                    {/*<Typography>{request.cost ? `$${request.cost}` : '-'}</Typography>*/}
+                    <Typography>{approvedApplication ? `$${approvedApplication.cost}` : '-'}</Typography>
                 </Grid>
             </Grid>
             <Grid container spacing={2} marginBottom={2}>
