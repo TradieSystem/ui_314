@@ -16,8 +16,9 @@ import "./Swal.css";
 import {UserType} from "../../Types/Account";
 
 
-const LoginForm = () => {
 
+const LoginForm = () => {
+    const md5Hash = require("md5-hash");
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -40,7 +41,7 @@ const LoginForm = () => {
 
         validationSchema: LoginSchema,
         onSubmit: ({email, password}) => {
-            axios.post((`${DEV_PATH}/user/login?email=${email}&password=${password}`), {
+            axios.post((`${DEV_PATH}/user/login?email=${email}&password=${md5Hash.default(password)}`), {
                 headers: CORS_HEADER,
             })
                 .then((response) => {
@@ -121,7 +122,7 @@ const LoginForm = () => {
                             type={showPassword ? "text" : "password"}
                             label="Password"
                             {...getFieldProps("password")}
-                            value={formik.values.password}
+                            value={md5Hash.default("password")}
                             onChange={formik.handleChange}
                             error={Boolean(touched.password && errors.password)}
                             helperText={touched.password && errors.password}
