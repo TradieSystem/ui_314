@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {ServiceRequest} from "../../../Types/ServiceRequest";
+import {ServiceRequest, ServiceRequestApplication} from "../../../Types/ServiceRequest";
 import {generateNewDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
 import {SortDirection} from "../../../Utilities/TableUtils";
 import styles from './AvailableRequestsTable.module.css';
 import {
+    Alert,
     Backdrop,
     Table,
     TableBody,
@@ -20,12 +21,17 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {RequestSummary} from "../../RequestHistory/RequestHistoryTables/RequestSummary/RequestSummary";
 import {ApplicationConfirmationDialog} from "./ApplicationConfirmationDialog/ApplicationConfirmationDialog";
 import {User} from "../../../Types/User";
+import axios from "axios";
+import {CORS_HEADER, DEV_PATH} from "../../../Routes";
+import {ServiceRequestTableRow} from "../../RequestHistory/RequestHistoryTables/RequestHistoryTable";
+import {TableSkeleton} from "../../../Components/TableSkeleton/TableSkeleton";
+import {UserType} from "../../../Types/Account";
 
 
 enum AvailableRequestsTableColumn {
     ApplicationNumber = 'ApplicationNumber',
     ApplicationDate = 'ApplicationDate',
-    Location = 'Location',
+    Postcode = 'Postcode',
     ServiceType = 'ServiceType',
     Client = 'Client',
     Details = 'Details',
@@ -58,9 +64,13 @@ const getHeaderBorderRadius = (columnEnum: AvailableRequestsTableColumn): string
 
 export const AvailableRequestsTable = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
 
-    //TODO set to actual data
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateNewDummyServiceRequests());
+    const [loading, setLoading] = useState<boolean>(true);
+    const [alert, setAlert] = useState<JSX.Element>(<></>);
+
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>();
+    const [rows, setRows] = useState<ServiceRequestTableRow[]>([]);
 
     //Table sorting
     const [sortColumn, setSortColumn] = useState<AvailableRequestsTableColumn>(AvailableRequestsTableColumn.ApplicationNumber);
@@ -86,41 +96,41 @@ export const AvailableRequestsTable = () => {
 
     const sortServiceRequests = (sortField: AvailableRequestsTableColumn, sortDirection: SortDirection) => {
         //Sort the data by the property
-        let orderedServiceRequests = serviceRequests;
+        let orderedServiceRequests = rows;
         switch (AvailableRequestsTableColumn[sortField]) {
             case AvailableRequestsTableColumn.ApplicationNumber:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID > b.requestID ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestID > b.requestID ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID < b.requestID ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestID < b.requestID ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.ApplicationDate:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate > b.requestDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestDate > b.requestDate ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate < b.requestDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestDate < b.requestDate ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.ServiceType:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
                 }
                 break;
             case AvailableRequestsTableColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.clientName > b.clientName ? 1 : -1);
                 } else {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.clientName < b.clientName ? 1 : -1);
                 }
                 break;
-            case AvailableRequestsTableColumn.Location:
+            case AvailableRequestsTableColumn.Postcode:
                 if (sortDirection === SortDirection.ASC) {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb > b.suburb ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.postcode > b.postcode ? 1 : -1);
                 } else {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.suburb < b.suburb ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.postcode < b.postcode ? 1 : -1);
                 }
                 break;
             default:
@@ -144,6 +154,12 @@ export const AvailableRequestsTable = () => {
         sortServiceRequests(sortField, newSortDirection);
     };
 
+    const professionalHasApplied = (request : ServiceRequest) => {
+        const hasApplied : ServiceRequestApplication[] | undefined= request.applications?.filter((application) => application.professionalID === user.user_id);
+
+        return !!(hasApplied && hasApplied[0]);
+    }
+
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -152,16 +168,95 @@ export const AvailableRequestsTable = () => {
     };
 
     useEffect(() => {
-        //TODO make axios call to get all available new requests
+        if (loading) {
+            axios.get(`${DEV_PATH}/serviceRequest/available?postcode=${user.address.postcode}`, {
+                headers: {
+                    ...CORS_HEADER,
+                    'Authorization': auth_token
+                },
+            })
+                .then((r) => {
+                    if (r.data !== null && r.data[0]) {     //If there was an array of data returned (i.e. some service requests)
+                        let incomingRequests: ServiceRequest[] = [];
+                        r.data.forEach((request: ServiceRequest) => {
+                            const serviceRequest: ServiceRequest = {
+                                requestID: request.requestID,
+                                requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
+                                serviceType: request.serviceType,
+                                requestStatus: request.requestStatus,
+                                postcode: request.postcode,
+                                applications: request.applications,
+                                jobDescription: request.jobDescription,
+                                clientID: request.clientID
+                            }
 
-        //TODO call setServiceRequests when data returned
+                            incomingRequests.push(serviceRequest);
+                            setServiceRequests(incomingRequests);
+                        });
+                    } else {
+                        setLoading(false);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setAlert(
+                        <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                            There was an issue retrieving the content
+                        </Alert>
+                    );
+                });
+        }
 
         //Sort by Application Number, ascending
         handleSort(AvailableRequestsTableColumn.ApplicationNumber);
     }, []);
 
+    useEffect(() => {
+        if (loading) {
+            //When we have received the service requests, we need to hit another endpoint to get the client name
+            serviceRequests?.forEach((request) => {
+                axios.get(`${DEV_PATH}/user/userGet?user_id=${request.clientID}`, {
+                    headers: {
+                        ...CORS_HEADER,
+                        'Authorization': auth_token
+                    },
+                })
+                    .then((r) => {
+                        if (r.data && r.data.firstName && r.data.lastName) {
+                            const name = `${r.data.firstName} ${r.data.lastName}`;
+                            const newRow: ServiceRequestTableRow = {
+                                clientName: name,
+                                requestID: request.requestID,
+                                requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
+                                serviceType: request.serviceType,
+                                requestStatus: request.requestStatus,
+                                postcode: request.postcode,
+                                clientID: request.clientID,
+                                applications: request.applications,
+                                jobDescription: request.jobDescription
+                            }
+                            rows.push(newRow);
+                        }
+
+                        if(serviceRequests?.length === rows.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
+                            setLoading(false);
+                        }
+                    })
+                    .catch((error) => {
+                        setLoading(false);
+                        setAlert(
+                            <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                                There was an issue retrieving the content
+                            </Alert>
+                        );
+                    });
+            });
+        }
+    }, [serviceRequests]);
+
     return (
         <div className={styles['table-container']}>
+            {alert}
             <Table>
                 <TableHead>
                     <TableRow>
@@ -198,85 +293,105 @@ export const AvailableRequestsTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {serviceRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) => {
-                        return (
-                            <TableRow
-                                key={request.requestID}
-                                sx={{
-                                    backgroundColor: "white",
-                                    '&:last-child td:first-of-type': {
-                                        borderBottomLeftRadius: 12,
-                                    },
-                                    '&:last-child td:last-child': {
-                                        borderBottomRightRadius: 12,
-                                    },
-                                }}
-                            >
-                                <TableCell>
-                                    {request.requestID}
-                                </TableCell>
-                                <TableCell>
-                                    {format(request.requestDate, "dd/MM/yyyy")}
-                                </TableCell>
-                                <TableCell>
-                                    <><b>{request.postcode}</b></>
-                                </TableCell>
-                                <TableCell>
-                                    {request.serviceType}
-                                </TableCell>
-                                <TableCell>
-                                    <i>Hit endpoint to get user here</i>
-                                </TableCell>
-                                <TableCell>
-                                    <ThemedButton
-                                        variantOverride={'text'}
-                                        onClick={() => {
-                                            setShowRequestSummary(true);
-                                            setRequestToView(request);
+                    {loading ? (<TableSkeleton columns={7}/>) : <></>}
+                    {(!loading && rows.length === 0) ?
+                        <TableRow>
+                            <TableCell/>
+                            <TableCell/>
+                            {user.userType === UserType.PROFESSIONAL && <TableCell/>}
+                            <TableCell>
+                                <Typography>
+                                    There are no service requests for this user.
+                                </Typography>
+                            </TableCell>
+                            <TableCell/>
+                            <TableCell/>
+                        </TableRow> :
+                        <></>
+                    }
+                    {!loading ?
+                        <>
+                            {rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) => {
+                                return (
+                                    <TableRow
+                                        key={request.requestID}
+                                        sx={{
+                                            backgroundColor: "white",
+                                            '&:last-child td:first-of-type': {
+                                                borderBottomLeftRadius: 12,
+                                            },
+                                            '&:last-child td:last-child': {
+                                                borderBottomRightRadius: 12,
+                                            },
                                         }}
                                     >
-                                        View
-                                    </ThemedButton>
-                                </TableCell>
-                                <TableCell>
-                                    {/*<Tooltip*/}
-                                    {/*    title={user?.user_id && request.applicantIds?.includes(user?.user_id) ? 'Application to request already submitted' : ''}>*/}
-                                    {/*    <span>*/}
-                                    {/*         <ThemedButton*/}
-                                    {/*             variantOverride={'text'}*/}
-                                    {/*             disabled={user?.user_id ? request.applicantIds?.includes(user?.user_id) : false}*/}
-                                    {/*             onClick={() => {*/}
-                                    {/*                 setRequestToView(request)*/}
-                                    {/*                 setShowConfirmDialog(true);*/}
+                                        <TableCell>
+                                            {request.requestID}
+                                        </TableCell>
+                                        <TableCell>
+                                            {format(request.requestDate, "dd/MM/yyyy")}
+                                        </TableCell>
+                                        <TableCell>
+                                            <><b>{request.postcode}</b></>
+                                        </TableCell>
+                                        <TableCell>
+                                            {request.serviceType}
+                                        </TableCell>
+                                        <TableCell>
+                                            {request.clientName}
+                                        </TableCell>
+                                        <TableCell>
+                                            <ThemedButton
+                                                variantOverride={'text'}
+                                                onClick={() => {
+                                                    setShowRequestSummary(true);
+                                                    setRequestToView(request);
+                                                }}
+                                            >
+                                                View
+                                            </ThemedButton>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Tooltip
+                                                title={user?.user_id && professionalHasApplied(request) ? 'Application to request already submitted' : ''}>
+                                        <span>
+                                             <ThemedButton
+                                                 variantOverride={'text'}
+                                                 disabled={user?.user_id ? professionalHasApplied(request) : false}
+                                                 onClick={() => {
+                                                     setRequestToView(request)
+                                                     setShowConfirmDialog(true);
+                                                 }}
+                                             >
+                                                 Apply
+                                            </ThemedButton>
+                                        </span>
+                                            </Tooltip>
+                                        </TableCell>
+                                        {showConfirmDialog && requestToView &&
+                                            <ApplicationConfirmationDialog
+                                                request={requestToView}
+                                                setShowConfirmationDialog={setShowConfirmDialog}
+                                                showConfirmationDialog={showConfirmDialog}
+                                            />
+                                        }
+                                    </TableRow>
+                                )
+                            })}
+                        </> : <></>
+                    }
 
-                                    {/*             }}*/}
-                                    {/*         >*/}
-                                    {/*             Apply*/}
-                                    {/*        </ThemedButton>*/}
-                                    {/*    </span>*/}
-                                    {/*</Tooltip>*/}
-                                </TableCell>
-                                {showConfirmDialog && requestToView &&
-                                    <ApplicationConfirmationDialog
-                                        request={requestToView}
-                                        setShowConfirmationDialog={setShowConfirmDialog}
-                                        showConfirmationDialog={showConfirmDialog}
-                                    />
-                                }
-                            </TableRow>
-                        )
-                    })}
                 </TableBody>
             </Table>
             <TablePagination
                 component="div"
-                count={serviceRequests.length}
+                count={rows?.length}
                 page={page}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            {requestToView &&
+            {(requestToView !== undefined) &&
                 <Backdrop open={showRequestSummary}>
                     <RequestSummary setShowRequestSummary={setShowRequestSummary} request={requestToView}/>
                 </Backdrop>

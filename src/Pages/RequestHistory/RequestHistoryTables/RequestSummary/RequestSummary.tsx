@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Typography} from "@mui/material";
+import {Alert, Box, Typography} from "@mui/material";
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
@@ -10,6 +10,11 @@ import "slick-carousel/slick/slick-theme.css";
 import {RequestSummaryApplicantsCarousel} from "./RequestSummaryApplicantsCarousel";
 import {UserType} from "../../../../Types/Account";
 import {User} from "../../../../Types/User";
+import {ServiceType} from "../../../../Types/ServiceType";
+import axios from "axios";
+import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../../Routes";
+import swal from "sweetalert";
+import {useNavigate} from "react-router-dom";
 
 export interface RequestSummaryProps {
     /**
@@ -25,13 +30,46 @@ export interface RequestSummaryProps {
 
 export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) => {
     const [showEdit, setShowEdit] = useState(false);
-    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
     const userType = user?.userType;
 
-    const handleEdit = () => {
-        //TODO send data to endpoint
+    const [serviceTypeEdit, setServiceTypeEdit] = useState<ServiceType>();
+    const [serviceDescEdit, setServiceDescEdit] = useState<string>();
 
-        //Finally, set the showEdit to false when 'Confirm' is clicked
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const navigate = useNavigate();
+
+    const handleEdit = () => {
+        setLoading(true);
+
+        const requestEditObject : Partial<ServiceRequest> = {
+            requestID: request.requestID,
+            serviceType: serviceTypeEdit as ServiceType,
+            jobDescription: serviceDescEdit
+        }
+
+        axios.put(`${DEV_PATH}/serviceRequest`, requestEditObject, {
+            headers: {
+                ...CORS_HEADER,
+                'Authorization': auth_token
+            },
+        })
+            .then((r) => {
+                if(r.data && r.data.requestID) {
+                    swal("Success", "Successfully edited the service request", "success")
+                        .then(() => window.location.reload());
+                } else {
+                    throw Error();
+                }
+            })
+            .catch(() => {
+                setLoading(false);
+                swal("Error", "An issue occurred when attempting to edit the service request", "error")
+                    .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
+            });
 
     }
 
@@ -70,7 +108,11 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 </Typography>
                 {!showEdit ?
                     <RequestSummaryView request={request}/> :
-                    <RequestSummaryEdit request={request}/>
+                    <RequestSummaryEdit
+                        request={request}
+                        setServiceDescEdit={setServiceDescEdit}
+                        setServiceTypeEdit={setServiceTypeEdit}
+                    />
                 }
             </div>
 
@@ -93,7 +135,16 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 }
                 {
                     ((request.requestStatus === ServiceRequestStatus.NEW) && (userType === UserType.CLIENT)) && (!request.applications || request.applications?.length === 0) &&
-                    <ThemedButton onClick={() => setShowEdit(!showEdit)}>
+                    <ThemedButton
+                        onClick={() => {
+                            if (showEdit) {
+                                handleEdit();
+                            } else {
+                                setShowEdit(!showEdit);
+                            }
+                        }}
+                        disabled={loading}
+                    >
                         {!showEdit ? `Edit` : `Confirm`}
                     </ThemedButton>
                 }

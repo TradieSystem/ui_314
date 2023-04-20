@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+    Alert,
     Backdrop,
     Table,
     TableBody,
@@ -13,13 +14,20 @@ import {
 import styles from './RequestHistoryTable.module.css';
 import {format} from 'date-fns'
 import {StatusIcon} from "../../../Components/StatusIcon/StatusIcon";
-import {ServiceRequest, ServiceRequestStatus} from "../../../Types/ServiceRequest";
+import {
+    ServiceRequest,
+    ServiceRequestApplication,
+    ServiceRequestApplicationStatus,
+    ServiceRequestStatus
+} from "../../../Types/ServiceRequest";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {UserType} from "../../../Types/Account";
-import {generateDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
 import {RequestSummary} from "./RequestSummary/RequestSummary";
 import {SortDirection} from "../../../Utilities/TableUtils";
 import {User} from "../../../Types/User";
+import {TableSkeleton} from "../../../Components/TableSkeleton/TableSkeleton";
+import axios from "axios";
+import {CORS_HEADER, DEV_PATH} from "../../../Routes";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -67,16 +75,23 @@ const getHeaderBorderRadius = (columnEnum: ClientRequestHistoryColumn): string =
     }
 }
 
+export interface ServiceRequestTableRow extends ServiceRequest {
+    clientName: string;
+}
+
 /**
  * Table representing the client request history of their {@link ServiceRequest}s.
  */
 export const RequestHistoryTable = (): JSX.Element => {
-    const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
-    const userType = user?.userType;
-    const headersToUse = userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
+    const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
+    const headersToUse = user.userType === UserType.CLIENT ? ClientRequestHistoryColumn : ProfessionalRequestHistoryColumn;
 
-    //TODO remove dummyServiceRequests when endpoint returns backend data
-    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>(generateDummyServiceRequests(userType !== UserType.PROFESSIONAL));
+    const [loading, setLoading] = useState<boolean>(true);
+    const [alert, setAlert] = useState<JSX.Element>(<></>);
+
+    const [rows, setRows] = useState<ServiceRequestTableRow[]>([]);
+    const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>();
 
     //Table sorting
     const [sortColumn, setSortColumn] = useState<ProfessionalRequestHistoryColumn>(ProfessionalRequestHistoryColumn.ApplicationNumber);
@@ -120,75 +135,173 @@ export const RequestHistoryTable = (): JSX.Element => {
 
     const sortServiceRequests = (sortField: ProfessionalRequestHistoryColumn, sortDirection: SortDirection) => {
         //Sort the data by the property
-        let orderedServiceRequests = serviceRequests;
+        let orderedServiceRequests = rows;
         switch (ProfessionalRequestHistoryColumn[sortField]) {
             case ProfessionalRequestHistoryColumn.ApplicationNumber:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID > b.requestID ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestID > b.requestID ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestID < b.requestID ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestID < b.requestID ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.ApplicationDate:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate > b.requestDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestDate > b.requestDate ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestDate < b.requestDate ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestDate < b.requestDate ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.ServiceType:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.serviceType > b.serviceType ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.serviceType < b.serviceType ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.Status:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestStatus > b.requestStatus ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestStatus > b.requestStatus ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.requestStatus < b.requestStatus ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.requestStatus < b.requestStatus ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.Cost:
                 if (sortDirection === SortDirection.ASC) {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost > b.cost) ? 1 : -1));
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => {
+                        const acceptedOfferA: ServiceRequestApplication | undefined = a.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
+                        const acceptedOfferB: ServiceRequestApplication | undefined = b.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
+
+                        if (acceptedOfferA && acceptedOfferA.cost && acceptedOfferB && acceptedOfferB.cost) {
+                            if (acceptedOfferA.cost > acceptedOfferB.cost) {
+                                return 1;
+                            }
+                        }
+                        return -1;
+                    });
                 } else {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => ((a.cost && b.cost !== undefined) && (a.cost < b.cost)) ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => {
+                        const acceptedOfferA: ServiceRequestApplication | undefined = a.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
+                        const acceptedOfferB: ServiceRequestApplication | undefined = b.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
+
+                        if (acceptedOfferA && acceptedOfferA.cost && acceptedOfferB && acceptedOfferB.cost) {
+                            if (acceptedOfferA.cost < acceptedOfferB.cost) {
+                                return 1;
+                            }
+                        }
+                        return -1;
+                    });
                 }
                 break;
             case ProfessionalRequestHistoryColumn.Client:
                 if (sortDirection === SortDirection.ASC) {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName > b.client.lastName ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.clientName > b.clientName ? 1 : -1);
                 } else {
-                    // orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.client.lastName < b.client.lastName ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.clientName < b.clientName ? 1 : -1);
                 }
                 break;
             case ProfessionalRequestHistoryColumn.Postcode:
                 if (sortDirection === SortDirection.ASC) {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.postcode > b.postcode ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.postcode > b.postcode ? 1 : -1);
                 } else {
-                    orderedServiceRequests = orderedServiceRequests.sort((a, b) => a.postcode < b.postcode ? 1 : -1);
+                    orderedServiceRequests = orderedServiceRequests?.sort((a, b) => a.postcode < b.postcode ? 1 : -1);
                 }
                 break;
             default:
                 break;
         }
 
-        setServiceRequests(orderedServiceRequests);
+        setRows(orderedServiceRequests);
     }
 
     useEffect(() => {
-        //TODO make axios call to get all requests associated with a client
+        if (loading) {
+            axios.get(`${DEV_PATH}/serviceRequest?userID=${user.user_id}&userType=${user.userType}`, {
+                headers: {
+                    ...CORS_HEADER,
+                    'Authorization': auth_token
+                },
+            })
+                .then((r) => {
+                    if (r.data !== null && r.data[0]) {     //If there was an array of data returned (i.e. some service requests)
+                        let incomingRequests: ServiceRequest[] = [];
+                        r.data.forEach((request: ServiceRequest) => {
+                            const serviceRequest: ServiceRequest = {
+                                requestID: request.requestID,
+                                requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
+                                serviceType: request.serviceType,
+                                requestStatus: request.requestStatus,
+                                postcode: request.postcode,
+                                applications: request.applications,
+                                jobDescription: request.jobDescription,
+                                clientID: request.clientID
+                            }
 
-        //TODO call setServiceRequests when data returned
-
+                            incomingRequests.push(serviceRequest);
+                            setServiceRequests(incomingRequests);
+                        });
+                    } else {
+                        setLoading(false);
+                    }
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    setAlert(
+                        <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                            There was an issue retrieving the content
+                        </Alert>
+                    );
+                });
+        }
         //Sort by Application Number, ascending
         handleSort(ProfessionalRequestHistoryColumn.ApplicationNumber);
     }, []);
 
+    useEffect(() => {
+        if (loading) {
+            //When we have received the service requests, we need to hit another endpoint to get the client name
+            serviceRequests?.forEach((request) => {
+                axios.get(`${DEV_PATH}/user/userGet?user_id=${request.clientID}`, {
+                    headers: {
+                        ...CORS_HEADER,
+                        'Authorization': auth_token
+                    },
+                })
+                    .then((r) => {
+                        if (r.data && r.data.firstName && r.data.lastName) {
+                            const name = `${r.data.firstName} ${r.data.lastName}`;
+                            const newRow: ServiceRequestTableRow = {
+                                clientName: name,
+                                requestID: request.requestID,
+                                requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
+                                serviceType: request.serviceType,
+                                requestStatus: request.requestStatus,
+                                postcode: request.postcode,
+                                clientID: request.clientID,
+                                applications: request.applications,
+                                jobDescription: request.jobDescription
+                            }
+                            rows.push(newRow);
+                        }
+
+                        if (serviceRequests?.length === rows.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
+                            setLoading(false);
+                        }
+                    })
+                    .catch((error) => {
+                        setLoading(false);
+                        setAlert(
+                            <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                                There was an issue retrieving the content
+                            </Alert>
+                        );
+                    });
+            });
+        }
+    }, [serviceRequests]);
+
     return (
         <div className={styles['table-container']}>
+            {alert}
             <Table>
                 <TableHead>
                     <TableRow>
@@ -225,92 +338,123 @@ export const RequestHistoryTable = (): JSX.Element => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {serviceRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) => {
-                        return (
-                            <TableRow
-                                key={request.requestID}
-                                sx={{
-                                    backgroundColor: "white",
-                                    '&:last-child td:first-of-type': {
-                                        borderBottomLeftRadius: 12,
-                                    },
-                                    '&:last-child td:last-child': {
-                                        borderBottomRightRadius: 12,
-                                    },
-                                }}
-                            >
-                                <TableCell>
-                                    {request.requestID}
-                                </TableCell>
-                                <TableCell>
-                                    {format(request.requestDate, "dd/MM/yyyy")}
-                                </TableCell>
-                                {/*Location column only renders for professionals viewing their confirmed service requests*/}
-                                {
-                                    userType === UserType.PROFESSIONAL &&
-                                    <TableCell>
-                                    {/*<TableCell sx={{display: "grid"}}>*/}
-                                        {/*<>{request.suburb}</>*/}
-                                        <b>{request.postcode}</b>
-                                    </TableCell>
-                                }
-                                <TableCell>
-                                    {request.serviceType}
-                                </TableCell>
-                                <TableCell>
-                                    <div className={styles['status-cell']}>
-                                        <StatusIcon status={request.requestStatus}/>
-                                        <b>{request.requestStatus}</b>
-                                    </div>
-                                </TableCell>
-                                {/*Show client attached to the service request only if we are viewing as a professional*/}
-                                {
-                                    userType === UserType.PROFESSIONAL &&
-                                    <TableCell>
-                                        {/*{`${request.client.firstName} ${request.client.lastName}`}*/}
-                                    </TableCell>
-                                }
-                                <TableCell>
-                                    {/*{request.cost ? `$${request.cost}` : '-'}*/}
-                                </TableCell>
-                                <TableCell>
-                                    {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
-                                    {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
-                                        <ThemedButton
-                                            variantOverride={'text'}
-                                            onClick={() => {
-                                                setShowRequestSummary(true);
-                                                setRequestToView(request);
-                                            }}
-                                        >
+                    {loading ? (<TableSkeleton columns={user.userType === UserType.PROFESSIONAL ? 9 : 7}/>) : <></>}
+                    {(!loading && rows.length === 0) ?
+                        <TableRow>
+                            <TableCell/>
+                            <TableCell/>
+                            {user.userType === UserType.PROFESSIONAL && <TableCell/>}
+                            <TableCell>
+                                <Typography>
+                                    There are no service requests for this user.
+                                </Typography>
+                            </TableCell>
+                            <TableCell/>
+                            <TableCell/>
+                            <TableCell/>
+                            <TableCell/>
+                        </TableRow> :
+                        <></>
+                    }
+                    {!loading ?
+                        <>
+                            {
+                                rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) =>
+                                    <TableRow
+                                        key={request.requestID}
+                                        sx={{
+                                            backgroundColor: "white",
+                                            '&:last-child td:first-of-type': {
+                                                borderBottomLeftRadius: 12,
+                                            },
+                                            '&:last-child td:last-child': {
+                                                borderBottomRightRadius: 12,
+                                            },
+                                        }}
+                                    >
+                                        <TableCell>
+                                            {request.requestID}
+                                        </TableCell>
+                                        <TableCell>
+                                            {format(request.requestDate, "dd/MM/yyyy")}
+                                        </TableCell>
+                                        {/*Location column only renders for professionals viewing their confirmed service requests*/}
+                                        {
+                                            user.userType === UserType.PROFESSIONAL &&
+                                            <TableCell>
+                                                <b>{request.postcode}</b>
+                                            </TableCell>
+                                        }
+                                        <TableCell>
+                                            {request.serviceType}
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className={styles['status-cell']}>
+                                                <StatusIcon status={request.requestStatus}/>
+                                                <b>{request.requestStatus}</b>
+                                            </div>
+                                        </TableCell>
+                                        {/*Show client attached to the service request only if we are viewing as a professional*/}
+                                        {
+                                            user.userType === UserType.PROFESSIONAL &&
+                                            <TableCell>
+                                                {request.clientName}
+                                            </TableCell>
+                                        }
+                                        <TableCell>
                                             {
-                                                (request.requestStatus === ServiceRequestStatus.NEW && userType === UserType.CLIENT) && (!request.applications || request.applications?.length === 0)
-                                                    ?
-                                                `View / Edit` :
-                                                `View`
+                                                (request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0) !== undefined) ?
+                                                    request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0)?.cost :
+                                                    '-'
                                             }
-                                        </ThemedButton>
-                                </TableCell>
-                                <TableCell>
-                                    {/*    Iteration 4 work     */}
-                                </TableCell>
-                            </TableRow>
-                        )
-                    })}
+                                        </TableCell>
+                                        <TableCell>
+                                            {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
+                                            {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
+                                            <ThemedButton
+                                                variantOverride={'text'}
+                                                onClick={() => {
+                                                    setShowRequestSummary(true);
+                                                    setRequestToView(request);
+                                                }}
+                                            >
+                                                {
+                                                    (request.requestStatus === ServiceRequestStatus.NEW && user.userType === UserType.CLIENT) && (!request.applications || request.applications?.length === 0)
+                                                        ?
+                                                        `View / Edit` :
+                                                        `View`
+                                                }
+                                            </ThemedButton>
+                                        </TableCell>
+                                        <TableCell>
+                                            {/*    Iteration 4 work     */}
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            }
+
+                        </>
+
+                        :
+
+                        <>
+                        </>}
                 </TableBody>
             </Table>
             <TablePagination
                 component="div"
-                count={serviceRequests.length}
+                count={rows?.length || 0}
                 page={page}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            {requestToView &&
+            {(requestToView !== undefined) ?
                 <Backdrop open={showRequestSummary}>
                     <RequestSummary setShowRequestSummary={setShowRequestSummary} request={requestToView}/>
-                </Backdrop>
+                </Backdrop> :
+                <>
+                </>
             }
         </div>
     );
