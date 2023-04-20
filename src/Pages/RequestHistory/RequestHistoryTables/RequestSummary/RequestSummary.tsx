@@ -148,6 +148,41 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                         {!showEdit ? `Edit` : `Confirm`}
                     </ThemedButton>
                 }
+                {
+                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) &&
+                    <ThemedButton
+                        onClick={() => {
+                            const auth_token = JSON.parse(localStorage.getItem("access_token") || "{ }")
+                            const InputObject = {
+                                requestID: request.requestID,
+                                requestStatus: ServiceRequestStatus.COMPLETE
+
+                            }
+
+                            axios.put(`${DEV_PATH}/serviceRequest`, InputObject, {
+                                headers: {
+                                    'Authorization': auth_token,
+                                    ...CORS_HEADER,
+
+                                }
+                            }).then(response => {
+                                if (response.status === 200) {
+                                    swal("Complete!", "You have successfully marked the job as complete!", "success").then(
+                                        //Couldn't think of a more elegant way to refresh the page than this, if someone can feel free to change
+                                        temp => { 
+                                        window.location.reload(); 
+                                    });
+                                    setShowRequestSummary(false);
+
+                                }
+                                else {
+                                    swal("Error", "Try Again", "error");
+                                }
+                            })
+                        }}>
+                        Mark Complete
+                    </ThemedButton>
+                }
             </div>
         </Box>
     )
