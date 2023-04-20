@@ -193,7 +193,7 @@ const LoginForm = () => {
                             type="submit"
                             loading={isSubmitting}
                         >
-                            {isSubmitting ? <Loading/> : "Login"}
+                            {isSubmitting ? <Loadin/> : "Login"}
                         </ThemedButton>
                     </Box>
                 </Box>
