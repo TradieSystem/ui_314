@@ -28,7 +28,7 @@ const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [securityQuestions, setSecurityQuestions] = useState<SecurityQuestionSet[]>([]);
     const [isSecurityQuestionsValid, setIsSecurityQuestionsValid] = useState(false);
-    const [userId,] = useState<number>();
+    const [userId,SetUser] = useState<number>();
     const [password, setPassword] = useState('');
     const md5Hash = require("md5-hash");
     const [showPassword, setShowPassword] = useState(false);
@@ -102,7 +102,6 @@ const ForgotPasswordForm = () => {
             .then((response) => {
                 if (response.data.matched === true) {
                     setIsSecurityQuestionsValid(true);
-
                 } else {
                     swal("Wrong Security Questions", "Try Again", "error");
                 }
@@ -125,6 +124,7 @@ const ForgotPasswordForm = () => {
                     const questions: SecurityQuestionSet[] = response.data.questions;
                     if (questions) {
                         setSecurityQuestions(questions);
+                        SetUser(response.data.user_id);
 
                     } else {
                         swal("Wrong Email", "Try Another Email", "error");
