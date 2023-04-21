@@ -59,19 +59,9 @@ const rows = [
 
 ];
 
-//Add Profile Picture Function in edit function.
-//Add value from star review.
-//Add validation picture field if wanted.
-//<IconButton  onClick={() => navigate("/HomePage")} aria-label="edit" style={{
-//background:"white",
-//color:"black"
-//}}>
-//<Edit />
-//</IconButton>
-
 export const ProfessionalProfile = () => {
     const user : User = JSON.parse(localStorage.getItem("user") || "{}") as User;
-    const [value, setValue] = React.useState<number | null>(2);
+    const [value] = React.useState<number | null>(2);
 
     if (user) {
         return (

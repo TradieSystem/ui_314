@@ -319,6 +319,7 @@ const EditProfileForm = () => {
 
         setSubmitting(true);
         setUpdatedUserObject(userObject);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -350,6 +351,7 @@ const EditProfileForm = () => {
                     }
                 });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [updatedUserObject]);
 
     if (user) {

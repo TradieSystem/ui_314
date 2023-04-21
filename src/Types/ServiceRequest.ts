@@ -1,5 +1,4 @@
 import {ServiceType} from "./ServiceType";
-import {User} from "./User";
 
 /**
  * Interface to describe a service request.
@@ -29,6 +28,10 @@ export interface ServiceRequest {
      * Client who has made the service request
      */
     clientID: number;
+    /**
+     * Professional who has been assigned to the service request
+     */
+    professionalID?: number;
     /**
      * An array of the {@link User} Professionals who have
      */
@@ -94,8 +97,8 @@ export enum ServiceRequestApplicationStatus {
 export enum ServiceRequestStatus {
     //New request with no confirmed professional assigned
     NEW = 'New',
-    //Request has had professional applicants, client has chosen one, and is now pending acceptance from the professional
-    PENDING_ACCEPTANCE = 'Pending Acceptance',
+    //@DEPRECATED Request has had professional applicants, client has chosen one, and is now pending acceptance from the professional
+    // PENDING_ACCEPTANCE = 'Pending Acceptance',
     //Request has been accepted by a professional, and not yet completed
     PENDING_COMPLETION = 'Pending Completion',
     //Job completed, but no review or rating left yet

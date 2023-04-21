@@ -52,6 +52,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                     )
                 });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [errors, values]);
 
     function stepsComplete() {

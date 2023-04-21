@@ -28,6 +28,7 @@ import {User} from "../../../Types/User";
 import {TableSkeleton} from "../../../Components/TableSkeleton/TableSkeleton";
 import axios from "axios";
 import {CORS_HEADER, DEV_PATH} from "../../../Routes";
+import {InfoOutlined} from "@mui/icons-material";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -215,6 +216,23 @@ export const RequestHistoryTable = (): JSX.Element => {
 
     useEffect(() => {
         if (loading) {
+            setAlert(
+                <Alert
+                    severity={"info"}
+                    variant={"outlined"}
+                    icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
+                    sx={{
+                        color: "#3f3f3f",
+                        backgroundColor: "#c7c7c7",
+                        border: "1.5px solid #3f3f3f",
+                        marginBottom: 2
+                    }}
+                >
+                    <Typography color={"black"}>
+                        Loading details...
+                    </Typography>
+                </Alert>
+            );
             axios.get(`${DEV_PATH}/serviceRequest?userID=${user.user_id}&userType=${user.userType}`, {
                 headers: {
                     ...CORS_HEADER,
@@ -231,19 +249,20 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 serviceType: request.serviceType,
                                 requestStatus: request.requestStatus,
                                 postcode: request.postcode,
+                                professionalID: request.professionalID,
                                 applications: request.applications,
                                 jobDescription: request.jobDescription,
                                 clientID: request.clientID
                             }
-
                             incomingRequests.push(serviceRequest);
                             setServiceRequests(incomingRequests);
                         });
                     } else {
                         setLoading(false);
+                        setAlert(<></>);
                     }
                 })
-                .catch((error) => {
+                .catch(() => {
                     setLoading(false);
                     setAlert(
                         <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
@@ -254,6 +273,7 @@ export const RequestHistoryTable = (): JSX.Element => {
         }
         //Sort by Application Number, ascending
         handleSort(ProfessionalRequestHistoryColumn.ApplicationNumber);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -275,6 +295,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
                                 serviceType: request.serviceType,
                                 requestStatus: request.requestStatus,
+                                professionalID: request.professionalID,
                                 postcode: request.postcode,
                                 clientID: request.clientID,
                                 applications: request.applications,
@@ -285,6 +306,7 @@ export const RequestHistoryTable = (): JSX.Element => {
 
                         if (serviceRequests?.length === rows.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
                             setLoading(false);
+                            setAlert(<></>);
                         }
                     })
                     .catch((error) => {
@@ -297,6 +319,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                     });
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serviceRequests]);
 
     return (
@@ -353,6 +376,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                             <TableCell/>
                             <TableCell/>
                             <TableCell/>
+                            {user.userType === UserType.PROFESSIONAL && <TableCell/>}
                         </TableRow> :
                         <></>
                     }
@@ -402,10 +426,9 @@ export const RequestHistoryTable = (): JSX.Element => {
                                             </TableCell>
                                         }
                                         <TableCell>
-                                            {
-                                                (request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0) !== undefined) ?
-                                                    request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0)?.cost :
-                                                    '-'
+                                            {request.applications?.filter((app) => app.professionalID === request.professionalID).at(0) ?
+                                                `$${request.applications?.filter((app) => app.professionalID === request.professionalID).at(0)?.cost}` :
+                                                '-'
                                             }
                                         </TableCell>
                                         <TableCell>

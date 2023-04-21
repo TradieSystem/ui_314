@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {ServiceRequest, ServiceRequestApplication} from "../../../Types/ServiceRequest";
-import {generateNewDummyServiceRequests} from "../../../Utilities/GenerateDummyData";
+import {
+    ServiceRequest,
+    ServiceRequestApplication,
+    ServiceRequestApplicationStatus
+} from "../../../Types/ServiceRequest";
 import {SortDirection} from "../../../Utilities/TableUtils";
 import styles from './AvailableRequestsTable.module.css';
 import {
@@ -26,6 +29,7 @@ import {CORS_HEADER, DEV_PATH} from "../../../Routes";
 import {ServiceRequestTableRow} from "../../RequestHistory/RequestHistoryTables/RequestHistoryTable";
 import {TableSkeleton} from "../../../Components/TableSkeleton/TableSkeleton";
 import {UserType} from "../../../Types/Account";
+import {InfoOutlined} from "@mui/icons-material";
 
 
 enum AvailableRequestsTableColumn {
@@ -70,7 +74,7 @@ export const AvailableRequestsTable = () => {
     const [alert, setAlert] = useState<JSX.Element>(<></>);
 
     const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>();
-    const [rows, setRows] = useState<ServiceRequestTableRow[]>([]);
+    const [rows] = useState<ServiceRequestTableRow[]>([]);
 
     //Table sorting
     const [sortColumn, setSortColumn] = useState<AvailableRequestsTableColumn>(AvailableRequestsTableColumn.ApplicationNumber);
@@ -154,8 +158,8 @@ export const AvailableRequestsTable = () => {
         sortServiceRequests(sortField, newSortDirection);
     };
 
-    const professionalHasApplied = (request : ServiceRequest) => {
-        const hasApplied : ServiceRequestApplication[] | undefined= request.applications?.filter((application) => application.professionalID === user.user_id);
+    const professionalHasApplied = (request: ServiceRequest) => {
+        const hasApplied: ServiceRequestApplication[] | undefined = request.applications?.filter((application) => application.professionalID === user.user_id);
 
         return !!(hasApplied && hasApplied[0]);
     }
@@ -169,6 +173,23 @@ export const AvailableRequestsTable = () => {
 
     useEffect(() => {
         if (loading) {
+            setAlert(
+                <Alert
+                    severity={"info"}
+                    variant={"outlined"}
+                    icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
+                    sx={{
+                        color: "#3f3f3f",
+                        backgroundColor: "#c7c7c7",
+                        border: "1.5px solid #3f3f3f",
+                        marginBottom: 2
+                    }}
+                >
+                    <Typography color={"black"}>
+                        Loading request details...
+                    </Typography>
+                </Alert>
+            );
             axios.get(`${DEV_PATH}/serviceRequest/available?postcode=${user.address.postcode}`, {
                 headers: {
                     ...CORS_HEADER,
@@ -184,16 +205,21 @@ export const AvailableRequestsTable = () => {
                                 requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
                                 serviceType: request.serviceType,
                                 requestStatus: request.requestStatus,
+                                professionalID: request.professionalID,
                                 postcode: request.postcode,
                                 applications: request.applications,
                                 jobDescription: request.jobDescription,
                                 clientID: request.clientID
                             }
+                            const approvedApplication: ServiceRequestApplication | undefined = request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
 
-                            incomingRequests.push(serviceRequest);
-                            setServiceRequests(incomingRequests);
+                            if (!approvedApplication) {
+                                incomingRequests.push(serviceRequest);
+                                setServiceRequests(incomingRequests);
+                            }
                         });
                     } else {
+                        setAlert(<></>);
                         setLoading(false);
                     }
                 })
@@ -209,6 +235,7 @@ export const AvailableRequestsTable = () => {
 
         //Sort by Application Number, ascending
         handleSort(AvailableRequestsTableColumn.ApplicationNumber);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -232,14 +259,16 @@ export const AvailableRequestsTable = () => {
                                 requestStatus: request.requestStatus,
                                 postcode: request.postcode,
                                 clientID: request.clientID,
+                                professionalID: request.professionalID,
                                 applications: request.applications,
                                 jobDescription: request.jobDescription
                             }
                             rows.push(newRow);
                         }
 
-                        if(serviceRequests?.length === rows.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
+                        if (serviceRequests?.length === rows.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
                             setLoading(false);
+                            setAlert(<></>);
                         }
                     })
                     .catch((error) => {
@@ -252,6 +281,7 @@ export const AvailableRequestsTable = () => {
                     });
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serviceRequests]);
 
     return (

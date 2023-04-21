@@ -19,7 +19,7 @@ export const EditProfileGeneral = ({setGeneralValid}: EditProfileGeneralProps): 
         } else {
             setGeneralValid(false);
         }
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [values, errors]);
 
     return (

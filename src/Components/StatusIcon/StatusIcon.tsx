@@ -26,9 +26,9 @@ export const StatusIcon = ({status}: StatusIconProps) : JSX.Element => {
         case ServiceRequestStatus.COMPLETE:
             color = '#7eef7e';
             break;
-        case ServiceRequestStatus.PENDING_ACCEPTANCE:
-            color = '#ffe785';
-            break;
+        // case ServiceRequestStatus.PENDING_ACCEPTANCE:
+        //     color = '#ffe785';
+        //     break;
         case ServiceRequestStatus.PENDING_COMPLETION:
             color = 'orange';
             break;
