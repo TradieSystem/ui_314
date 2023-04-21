@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {ServiceRequest,ServiceRequestApplication, ServiceRequestStatus, ServiceRequestApplicationStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
