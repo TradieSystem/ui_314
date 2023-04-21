@@ -59,13 +59,16 @@ export const RequestSummaryApplicantsCarousel = ({   request,
 
 
     const handleSelection = () => {
-        request.applications?.forEach((application) => {
-        const requestSelection : Partial<ServiceRequestApplication> = {
-            applicationID: application.applicationID,
-            requestID: application.requestID,
-            applicationStatus: ServiceRequestApplicationStatus.APPROVED
+        const selectedApplication = request.applications?.find(
+            (application) => application.applicationStatus === ServiceRequestApplicationStatus.PENDING
+        );
 
-        }
+        if (selectedApplication) {
+            const requestSelection: Partial<ServiceRequestApplication> = {
+                applicationID: selectedApplication.applicationID,
+                requestID: selectedApplication.requestID,
+                applicationStatus: ServiceRequestApplicationStatus.APPROVED
+            };
 
         axios.put(`${DEV_PATH}/serviceRequest/application`, requestSelection, {
             headers: {
@@ -84,7 +87,7 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                 swal("Error", "An issue occurred when attempting to edit the service request", "error")
                     .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
             });
-    })
+    }
     }
 
     const listItems = cards.map((card) =>
