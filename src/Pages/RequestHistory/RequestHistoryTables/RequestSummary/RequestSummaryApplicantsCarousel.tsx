@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {ServiceRequest,ServiceRequestApplication, ServiceRequestStatus, ServiceRequestApplicationStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
@@ -53,12 +53,11 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                                                  }: RequestSummaryApplicantsCarouselProps) => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
-    const [card, setCards] = useState<ServiceRequestApplicationCard[]>([]);
     const userType = user?.userType;
     const navigate = useNavigate();
 
 
-    const handleSelection = (selectedApplicationId: number) => {
+    const handleSelection = () => {
         const selectedApplication = request.applications?.find(
             (application) => application.applicationStatus === ServiceRequestApplicationStatus.PENDING
         );
@@ -78,14 +77,13 @@ export const RequestSummaryApplicantsCarousel = ({   request,
         })
             .then((r) => {
                 if (r.data) {
-                    swal("Success", "Successfully edited the service request", "success")
-                    setCards(card.filter(card => card.applicationID !== selectedApplicationId));
+                    swal("Success", "Successfully selected a professional", "success").then(() => window.location.reload())
                 } else {
                     throw Error();
                 }
             })
             .catch(() => {
-                swal("Error", "An issue occurred when attempting to edit the service request", "error")
+                swal("Error", "An issue occurred when attempting to accept a tradie", "error")
                     .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
             });
     }
@@ -121,7 +119,7 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
-                                onClick={() => handleSelection(card.applicationID)}
+                                onClick={() => handleSelection()}
                             >
                                 Accept
                             </ThemedButton>
