@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {ServiceRequest,ServiceRequestApplication, ServiceRequestStatus, ServiceRequestApplicationStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
@@ -53,12 +53,12 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                                                  }: RequestSummaryApplicantsCarouselProps) => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
-
+    const [card, setCards] = useState<ServiceRequestApplicationCard[]>([]);
     const userType = user?.userType;
     const navigate = useNavigate();
 
 
-    const handleSelection = () => {
+    const handleSelection = (selectedApplicationId: number) => {
         const selectedApplication = request.applications?.find(
             (application) => application.applicationStatus === ServiceRequestApplicationStatus.PENDING
         );
@@ -77,8 +77,9 @@ export const RequestSummaryApplicantsCarousel = ({   request,
             },
         })
             .then((r) => {
-                if (r.data && r.data.applicationStatus === "APPROVED") {
+                if (r.data) {
                     swal("Success", "Successfully edited the service request", "success")
+                    setCards(card.filter(card => card.applicationID !== selectedApplicationId));
                 } else {
                     throw Error();
                 }
@@ -120,7 +121,7 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
-                                type="submit"   onClick={() => handleSelection()}
+                                onClick={() => handleSelection(card.applicationID)}
                             >
                                 Accept
                             </ThemedButton>
