@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {ServiceRequest,ServiceRequestApplication, ServiceRequestStatus, ServiceRequestApplicationStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
@@ -57,17 +57,13 @@ export const RequestSummaryApplicantsCarousel = ({   request,
     const navigate = useNavigate();
 
 
-    const handleSelection = () => {
-        const selectedApplication = request.applications?.find(
-            (application) => application.applicationStatus === ServiceRequestApplicationStatus.PENDING
-        );
+    const handleSelection = (selectedApplicationId: number) => {
 
-        if (selectedApplication) {
-            const requestSelection: Partial<ServiceRequestApplication> = {
-                applicationID: selectedApplication.applicationID,
-                requestID: selectedApplication.requestID,
-                applicationStatus: ServiceRequestApplicationStatus.APPROVED
-            };
+        const requestSelection: Partial<ServiceRequestApplication> = {
+            applicationID: selectedApplicationId,
+            requestID: request.requestID,
+            applicationStatus: ServiceRequestApplicationStatus.APPROVED
+        };
 
         axios.put(`${DEV_PATH}/serviceRequest/application`, requestSelection, {
             headers: {
@@ -81,13 +77,12 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                 } else {
                     throw Error();
                 }
-            })
-            .catch(() => {
-                swal("Error", "An issue occurred when attempting to accept a tradie", "error")
-                    .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
-            });
-    }
-    }
+            }).catch(() => {
+            swal("Error", "An issue occurred when attempting to accept a tradie", "error")
+                .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
+        });
+
+}
 
     const listItems = cards.map((card) =>
         <li key={card.applicationID}>
@@ -119,7 +114,7 @@ export const RequestSummaryApplicantsCarousel = ({   request,
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
-                                onClick={() => handleSelection()}
+                                onClick={() => handleSelection(card.applicationID)}
                             >
                                 Accept
                             </ThemedButton>
