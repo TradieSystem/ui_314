@@ -149,7 +149,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     </ThemedButton>
                 }
                 {
-                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) &&
+                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) && (userType == UserType.PROFESSIONAL) &&
                     <ThemedButton
                         onClick={() => {
                             const auth_token = JSON.parse(localStorage.getItem("access_token") || "{ }")
