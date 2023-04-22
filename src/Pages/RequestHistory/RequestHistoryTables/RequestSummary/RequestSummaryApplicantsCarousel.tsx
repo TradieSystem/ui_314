@@ -1,17 +1,21 @@
 import React from 'react';
-import {ServiceRequest, ServiceRequestApplication, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
+import {ServiceRequest,ServiceRequestApplication, ServiceRequestStatus, ServiceRequestApplicationStatus} from "../../../../Types/ServiceRequest";
 import {UserType} from "../../../../Types/Account";
 import Slider from "react-slick";
 import {Card, CardActions, CardContent, Typography} from "@mui/material";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import './Arrow.css';
 import {User} from "../../../../Types/User";
-
+import axios from 'axios';
+import {CORS_HEADER, DEV_PATH, RoutesEnum } from '../../../../Routes';
+import swal from "sweetalert";
+import { useNavigate } from 'react-router-dom';
 export interface RequestSummaryApplicantsCarouselProps {
     /**
      * Request to display applicants for
      */
     request: ServiceRequest;
+
 
     /**
      * Callback to handle closing the overlay
@@ -22,7 +26,9 @@ export interface RequestSummaryApplicantsCarouselProps {
      * Cards to display on the carousel
      */
     cards: ServiceRequestApplicationCard[];
+
 }
+
 
 const settings = {
     dots: true,
@@ -40,13 +46,43 @@ export interface ServiceRequestApplicationCard extends ServiceRequestApplication
     offerDate: string;
 }
 
-export const RequestSummaryApplicantsCarousel = ({
-                                                     request,
+
+export const RequestSummaryApplicantsCarousel = ({   request,
                                                      setShowRequestSummary,
                                                      cards
                                                  }: RequestSummaryApplicantsCarouselProps) => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
+    const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
     const userType = user?.userType;
+    const navigate = useNavigate();
+
+
+    const handleSelection = (selectedApplicationId: number) => {
+
+        const requestSelection: Partial<ServiceRequestApplication> = {
+            applicationID: selectedApplicationId,
+            requestID: request.requestID,
+            applicationStatus: ServiceRequestApplicationStatus.APPROVED
+        };
+
+        axios.put(`${DEV_PATH}/serviceRequest/application`, requestSelection, {
+            headers: {
+                ...CORS_HEADER,
+                'Authorization': auth_token
+            },
+        })
+            .then((r) => {
+                if (r.data) {
+                    swal("Success", "Successfully selected a professional", "success").then(() => window.location.reload())
+                } else {
+                    throw Error();
+                }
+            }).catch(() => {
+            swal("Error", "An issue occurred when attempting to accept a tradie", "error")
+                .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
+        });
+
+}
 
     const listItems = cards.map((card) =>
         <li key={card.applicationID}>
@@ -78,7 +114,7 @@ export const RequestSummaryApplicantsCarousel = ({
                         </Typography>
                         <CardActions style={{justifyContent: "center", display: "flex"}}>
                             <ThemedButton
-                                type="submit" onClick={() => setShowRequestSummary(false)}
+                                onClick={() => handleSelection(card.applicationID)}
                             >
                                 Accept
                             </ThemedButton>
@@ -98,6 +134,7 @@ export const RequestSummaryApplicantsCarousel = ({
                         <Slider{...settings}>{listItems}</Slider>
                     </div>
                 </>
+
             }
         </div>
     );
