@@ -5,6 +5,8 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {RoutesEnum} from "../../../Routes";
 import {AccountCircleSharp, ManageAccounts} from "@mui/icons-material";
 import {User} from "../../../Types/User";
+import {motion} from "framer-motion";
+import {fadeInUp} from "../../../Effects/Animations";
 
 
 const UserProfile = () => {
@@ -13,7 +15,10 @@ const UserProfile = () => {
 
     if (user) {
         return (
-            <Box>
+            <Box
+                component={motion.div}
+                {...fadeInUp}
+            >
                 <Stack
                     sx={{
                         display: "grid"

@@ -13,9 +13,13 @@ export interface RequestSummaryViewProps {
      * The request to view
      */
     request: ServiceRequest;
+    /**
+     * (Optional) Professional name to display, if a professional has been assigned
+     */
+    professionalName?: string;
 }
 
-export const RequestSummaryView = ({request}: RequestSummaryViewProps) => {
+export const RequestSummaryView = ({request, professionalName}: RequestSummaryViewProps) => {
     const approvedApplication: ServiceRequestApplication | undefined = request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
 
     return (
@@ -52,6 +56,16 @@ export const RequestSummaryView = ({request}: RequestSummaryViewProps) => {
                     <Typography>{`${request.requestStatus}`}</Typography>
                 </Grid>
             </Grid>
+            {professionalName &&
+                <Grid container spacing={2} marginBottom={2}>
+                    <Grid item>
+                        <Typography fontWeight={'bold'}>Assigned Professional:</Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography>{professionalName}</Typography>
+                    </Grid>
+                </Grid>
+            }
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
                     <Typography fontWeight={'bold'}>Cost:</Typography>

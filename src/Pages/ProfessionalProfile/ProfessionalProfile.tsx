@@ -14,6 +14,8 @@ import {
     TableRow,
 } from "@mui/material";
 import {User} from "../../Types/User";
+import {motion} from "framer-motion";
+import {fadeInUp} from "../../Effects/Animations";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -65,7 +67,10 @@ export const ProfessionalProfile = () => {
 
     if (user) {
         return (
-            <Box>
+            <Box
+                component={motion.div}
+                {...fadeInUp}
+            >
                 <Box sx={{
                     display: "grid",
                     justifyContent: "center"
