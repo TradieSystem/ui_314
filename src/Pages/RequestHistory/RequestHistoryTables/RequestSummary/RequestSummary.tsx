@@ -18,6 +18,13 @@ import {useNavigate} from "react-router-dom";
 import {format} from "date-fns";
 import {InfoOutlined} from "@mui/icons-material";
 
+const panelStyling = {
+    padding: 3,
+    borderRadius: "20px",
+    border: "1px solid #DB5B13",
+    margin: "0 2rem 2rem 0",
+}
+
 export interface RequestSummaryProps {
     /**
      * Callback to handle closing the overlay
@@ -46,6 +53,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
     const [alert, setAlert] = useState<JSX.Element>(<></>);
 
     const [cards] = useState<ServiceRequestApplicationCard[]>([]);
+    const [professionalName, setProfessionalName] = useState<string>();
 
     const navigate = useNavigate();
 
@@ -91,16 +99,24 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 .then((r) => {
                     if (r.data && r.data.firstName && r.data.lastName) {
                         const name = `${r.data.firstName} ${r.data.lastName}`;
-                        const newCard: ServiceRequestApplicationCard = {
-                            requestID: application.requestID,
-                            applicationID: application.applicationID,
-                            offerDate: format(new Date(), "MM/dd/yyyy"),
-                            professionalID: application.professionalID,
-                            cost: application.cost,
-                            applicationStatus: application.applicationStatus,
-                            professionalName: name
+                        if(request.requestStatus === ServiceRequestStatus.NEW) {
+                            const newCard: ServiceRequestApplicationCard = {
+                                requestID: application.requestID,
+                                applicationID: application.applicationID,
+                                offerDate: format(new Date(), "MM/dd/yyyy"),
+                                professionalID: application.professionalID,
+                                cost: application.cost,
+                                applicationStatus: application.applicationStatus,
+                                professionalName: name
+                            }
+                            cards.push(newCard);
+                        } else {
+                            //We want to send the name to the summary card
+                            if(request.professionalID === application.professionalID) {
+                                setProfessionalName(name);
+                            }
                         }
-                        cards.push(newCard);
+
                     }
 
                     if (request.applications?.length === cards.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
@@ -153,14 +169,19 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 >
                     {!showEdit ? `Request Details` : 'Edit Request Details'}
                 </Typography>
-                {!showEdit ?
-                    <RequestSummaryView request={request}/> :
-                    <RequestSummaryEdit
-                        request={request}
-                        setServiceDescEdit={setServiceDescEdit}
-                        setServiceTypeEdit={setServiceTypeEdit}
-                    />
-                }
+                <Box
+                    sx={panelStyling}
+                >
+                    {!showEdit ?
+                        <RequestSummaryView request={request} professionalName={professionalName}/> :
+                        <RequestSummaryEdit
+                            request={request}
+                            setServiceDescEdit={setServiceDescEdit}
+                            setServiceTypeEdit={setServiceTypeEdit}
+                        />
+                    }
+                </Box>
+
             </div>
             {
                 !loadingCards ?
@@ -169,7 +190,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                         <RequestSummaryApplicantsCarousel
                             cards={cards}
                             request={request}
-                            setShowRequestSummary={setShowRequestSummary}
                         />
                     ) :
                     ((request.requestStatus === ServiceRequestStatus.NEW && request.applications !== null) ?

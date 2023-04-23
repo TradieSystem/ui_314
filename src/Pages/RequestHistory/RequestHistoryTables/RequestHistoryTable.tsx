@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
     Alert,
-    Backdrop,
+    Backdrop, Box,
     Table,
     TableBody,
     TableCell,
@@ -29,6 +29,8 @@ import {TableSkeleton} from "../../../Components/TableSkeleton/TableSkeleton";
 import axios from "axios";
 import {CORS_HEADER, DEV_PATH} from "../../../Routes";
 import {InfoOutlined} from "@mui/icons-material";
+import {motion} from "framer-motion";
+import {fadeInUp} from "../../../Effects/Animations";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -324,146 +326,152 @@ export const RequestHistoryTable = (): JSX.Element => {
 
     return (
         <div className={styles['table-container']}>
+            <Box
+                component={motion.div}
+                {...fadeInUp}
+            >
             {alert}
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        {Object.entries(headersToUse).map(([key, value]) => {
-                            return (
-                                <TableCell
-                                    key={key}
-                                    sx={{
-                                        borderRadius: getHeaderBorderRadius(key as ClientRequestHistoryColumn),
-                                        backgroundColor: "#d3733c",
-                                        color: "white"
-                                    }}
-                                >
-                                    {/*Manage and Review columns aren't sortable*/}
-                                    {(key === ClientRequestHistoryColumn.Manage || key === ClientRequestHistoryColumn.Review) ?
-                                        <Typography variant={'h6'} fontWeight={"bold"}>
-                                            {mapColumnName(value)}
-                                        </Typography> :
-                                        <TableSortLabel
-                                            active={sortColumn === key}
-                                            direction={sortColumn === key ? sortDirection : SortDirection.ASC}
-                                            onClick={() => {
-                                                handleSort(key as ProfessionalRequestHistoryColumn)
-                                            }}
-                                        >
-                                            <Typography variant={'h6'} fontWeight={"bold"}>
-                                                {mapColumnName(value)}
-                                            </Typography>
-                                        </TableSortLabel>
-                                    }
-                                </TableCell>
-                            );
-                        })}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {loading ? (<TableSkeleton columns={user.userType === UserType.PROFESSIONAL ? 9 : 7}/>) : <></>}
-                    {(!loading && rows.length === 0) ?
+                <Table>
+                    <TableHead>
                         <TableRow>
-                            <TableCell/>
-                            <TableCell/>
-                            {user.userType === UserType.PROFESSIONAL && <TableCell/>}
-                            <TableCell>
-                                <Typography>
-                                    There are no service requests for this user.
-                                </Typography>
-                            </TableCell>
-                            <TableCell/>
-                            <TableCell/>
-                            <TableCell/>
-                            <TableCell/>
-                            {user.userType === UserType.PROFESSIONAL && <TableCell/>}
-                        </TableRow> :
-                        <></>
-                    }
-                    {!loading ?
-                        <>
-                            {
-                                rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) =>
-                                    <TableRow
-                                        key={request.requestID}
+                            {Object.entries(headersToUse).map(([key, value]) => {
+                                return (
+                                    <TableCell
+                                        key={key}
                                         sx={{
-                                            backgroundColor: "white",
-                                            '&:last-child td:first-of-type': {
-                                                borderBottomLeftRadius: 12,
-                                            },
-                                            '&:last-child td:last-child': {
-                                                borderBottomRightRadius: 12,
-                                            },
+                                            borderRadius: getHeaderBorderRadius(key as ClientRequestHistoryColumn),
+                                            backgroundColor: "#d3733c",
+                                            color: "white"
                                         }}
                                     >
-                                        <TableCell>
-                                            {request.requestID}
-                                        </TableCell>
-                                        <TableCell>
-                                            {format(request.requestDate, "dd/MM/yyyy")}
-                                        </TableCell>
-                                        {/*Location column only renders for professionals viewing their confirmed service requests*/}
-                                        {
-                                            user.userType === UserType.PROFESSIONAL &&
-                                            <TableCell>
-                                                <b>{request.postcode}</b>
-                                            </TableCell>
-                                        }
-                                        <TableCell>
-                                            {request.serviceType}
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className={styles['status-cell']}>
-                                                <StatusIcon status={request.requestStatus}/>
-                                                <b>{request.requestStatus}</b>
-                                            </div>
-                                        </TableCell>
-                                        {/*Show client attached to the service request only if we are viewing as a professional*/}
-                                        {
-                                            user.userType === UserType.PROFESSIONAL &&
-                                            <TableCell>
-                                                {request.clientName}
-                                            </TableCell>
-                                        }
-                                        <TableCell>
-                                            {request.applications?.filter((app) => app.professionalID === request.professionalID).at(0) ?
-                                                `$${request.applications?.filter((app) => app.professionalID === request.professionalID).at(0)?.cost}` :
-                                                '-'
-                                            }
-                                        </TableCell>
-                                        <TableCell>
-                                            {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
-                                            {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
-                                            <ThemedButton
-                                                variantOverride={'text'}
+                                        {/*Manage and Review columns aren't sortable*/}
+                                        {(key === ClientRequestHistoryColumn.Manage || key === ClientRequestHistoryColumn.Review) ?
+                                            <Typography variant={'h6'} fontWeight={"bold"}>
+                                                {mapColumnName(value)}
+                                            </Typography> :
+                                            <TableSortLabel
+                                                active={sortColumn === key}
+                                                direction={sortColumn === key ? sortDirection : SortDirection.ASC}
                                                 onClick={() => {
-                                                    setShowRequestSummary(true);
-                                                    setRequestToView(request);
+                                                    handleSort(key as ProfessionalRequestHistoryColumn)
                                                 }}
                                             >
-                                                {
-                                                    (request.requestStatus === ServiceRequestStatus.NEW && user.userType === UserType.CLIENT) && (!request.applications || request.applications?.length === 0)
-                                                        ?
-                                                        `View / Edit` :
-                                                        `View`
+                                                <Typography variant={'h6'} fontWeight={"bold"}>
+                                                    {mapColumnName(value)}
+                                                </Typography>
+                                            </TableSortLabel>
+                                        }
+                                    </TableCell>
+                                );
+                            })}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {loading ? (<TableSkeleton columns={user.userType === UserType.PROFESSIONAL ? 9 : 7}/>) : <></>}
+                        {(!loading && rows.length === 0) ?
+                            <TableRow>
+                                <TableCell/>
+                                <TableCell/>
+                                {user.userType === UserType.PROFESSIONAL && <TableCell/>}
+                                <TableCell>
+                                    <Typography>
+                                        There are no service requests for this user.
+                                    </Typography>
+                                </TableCell>
+                                <TableCell/>
+                                <TableCell/>
+                                <TableCell/>
+                                <TableCell/>
+                                {user.userType === UserType.PROFESSIONAL && <TableCell/>}
+                            </TableRow> :
+                            <></>
+                        }
+                        {!loading ?
+                            <>
+                                {
+                                    rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((request, index) =>
+                                        <TableRow
+                                            key={request.requestID}
+                                            sx={{
+                                                backgroundColor: "white",
+                                                '&:last-child td:first-of-type': {
+                                                    borderBottomLeftRadius: 12,
+                                                },
+                                                '&:last-child td:last-child': {
+                                                    borderBottomRightRadius: 12,
+                                                },
+                                            }}
+                                        >
+                                            <TableCell>
+                                                {request.requestID}
+                                            </TableCell>
+                                            <TableCell>
+                                                {format(request.requestDate, "dd/MM/yyyy")}
+                                            </TableCell>
+                                            {/*Location column only renders for professionals viewing their confirmed service requests*/}
+                                            {
+                                                user.userType === UserType.PROFESSIONAL &&
+                                                <TableCell>
+                                                    <b>{request.postcode}</b>
+                                                </TableCell>
+                                            }
+                                            <TableCell>
+                                                {request.serviceType}
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className={styles['status-cell']}>
+                                                    <StatusIcon status={request.requestStatus}/>
+                                                    <b>{request.requestStatus}</b>
+                                                </div>
+                                            </TableCell>
+                                            {/*Show client attached to the service request only if we are viewing as a professional*/}
+                                            {
+                                                user.userType === UserType.PROFESSIONAL &&
+                                                <TableCell>
+                                                    {request.clientName}
+                                                </TableCell>
+                                            }
+                                            <TableCell>
+                                                {request.applications?.filter((app) => app.professionalID === request.professionalID).at(0) ?
+                                                    `$${request.applications?.filter((app) => app.professionalID === request.professionalID).at(0)?.cost}` :
+                                                    '-'
                                                 }
-                                            </ThemedButton>
-                                        </TableCell>
-                                        <TableCell>
-                                            {/*    Iteration 4 work     */}
-                                        </TableCell>
-                                    </TableRow>
-                                )
-                            }
+                                            </TableCell>
+                                            <TableCell>
+                                                {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
+                                                {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
+                                                <ThemedButton
+                                                    variantOverride={'text'}
+                                                    onClick={() => {
+                                                        setShowRequestSummary(true);
+                                                        setRequestToView(request);
+                                                    }}
+                                                >
+                                                    {
+                                                        (request.requestStatus === ServiceRequestStatus.NEW && user.userType === UserType.CLIENT) && (!request.applications || request.applications?.length === 0)
+                                                            ?
+                                                            `View / Edit` :
+                                                            `View`
+                                                    }
+                                                </ThemedButton>
+                                            </TableCell>
+                                            <TableCell>
+                                                {/*    Iteration 4 work     */}
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                }
 
-                        </>
+                            </>
 
-                        :
+                            :
 
-                        <>
-                        </>}
-                </TableBody>
-            </Table>
+                            <>
+                            </>}
+                    </TableBody>
+                </Table>
+            </Box>
+
             <TablePagination
                 component="div"
                 count={rows?.length || 0}

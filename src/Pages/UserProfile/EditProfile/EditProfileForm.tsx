@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
-import {Alert, Grid} from "@mui/material";
+import {Alert, Box, Grid} from "@mui/material";
 import {User} from "../../../Types/User";
 import {alphabeticRegExp, monthRegExp, numericRegExp, phoneRegExp,} from "../../SignUp/SignUp";
 import {EditProfileGeneral} from "./EditProfilePanels/EditProfileGeneral";
@@ -16,6 +16,8 @@ import {EditProfileClientAccount} from "./EditProfilePanels/EditProfileClientAcc
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../Routes";
 import axios from "axios";
 import swal from "sweetalert";
+import {motion} from "framer-motion";
+import {fadeInUp} from "../../../Effects/Animations";
 
 export const panelStyling = {
     width: "40%",
@@ -356,7 +358,10 @@ const EditProfileForm = () => {
 
     if (user) {
         return (
-            <>
+            <Box
+                component={motion.div}
+                {...fadeInUp}
+            >
                 {alert}
                 <Formik initialValues={initialValues} validationSchema={EditSchema} onSubmit={handleSubmit}>
                     <Form>
@@ -379,7 +384,7 @@ const EditProfileForm = () => {
                         <EditProfileButtonControls handleSubmit={handleSubmit} submitting={submitting} disabled={!generalValid || !addressValid || !billingOutValid || !professionalDetailsValid}/>
                     </Form>
                 </Formik>
-            </>
+            </Box>
         );
     }
 };
