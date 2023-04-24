@@ -217,7 +217,12 @@ export const AvailableRequestsTable = () => {
                                 incomingRequests.push(serviceRequest);
                                 setServiceRequests(incomingRequests);
                             }
-                        });
+                        })
+
+                        if(serviceRequests?.length === 0 || !serviceRequests) {
+                            setLoading(false);
+                            setAlert(<></>);
+                        }
                     } else {
                         setAlert(<></>);
                         setLoading(false);
@@ -334,6 +339,7 @@ export const AvailableRequestsTable = () => {
                                     There are no service requests for this user.
                                 </Typography>
                             </TableCell>
+                            <TableCell/>
                             <TableCell/>
                             <TableCell/>
                         </TableRow> :
