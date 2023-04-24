@@ -157,7 +157,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                             const auth_token = JSON.parse(localStorage.getItem("access_token") || "{ }")
                             const InputObject = {
                                 requestID: request.requestID,
-                                requestStatus: ServiceRequestStatus.PENDING_COMPLETION
+                                requestStatus: ServiceRequestStatus.COMPLETE
 
                             }
                             axios.put(`${DEV_PATH}/serviceRequest`, InputObject, {
