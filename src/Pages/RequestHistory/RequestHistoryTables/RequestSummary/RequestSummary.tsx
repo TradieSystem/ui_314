@@ -46,6 +46,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
 
     const [serviceTypeEdit, setServiceTypeEdit] = useState<ServiceType>();
     const [serviceDescEdit, setServiceDescEdit] = useState<string>();
+    const [markCompleteDisabled, setMarkCompleteDisabled] = useState<boolean>();
 
     const [loadingEdit, setLoadingEdit] = useState<boolean>(false);
     const [loadingCards, setLoadingCards] = useState<boolean>(true);
@@ -235,6 +236,44 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                         disabled={loadingEdit}
                     >
                         {!showEdit ? `Edit` : `Confirm`}
+                    </ThemedButton>
+                }
+                {
+                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) && (userType == UserType.PROFESSIONAL) &&
+                    <ThemedButton
+                        onClick={() => {
+                            setMarkCompleteDisabled(true);
+                            const auth_token = JSON.parse(localStorage.getItem("access_token") || "{ }")
+                            const InputObject = {
+                                requestID: request.requestID,
+                                requestStatus: ServiceRequestStatus.COMPLETE
+
+                            }
+                            axios.put(`${DEV_PATH}/serviceRequest`, InputObject, {
+                                headers: {
+                                    'Authorization': auth_token,
+                                    ...CORS_HEADER,
+
+                                }
+                            }).then(response => {
+                                if (response.status === 200) {
+                                    swal("Complete!", "You have successfully marked the job as complete!", "success").then(
+                                        //Couldn't think of a more elegant way to refresh the page than this, if someone can feel free to change
+                                        temp => {
+                                            window.location.reload();
+                                        });
+
+
+                                }
+                                else {
+                                    swal("Error", "Try Again", "error").then(temp => {
+                                        setMarkCompleteDisabled(false);
+                                    });
+                                }
+                            })
+                        }}
+                        disabled={markCompleteDisabled}>
+                        Mark Complete
                     </ThemedButton>
                 }
             </div>
