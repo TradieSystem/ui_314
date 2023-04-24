@@ -239,7 +239,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     </ThemedButton>
                 }
                 {
-                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) && (userType == UserType.PROFESSIONAL) &&
+                    (request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION) && (userType === UserType.PROFESSIONAL) &&
                     <ThemedButton
                         onClick={() => {
                             setMarkCompleteDisabled(true);
