@@ -8,12 +8,21 @@
     margin-left: 7.5rem;
 }
 
+.banner {
+    background-color: #dec6c2;
+    height: 6px;
+    display: flex;
+    justify-content: center;
+    border: 0;
+    background-image: linear-gradient(to right, rgba(216, 206, 205, 0), #d97e49, rgba(216, 206, 205, 0));
+    margin-left: 12rem;
+    margin-right: 6rem;
+
+}
 .headers {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
 }
-
 body {
-    background-color: #D8CECD;
+    background-color: #dec6c2;
 }

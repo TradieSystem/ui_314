@@ -36,13 +36,12 @@ export const PageContainer = ({title, subtitle, children}: PageContainerProps) =
     return (
         <>
             <SideNavigation/>
-            <div
-                id={'page-content'}
-                className={isExpanded ? styles['page-content__min'] : styles['page-content__max']}
-            >
-                <div className={styles['headers']}>
-                    <Typography variant={'h3'}>{title}</Typography>
-                </div>
+            <div className={styles['headers']}>
+                <Typography variant={'h1'} style={{fontSize: "60px"}}>{title}</Typography>
+            </div>
+                <div className={styles['banner']}/>
+
+            <div id={'page-content'} className={isExpanded ? styles['page-content__min'] : styles['page-content__max']}>
                 {subtitle &&
                     <div className={styles['headers']}>
                         <Typography variant={'h5'}>{subtitle}</Typography>
@@ -52,6 +51,10 @@ export const PageContainer = ({title, subtitle, children}: PageContainerProps) =
             </div>
         </>
     )
-}
+    }
 
-export default PageContainer;
+
+
+
+
+        export default PageContainer;
