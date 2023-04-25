@@ -40,6 +40,32 @@ export interface ServiceRequest {
      * (Optional) description client has attached to the request
      */
     jobDescription?: string;
+    /**
+     * (Optional) rating that was left by the client on the {@link ServiceRequest} AFTER it has been marked as {@link ServiceRequestStatus.COMPLETE} - should be an integer value.
+     */
+    rating?: number;
+    /**
+     * (Optional) review that was left by the client on the {@link ServiceRequest} AFTER it has been marked as {@link ServiceRequestStatus.COMPLETE}
+     */
+    review?: string;
+}
+
+/**
+ * An interface to describe the object that is sent to the backend when a Client {@link User} leaves a review on a {@link ServiceRequest}
+ */
+export interface ServiceRequestReview {
+    /**
+     * The MANDATORY unique identifier request ID of the {@link ServiceRequest}
+     */
+    requestID: number;
+    /**
+     * A MANDATORY rating that is an INTEGER value between 1-5 (inclusive of both)
+     */
+    rating: number;
+    /**
+     * (Optional) review description
+     */
+    review?: string;
 }
 
 /**
