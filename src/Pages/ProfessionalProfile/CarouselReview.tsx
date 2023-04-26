@@ -69,7 +69,7 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
                             <Typography><b>Service:</b> {review.service}</Typography>
                         </Grid>
                         <Grid item xs={5}>
-                            <Typography><b>Description:</b> {review.content}</Typography>
+                            <Typography><b>Review:</b> {review.content}</Typography>
                         </Grid>
                         <Grid item xs={3}>
                             <Typography><b>Rating:</b> {review.rating}/5</Typography>
