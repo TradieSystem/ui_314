@@ -25,7 +25,7 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
                 <div key={review.requestID} style={{ marginBottom: "20px"}}>
                     <Grid container spacing={4} style={{justifyContent: "center", display: "flex",padding:"20px"}}>
                         <Grid item xs={3}>
-                            <Typography><b>Service:</b> {review.requestID}</Typography>
+                            <Typography><b>Request:</b> {review.requestID}</Typography>
                         </Grid>
                         <Grid item xs={5}>
                             <Typography><b>Review:</b> {review.review}</Typography>
