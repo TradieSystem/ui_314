@@ -64,7 +64,7 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
             background: "#d9c8c6"}}>
             {reviews.map(review => (
                 <div key={review.id} style={{ marginBottom: "20px"}}>
-                    <Grid container spacing={4} style={{justifyContent: "center", display: "flex",padding:"25px"}}>
+                    <Grid container spacing={4} style={{justifyContent: "center", display: "flex",padding:"20px"}}>
                         <Grid item xs={3}>
                             <Typography><b>Service:</b> {review.service}</Typography>
                         </Grid>
