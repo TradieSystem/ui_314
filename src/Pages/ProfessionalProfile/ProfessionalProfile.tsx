@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import {
-    Avatar,
+    Avatar, Stack,
 } from "@mui/material";
 import {User} from "../../Types/User";
 import {motion} from "framer-motion";
@@ -52,6 +52,11 @@ export const ProfessionalProfile = () => {
                 component={motion.div}
                 {...fadeInUp}
             >
+                <Stack
+                    sx={{
+                        display: "grid"
+                    }}
+                >
                     <div style={{justifyContent: "center", display: "flex"}}>
                         <Avatar
                             alt="Travis Howard"
@@ -73,6 +78,7 @@ export const ProfessionalProfile = () => {
                     <CarouselReview reviews={reviews} />
                 </Box>
                 </Box>
+                    </Stack>
             </Box>
         );
     }
