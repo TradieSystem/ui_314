@@ -307,7 +307,7 @@ export const SignUp = () => {
                                 localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
                                 localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
                                 swal("Welcome", "Your account has successfully been created.", "success")
-                                    .then(() => navigate(`/${RoutesEnum.HOME}`));
+                                    .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
 
                             } catch (error) {
                                 swal("Error", "An issue occurred when attempting to login to your account.", "error")
