@@ -3,6 +3,7 @@ import {MembershipOption, UserType} from "../Types/Account";
 import {ServiceRequest, ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
 import {ServiceType} from "../Types/ServiceType";
 import {dummyProfessionalUser} from "../Contexts/AuthContext";
+import {ServiceRequestTableRow} from "../Pages/RequestHistory/RequestHistoryTables/RequestHistoryTable";
 
 /**
  * Function to generate a list of dummy data containing a list of clients
@@ -40,15 +41,19 @@ export function generateClients() : User[] {
 /**
  * Function to generate a list of dummy service requests made by the same client
  */
-const dummyServiceRequests : ServiceRequest[] = [
+export const dummyServiceRequests : ServiceRequestTableRow[] = [
     {
         requestID: 2,
         requestDate: new Date("01/02/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.COMPLETE,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: (generateProfessionals().at(0) as User).user_id,
         postcode: "2000",
-        jobDescription: "I want a new fence please"
+        jobDescription: "I want a new fence please",
+        rating: 3,
+        review: "Got a new fence"
     },
     {
         requestID: 1,
@@ -56,24 +61,41 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.ARCHIVED,
         postcode: "2111",
+        professionalID: (generateProfessionals().at(1) as User).user_id,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        rating: 4,
+        review: "Guess it's fine"
     },
     {
         requestID: 3,
         requestDate: new Date("03/03/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
+        professionalID: (generateProfessionals().at(2) as User).user_id,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
         postcode: "2222",
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        applications: [
+            {
+                requestID: 3,
+                applicationID: 1,
+                offerDate: new Date("05/05/2023"),
+                professionalID: dummyProfessionalUser.user_id,
+                cost: 500.50,
+                applicationStatus: ServiceRequestApplicationStatus.APPROVED
+            }
+        ],
     },
-    // {
-    //     requestID: 4,
-    //     requestDate: new Date("03/15/2023"),
-    //     serviceType: ServiceType.ROOF_CLEANING,
-    //     requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-    //     clientID: (generateClients().at(0) as User).user_id,
-    //     postcode: "2333",
-    // },
+    {
+        requestID: 4,
+        requestDate: new Date("03/15/2023"),
+        serviceType: ServiceType.ROOF_CLEANING,
+        requestStatus: ServiceRequestStatus.NEW,
+        clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        postcode: "2333",
+    },
     {
         requestID: 5,
         requestDate: new Date("03/07/2023"),
@@ -81,6 +103,7 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestStatus: ServiceRequestStatus.NEW,
         postcode: "2444",
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
         jobDescription: 'The tree is in the way'
     },
     {
@@ -89,12 +112,13 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.NEW,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
         applications: [
             {
-                requestID: 1,
+                requestID: 6,
                 applicationID: 1,
                 offerDate: new Date("05/05/2023"),
-                professionalID: dummyProfessionalUser.user_id,
+                professionalID: (generateProfessionals().at(0) as User).user_id,
                 cost: 50.50,
                 applicationStatus: ServiceRequestApplicationStatus.PENDING
             }
@@ -108,7 +132,9 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.ARCHIVED,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
         postcode: "2666",
+        professionalID: (generateProfessionals().at(0) as User).user_id
     },
     {
         requestID: 10,
@@ -116,6 +142,8 @@ const dummyServiceRequests : ServiceRequest[] = [
         serviceType: ServiceType.TREE_REMOVAL,
         requestStatus: ServiceRequestStatus.COMPLETE,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: (generateProfessionals().at(0) as User).user_id,
         postcode: "2777",
     },
     {
@@ -123,23 +151,28 @@ const dummyServiceRequests : ServiceRequest[] = [
         requestDate: new Date("03/12/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
+        professionalID: (generateProfessionals().at(1) as User).user_id,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
         postcode: "2888",
     },
-    // {
-    //     requestID: 9,
-    //     requestDate: new Date("03/15/2023"),
-    //     serviceType: ServiceType.ROOF_CLEANING,
-    //     requestStatus: ServiceRequestStatus.PENDING_ACCEPTANCE,
-    //     clientID: (generateClients().at(0) as User).user_id,
-    //     postcode: "2999",
-    // },
+    {
+        requestID: 9,
+        requestDate: new Date("03/15/2023"),
+        serviceType: ServiceType.ROOF_CLEANING,
+        requestStatus: ServiceRequestStatus.NEW,
+        clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        postcode: "2999",
+    },
     {
         requestID: 11,
         requestDate: new Date("12/15/2020"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.ARCHIVED,
         clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: (generateProfessionals().at(1) as User).user_id,
         postcode: "2001",
     },
 ]

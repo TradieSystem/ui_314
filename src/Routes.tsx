@@ -19,7 +19,7 @@ export enum RoutesEnum {
  * use this for axios calls so we can easily change the path when we deploy
  */
 
-export const DEV_PATH = "http://localhost:5000/v1";
+export const DEV_PATH = "http://127.0.0.1:5000/v1";
 
 export const CORS_HEADER = {
     'content-type': 'application/json',
