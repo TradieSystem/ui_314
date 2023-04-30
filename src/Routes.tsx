@@ -3,7 +3,6 @@
  */
 export enum RoutesEnum {
     LOGIN = "login",
-    HOME = "home",
     REQUEST_HISTORY = "request_history",
     CREATE_REQUEST = "create_request",
     SIGN_UP = "signup",
@@ -20,7 +19,7 @@ export enum RoutesEnum {
  * use this for axios calls so we can easily change the path when we deploy
  */
 
-export const DEV_PATH = "https://63ssyxp81l.execute-api.us-east-1.amazonaws.com/v2";
+export const DEV_PATH = "http://localhost:5000/v1";
 
 export const CORS_HEADER = {
     'content-type': 'application/json',

@@ -59,7 +59,7 @@ const LoginForm = () => {
                             localStorage.setItem("access_token", JSON.stringify(response.data.access_token));
                             localStorage.setItem("refresh_token", JSON.stringify(response.data.refresh_token));
                             swal("Good job!", "You Have Signed In!", "success");
-                            navigate("/" + RoutesEnum.HOME);
+                            navigate("/" + RoutesEnum.REQUEST_HISTORY);
                             window.location.reload();
                         } catch (error) {
                             //This error will appear if we receive a 200, with an object that isn't a user

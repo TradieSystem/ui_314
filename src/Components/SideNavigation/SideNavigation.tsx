@@ -64,7 +64,7 @@ export const SideNavigation = () => {
                                 }
                                 localStorage.setItem("user", JSON.stringify(newUserObject));
 
-                                navigate(`/${RoutesEnum.HOME}`);
+                                navigate(`/${RoutesEnum.REQUEST_HISTORY}`);
                                 window.location.reload();
                             }}
                         />}

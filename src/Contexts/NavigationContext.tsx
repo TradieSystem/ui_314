@@ -1,6 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
 import {SideNavigationMenuItemProps} from "../Components/SideNavigation/SideNavigationMenuItem/SideNavigationMenuItem";
-import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import AddBox from '@mui/icons-material/AddBox';
 import {RoutesEnum} from "../Routes";
@@ -27,11 +26,6 @@ export const NavigationContextContextProvider = ({children}: any) => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
 
     let sideNavigationMenuItems: SideNavigationMenuItemProps[] = [
-        {
-            icon: <HomeIcon/>,
-            text: 'Home',
-            route: RoutesEnum.HOME
-        },
         {
 
             icon: <ArticleIcon/>,
