@@ -11,13 +11,12 @@ import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
 import { DEV_PATH } from '../../Routes';
 import axios from 'axios';
-
+import swal from 'sweetalert';
 
 export const ProfessionalProfile = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
         const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
         const [averageRating, setAverageRating] = useState<number>(0);
-
         useEffect(() => {
             axios
                 .get(`${DEV_PATH}/serviceRequest`)
@@ -29,25 +28,22 @@ export const ProfessionalProfile = () => {
                             const filteredRequests = data.filter(
                                 (request: ServiceRequest) => request.requestID && request.requestID > 0
                             );
-                            setServiceRequests(filteredRequests);
                             const filteredReviews = filteredRequests.filter(
                                 (request) => request.rating && request.rating > 0 && request.review && request.review.trim().length > 0
                             );
+                            setServiceRequests(filteredReviews);
                             const totalRating = filteredReviews.reduce(
                                 (acc, request) => (request.rating ? acc + request.rating : acc),
                                 0
                             );
                             const avgRating = filteredReviews.length > 0 ? totalRating / filteredReviews.length : 0;
                             setAverageRating(avgRating);
-                        } else {
-                            console.error("Invalid data - no service requests found");
                         }
-                    } else {
-                        console.error("Invalid data - no service requests found");
                     }
-                })
-                .catch((error) => {
-                    console.error("Invalid data - no service requests found");
+                }).catch((error) => {
+                if (error.response.status === 500) {
+                        swal("Error", " There was an issue retrieving the content", "error");
+                }
                 })
         }, []);
     if (user) {

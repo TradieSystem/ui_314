@@ -5,15 +5,14 @@ import { styled } from '@mui/material/styles';
 
 
 const RootStyle = styled('div')({
-    maxWidth: '1500px',
+    maxWidth: '1000px',
     padding: 25,
     margin: 'auto',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     background: '#d8cecd',
-    width: '100%', // auto size width
-    height: '100%', // auto size height
+    width: '100%'
 });
 
 
@@ -24,7 +23,6 @@ const ProfessionalProfileDisplay = () => {
             <RootStyle>
                 <ProfessionalProfile />
             </RootStyle>
-
         </PageContainer>
 
     );
