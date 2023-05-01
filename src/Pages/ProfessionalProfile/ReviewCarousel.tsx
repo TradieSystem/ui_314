@@ -58,7 +58,7 @@ const CarouselReview = (props: {filteredReviews: ServiceRequest[]}) => {
         <Slider {...settings}>
             {groupedReviews.map((group, i) => (
                 <div key={i}>
-                    <ReviewCard reviews={group} />
+                    <ReviewCard  reviews={group} />
                 </div>
             ))}
         </Slider>

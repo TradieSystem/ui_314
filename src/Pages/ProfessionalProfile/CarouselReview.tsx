@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from "react-slick";
-import {Grid, Typography} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 import {ServiceRequest} from "../../Types/ServiceRequest"
 
 interface ReviewCardProps {
@@ -14,6 +14,7 @@ const settings = {
     slidesToShow: 1,
     slidesToScroll: 1
 };
+
 const ReviewCard = ({ reviews }: ReviewCardProps) => {
     return (
         <div style={{ margin: "8px",
@@ -52,7 +53,7 @@ const CarouselReview = (props: {reviews: ServiceRequest[]}) => {
         return acc;
     }, []);
     return (
-        <Slider {...settings}>
+        <Slider {...settings} >
             {groupedReviews.map((group, i) => (
                 <div key={i}>
                     <ReviewCard reviews={group} />

@@ -13,7 +13,6 @@ import { DEV_PATH } from '../../Routes';
 import axios from 'axios';
 
 
-
 export const ProfessionalProfile = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
         const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
@@ -48,10 +47,9 @@ export const ProfessionalProfile = () => {
                     }
                 })
                 .catch((error) => {
-                    console.error("Failed to fetch service requests", error);
+                    console.error("Invalid data - no service requests found");
                 })
         }, []);
-
     if (user) {
         return (
 
@@ -81,17 +79,16 @@ export const ProfessionalProfile = () => {
                         </div>
                         <center><Rating name="read-only" value={Number(averageRating.toFixed(1))} readOnly/></center>
                     </Box>
-                <Box sx={{
-                    my: 3
-                }}>
-                    {serviceRequests && serviceRequests.length > 0 ? (
-                        <Box style={{height: "800px", width:"800px", justifyContent: "center", display: "flex", alignItems:"center"}}>
-                            <CarouselReview filteredReviews={serviceRequests}/>
-                        </Box>
-                    ) : (
-                            <Typography style={{justifyContent: "center", display: "flex",alignItems:"center"}}>There Are No Reviews</Typography>
-                    )}
-                </Box>
+
+                    <Box sx={{ my: 3 }}>
+                        {serviceRequests && serviceRequests.length > 0 ? (
+                            <Box style={{ width: 800, height: 800  }}>
+                                <CarouselReview filteredReviews={serviceRequests} />
+                            </Box>
+                        ) : (
+                            <Typography style={{ justifyContent: "center", display: "flex", alignItems: "center" }}>There Are No Reviews</Typography>
+                        )}
+                    </Box>
                 </Stack>
                 </Box>
         );
