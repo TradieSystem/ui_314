@@ -1,6 +1,6 @@
 import {User} from "../Types/User";
 import {MembershipOption, UserType} from "../Types/Account";
-import {ServiceRequest, ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
+import {ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
 import {ServiceType} from "../Types/ServiceType";
 import {dummyProfessionalUser} from "../Contexts/AuthContext";
 import {ServiceRequestTableRow} from "../Pages/RequestHistory/RequestHistoryTables/RequestHistoryTable";
@@ -8,12 +8,12 @@ import {ServiceRequestTableRow} from "../Pages/RequestHistory/RequestHistoryTabl
 /**
  * Function to generate a list of dummy data containing a list of clients
  */
-export function generateClients() : User[] {
-    let clients : User[] = [];
+export function generateClients(): User[] {
+    let clients: User[] = [];
 
     //Starting from 3 as ids 1 and 2 are in the AuthContext
-    for(let i=3; i<51; i++) {
-        const newClient : User = {
+    for (let i = 3; i < 51; i++) {
+        const newClient: User = {
             user_id: i,
             firstName: `Firstname ${i}`,
             lastName: `Lastname ${i}`,
@@ -28,7 +28,7 @@ export function generateClients() : User[] {
             mobile: `12345678${i}`,
             userType: UserType.CLIENT,
             client: {
-                membershipType: (i%2 === 0) ? MembershipOption.SUBSCRIPTION : MembershipOption.PAY_AS_YOU_GO
+                membershipType: (i % 2 === 0) ? MembershipOption.SUBSCRIPTION : MembershipOption.PAY_AS_YOU_GO
             }
         }
 
@@ -41,7 +41,7 @@ export function generateClients() : User[] {
 /**
  * Function to generate a list of dummy service requests made by the same client
  */
-export const dummyServiceRequests : ServiceRequestTableRow[] = [
+export const dummyServiceRequests: ServiceRequestTableRow[] = [
     {
         requestID: 2,
         requestDate: new Date("01/02/2022"),
@@ -180,11 +180,11 @@ export const dummyServiceRequests : ServiceRequestTableRow[] = [
 /**
  * Function to generate a list of professionals
  */
-export function generateProfessionals() : User[] {
-    let professionals : User[] = [];
+export function generateProfessionals(): User[] {
+    let professionals: User[] = [];
 
-    for(let i=100; i<150; i++) {
-        const newProfessional : User = {
+    for (let i = 100; i < 150; i++) {
+        const newProfessional: User = {
             user_id: i,
             firstName: `Firstname ${i}`,
             lastName: `Lastname ${i}`,
