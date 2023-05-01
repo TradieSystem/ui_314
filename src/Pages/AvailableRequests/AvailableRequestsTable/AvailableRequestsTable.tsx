@@ -215,11 +215,12 @@ export const AvailableRequestsTable = () => {
 
                             if (!approvedApplication) {
                                 incomingRequests.push(serviceRequest);
-                                setServiceRequests(incomingRequests);
                             }
                         })
 
-                        if(serviceRequests?.length === 0 || !serviceRequests) {
+                        setServiceRequests(incomingRequests);
+
+                        if(incomingRequests?.length === 0 || !incomingRequests) {
                             setLoading(false);
                             setAlert(<></>);
                         }
