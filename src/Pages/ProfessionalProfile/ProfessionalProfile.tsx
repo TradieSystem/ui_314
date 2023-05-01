@@ -11,6 +11,7 @@ import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
 import { DEV_PATH } from '../../Routes';
 import axios from 'axios';
+import {dummyServiceRequests} from "../../Utilities/GenerateDummyData";
 
 
 
@@ -44,7 +45,23 @@ export const ProfessionalProfile = () => {
                             console.error("Invalid data - no service requests found");
                         }
                     } else {
-                        console.error("Invalid data - no service requests found");
+                        const filteredRequests = dummyServiceRequests.filter(
+                            (request: ServiceRequest) => request.requestID && request.requestID > 0
+                        );
+
+                        const filteredReviews = filteredRequests.filter(
+                            (request) => request.rating && request.rating > 0 && request.review && request.review.trim().length > 0
+                        );
+
+                        console.log(filteredReviews);
+                        setServiceRequests(filteredReviews);
+
+                        const totalRating = filteredReviews.reduce(
+                            (acc, request) => (request.rating ? acc + request.rating : acc),
+                            0
+                        );
+                        const avgRating = filteredReviews.length > 0 ? totalRating / filteredReviews.length : 0;
+                        setAverageRating(avgRating);
                     }
                 })
                 .catch((error) => {
@@ -85,7 +102,7 @@ export const ProfessionalProfile = () => {
                     my: 3
                 }}>
                     {serviceRequests && serviceRequests.length > 0 ? (
-                        <Box style={{height: "800px", width:"800px", justifyContent: "center", display: "flex", alignItems:"center"}}>
+                        <Box style={{padding: 10, justifyContent: "center", display: "flex", alignItems:"center"}}>
                             <CarouselReview filteredReviews={serviceRequests}/>
                         </Box>
                     ) : (

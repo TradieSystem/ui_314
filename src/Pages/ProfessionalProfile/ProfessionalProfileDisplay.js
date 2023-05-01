@@ -24,7 +24,6 @@ const ProfessionalProfileDisplay = () => {
             <RootStyle>
                 <ProfessionalProfile />
             </RootStyle>
-
         </PageContainer>
 
     );

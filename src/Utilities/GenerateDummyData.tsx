@@ -68,6 +68,19 @@ export const dummyServiceRequests : ServiceRequestTableRow[] = [
         review: "Guess it's fine"
     },
     {
+        requestID: 20,
+        requestDate: new Date("01/02/2022"),
+        serviceType: ServiceType.FENCE_INSTALLATION,
+        requestStatus: ServiceRequestStatus.COMPLETE,
+        clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: (generateProfessionals().at(0) as User).user_id,
+        postcode: "2000",
+        jobDescription: "I want a new fence please",
+        rating: 3,
+        review: "Got a new fence"
+    },
+    {
         requestID: 3,
         requestDate: new Date("03/03/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
