@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import {
+    Alert,
     Avatar, Stack, Typography
 } from "@mui/material";
 import {User} from "../../Types/User";
@@ -11,12 +12,12 @@ import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
 import { DEV_PATH } from '../../Routes';
 import axios from 'axios';
-import swal from 'sweetalert';
 
 export const ProfessionalProfile = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
         const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
         const [averageRating, setAverageRating] = useState<number>(0);
+        const [alert, setAlert] = useState<JSX.Element>(<></>);
         useEffect(() => {
             axios
                 .get(`${DEV_PATH}/serviceRequest`)
@@ -41,10 +42,12 @@ export const ProfessionalProfile = () => {
                         }
                     }
                 }).catch((error) => {
-                if (error.response.status === 500) {
-                        swal("Error", " There was an issue retrieving the content", "error");
-                }
-                })
+                setAlert(
+                    <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                        There was an issue retrieving the content
+                    </Alert>
+                );
+            });
         }, []);
     if (user) {
         return (
@@ -53,7 +56,7 @@ export const ProfessionalProfile = () => {
                 component={motion.div}
                 {...fadeInUp}
             >
-
+                {alert}
                 <Stack
                     sx={{
                         justifyContent: "center", display: "flex",alignItems:"center"
