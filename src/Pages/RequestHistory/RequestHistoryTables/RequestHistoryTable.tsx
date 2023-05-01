@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
     Alert,
-    Backdrop, Box,
+    Backdrop,
+    Box,
     Table,
     TableBody,
     TableCell,
@@ -31,6 +32,7 @@ import {CORS_HEADER, DEV_PATH} from "../../../Routes";
 import {InfoOutlined} from "@mui/icons-material";
 import {motion} from "framer-motion";
 import {fadeInUp} from "../../../Effects/Animations";
+import {exportPDF} from "../../../Utilities/PDFGeneration";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -330,7 +332,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                 component={motion.div}
                 {...fadeInUp}
             >
-            {alert}
+                {alert}
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -438,8 +440,6 @@ export const RequestHistoryTable = (): JSX.Element => {
                                                 }
                                             </TableCell>
                                             <TableCell>
-                                                {/*    Mostly Iteration 3 work - only ability to view existing request implemented in 2 */}
-                                                {/* Iteration 3 will add seeing how many responses from professionals in this cell too, and more conditional rendering */}
                                                 <ThemedButton
                                                     variantOverride={'text'}
                                                     onClick={() => {
@@ -461,25 +461,32 @@ export const RequestHistoryTable = (): JSX.Element => {
                                         </TableRow>
                                     )
                                 }
-
                             </>
-
                             :
-
                             <>
-                            </>}
+                            </>
+                        }
                     </TableBody>
                 </Table>
             </Box>
+            <div style={{justifyContent: "space-between", display: "flex", marginTop: "2rem"}}>
+                {
+                    serviceRequests ?
+                    <ThemedButton onClick={() => exportPDF(rows, user)}>
+                        Export
+                    </ThemedButton> :
+                        <div></div>
+                }
+                <TablePagination
+                    component="div"
+                    count={rows?.length || 0}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </div>
 
-            <TablePagination
-                component="div"
-                count={rows?.length || 0}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
             {(requestToView !== undefined) ?
                 <Backdrop open={showRequestSummary}>
                     <RequestSummary setShowRequestSummary={setShowRequestSummary} request={requestToView}/>
