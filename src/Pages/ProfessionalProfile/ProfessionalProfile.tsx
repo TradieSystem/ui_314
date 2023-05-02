@@ -50,7 +50,11 @@ export const ProfessionalProfile = () => {
                             const avgRating = filteredReviews.length > 0 ? totalRating / filteredReviews.length : 0;
                             setAverageRating(avgRating);
                             setIsLoading(false);
+                        } else {
+                            setIsLoading(false);
                         }
+                    } else {
+                        setIsLoading(false);
                     }
                 }).catch((error) => {
                 setIsLoading(false);
