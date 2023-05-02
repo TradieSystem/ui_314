@@ -12,6 +12,7 @@ import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
 import {CORS_HEADER, DEV_PATH } from '../../Routes';
 import axios from 'axios';
+import { generateDummyServiceRequests } from '../../Utilities/GenerateDummyData';
 
 export const ProfessionalProfile = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
@@ -19,7 +20,9 @@ export const ProfessionalProfile = () => {
         const [averageRating, setAverageRating] = useState<number>(0);
         const [alert, setAlert] = useState<JSX.Element>(<></>);
     const auth_token: string = JSON.parse(localStorage.getItem("access_token") || "{}");
+    const [isLoading, setIsLoading] = useState(false);
         useEffect(() => {
+            setIsLoading(true);
             axios
                 .get(`${DEV_PATH}/serviceRequest?userID=${user.user_id}&userType=${user.userType}`,{
                     headers:{
@@ -29,10 +32,10 @@ export const ProfessionalProfile = () => {
                     }
                 })
                 .then((response) => {
-                    const data = response.data;
+                    const data = generateDummyServiceRequests(false);
                     if (Array.isArray(data) && data.length > 0) {
                         const firstRequest = data[0];
-                        if (firstRequest.id !== undefined) {
+                        //if (firstRequest.id !== undefined) {
                             const filteredRequests = data.filter(
                                 (request: ServiceRequest) => request.requestID && request.requestID > 0
                             );
@@ -46,9 +49,11 @@ export const ProfessionalProfile = () => {
                             );
                             const avgRating = filteredReviews.length > 0 ? totalRating / filteredReviews.length : 0;
                             setAverageRating(avgRating);
+                            setIsLoading(false);
                         }
-                    }
+                   // }
                 }).catch((error) => {
+                setIsLoading(false);
                 setAlert(
                     <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
                         There was an issue retrieving the content
@@ -88,12 +93,18 @@ export const ProfessionalProfile = () => {
                     </Box>
 
                     <Box sx={{ my: 3 }}>
-                        {serviceRequests && serviceRequests.length > 0 ? (
-                            <Box style={{ width: 800 }}>
-                                <CarouselReview filteredReviews={serviceRequests} />
-                            </Box>
+                        {isLoading ? (
+                            <Typography style={{ justifyContent: "center", display: "flex", alignItems: "center" }}>Loading...</Typography>
                         ) : (
-                            <Typography style={{ justifyContent: "center", display: "flex", alignItems: "center" }}>There Are No Reviews</Typography>
+                            <>
+                                {serviceRequests && serviceRequests.length > 0 ? (
+                                    <Box style={{ width: 800 }}>
+                                        <CarouselReview filteredReviews={serviceRequests} />
+                                    </Box>
+                                ) : (
+                                    <Typography style={{ justifyContent: "center", display: "flex", alignItems: "center" }}>There Are No Reviews</Typography>
+                                )}
+                            </>
                         )}
                     </Box>
                 </Stack>
