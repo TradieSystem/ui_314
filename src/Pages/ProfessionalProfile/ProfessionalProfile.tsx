@@ -55,7 +55,8 @@ export const ProfessionalProfile = () => {
                     </Alert>
                 );
             });
-        }, [auth_token, user.userType, user.user_id]);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);
     if (user) {
         return (
 
