@@ -10,7 +10,7 @@ import {motion} from "framer-motion";
 import {fadeInUp} from "../../Effects/Animations";
 import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
-import { DEV_PATH } from '../../Routes';
+import {CORS_HEADER, DEV_PATH } from '../../Routes';
 import axios from 'axios';
 
 export const ProfessionalProfile = () => {
@@ -18,9 +18,16 @@ export const ProfessionalProfile = () => {
         const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
         const [averageRating, setAverageRating] = useState<number>(0);
         const [alert, setAlert] = useState<JSX.Element>(<></>);
+    const auth_token: string = JSON.parse(localStorage.getItem("access_token") || "{}");
         useEffect(() => {
             axios
-                .get(`${DEV_PATH}/serviceRequest`)
+                .get(`${DEV_PATH}/serviceRequest?userID=${user.user_id}&userType=${user.userType}`,{
+                    headers:{
+                        'Authorization': auth_token,
+                        ...CORS_HEADER
+
+                    }
+                })
                 .then((response) => {
                     const data = response.data;
                     if (Array.isArray(data) && data.length > 0) {
