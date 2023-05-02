@@ -33,8 +33,8 @@ export const ProfessionalProfile = () => {
                 .then((response) => {
                     const data = response.data;
                     if (Array.isArray(data) && data.length > 0) {
-                        const firstRequest = data[0];
-                        if (firstRequest.id !== undefined) {
+                        const firstRequest : ServiceRequest = data[0];
+                        if (firstRequest.requestID !== undefined) {
                             const filteredRequests = data.filter(
                                 (request: ServiceRequest) => request.requestID && request.requestID > 0
                             );
