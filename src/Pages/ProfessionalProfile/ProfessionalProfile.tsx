@@ -55,7 +55,7 @@ export const ProfessionalProfile = () => {
                     </Alert>
                 );
             });
-        }, []);
+        }, [auth_token, user.userType, user.user_id]);
     if (user) {
         return (
 
