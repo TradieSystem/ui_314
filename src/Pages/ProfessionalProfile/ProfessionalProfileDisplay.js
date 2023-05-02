@@ -12,7 +12,8 @@ const RootStyle = styled('div')({
     justifyContent: 'center',
     flexDirection: 'column',
     background: '#d8cecd',
-    width: '100%'
+    width: '100%',
+    height: '100%'
 });
 
 

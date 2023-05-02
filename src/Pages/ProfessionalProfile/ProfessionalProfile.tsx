@@ -89,7 +89,7 @@ export const ProfessionalProfile = () => {
 
                     <Box sx={{ my: 3 }}>
                         {serviceRequests && serviceRequests.length > 0 ? (
-                            <Box style={{ width: 800, height: 800  }}>
+                            <Box style={{ width: 800 }}>
                                 <CarouselReview filteredReviews={serviceRequests} />
                             </Box>
                         ) : (
