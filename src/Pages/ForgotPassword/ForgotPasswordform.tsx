@@ -83,7 +83,7 @@ const ForgotPasswordForm = () => {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                swal("Error", "Try Again", "error");
             });
     }
     const handleQuestions = () => {
