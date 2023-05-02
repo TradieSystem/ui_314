@@ -12,7 +12,6 @@ import CarouselReview from './ReviewCarousel';
 import { ServiceRequest } from '../../Types/ServiceRequest';
 import {CORS_HEADER, DEV_PATH } from '../../Routes';
 import axios from 'axios';
-import { generateDummyServiceRequests } from '../../Utilities/GenerateDummyData';
 
 export const ProfessionalProfile = () => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
