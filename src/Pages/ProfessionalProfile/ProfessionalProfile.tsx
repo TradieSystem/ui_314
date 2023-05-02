@@ -32,10 +32,10 @@ export const ProfessionalProfile = () => {
                     }
                 })
                 .then((response) => {
-                    const data = generateDummyServiceRequests(false);
+                    const data = response.data;
                     if (Array.isArray(data) && data.length > 0) {
                         const firstRequest = data[0];
-                        //if (firstRequest.id !== undefined) {
+                        if (firstRequest.id !== undefined) {
                             const filteredRequests = data.filter(
                                 (request: ServiceRequest) => request.requestID && request.requestID > 0
                             );
@@ -51,7 +51,7 @@ export const ProfessionalProfile = () => {
                             setAverageRating(avgRating);
                             setIsLoading(false);
                         }
-                   // }
+                    }
                 }).catch((error) => {
                 setIsLoading(false);
                 setAlert(
