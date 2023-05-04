@@ -33,6 +33,7 @@ import {InfoOutlined} from "@mui/icons-material";
 import {motion} from "framer-motion";
 import {fadeInUp} from "../../../Effects/Animations";
 import {exportPDF} from "../../../Utilities/PDFGeneration";
+import Rating from "@mui/material/Rating";
 
 enum ClientRequestHistoryColumn {
     ApplicationNumber = 'ApplicationNumber',
@@ -251,12 +252,14 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 requestID: request.requestID,
                                 requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
                                 serviceType: request.serviceType,
-                                requestStatus: request.requestStatus,
+                                requestStatus: request.rating !== null ? ServiceRequestStatus.ARCHIVED : request.requestStatus,
                                 postcode: request.postcode,
                                 professionalID: request.professionalID,
                                 applications: request.applications,
                                 jobDescription: request.jobDescription,
-                                clientID: request.clientID
+                                clientID: request.clientID,
+                                rating: request.rating,
+                                review: request.review
                             }
                             incomingRequests.push(serviceRequest);
                             setServiceRequests(incomingRequests);
@@ -298,12 +301,14 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 requestID: request.requestID,
                                 requestDate: request.requestDate ? new Date(request.requestDate) : new Date(),
                                 serviceType: request.serviceType,
-                                requestStatus: request.requestStatus,
+                                requestStatus: request.rating !== null ? ServiceRequestStatus.ARCHIVED : request.requestStatus,
                                 professionalID: request.professionalID,
                                 postcode: request.postcode,
                                 clientID: request.clientID,
                                 applications: request.applications,
-                                jobDescription: request.jobDescription
+                                jobDescription: request.jobDescription,
+                                rating: request.rating,
+                                review: request.review
                             }
                             rows.push(newRow);
                         }
@@ -456,6 +461,10 @@ export const RequestHistoryTable = (): JSX.Element => {
                                                 </ThemedButton>
                                             </TableCell>
                                             <TableCell>
+                                                {request.rating ?
+                                                    <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/> :
+                                                    <>-</>
+                                                }
                                                 {/*    Iteration 4 work     */}
                                             </TableCell>
                                         </TableRow>
