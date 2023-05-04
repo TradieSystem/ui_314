@@ -177,7 +177,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                         }
                     </Box>
                 </div>
-                {request.requestStatus === ServiceRequestStatus.COMPLETE &&
+                {((request.requestStatus === ServiceRequestStatus.COMPLETE) || (request.requestStatus === ServiceRequestStatus.ARCHIVED)) &&
                     <div>
                         <Typography
                             variant={'h4'}
