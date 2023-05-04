@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Box, Typography} from "@mui/material";
+import {Alert, Box, FormControlLabel, Radio, RadioGroup, Typography} from "@mui/material";
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
@@ -17,6 +17,8 @@ import swal from "sweetalert";
 import {useNavigate} from "react-router-dom";
 import {format} from "date-fns";
 import {InfoOutlined} from "@mui/icons-material";
+import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
+import Rating from "@mui/material/Rating";
 
 const panelStyling = {
     padding: 3,
@@ -55,6 +57,9 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
 
     const [cards] = useState<ServiceRequestApplicationCard[]>([]);
     const [professionalName, setProfessionalName] = useState<string>();
+
+    const [rating, setRating] = useState<number>();
+    const [review, setReview] = useState<string>();
 
     const navigate = useNavigate();
 
@@ -100,7 +105,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 .then((r) => {
                     if (r.data && r.data.firstName && r.data.lastName) {
                         const name = `${r.data.firstName} ${r.data.lastName}`;
-                        if(request.requestStatus === ServiceRequestStatus.NEW) {
+                        if (request.requestStatus === ServiceRequestStatus.NEW) {
                             const newCard: ServiceRequestApplicationCard = {
                                 requestID: application.requestID,
                                 applicationID: application.applicationID,
@@ -113,7 +118,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                             cards.push(newCard);
                         } else {
                             //We want to send the name to the summary card
-                            if(request.professionalID === application.professionalID) {
+                            if (request.professionalID === application.professionalID) {
                                 setProfessionalName(name);
                             }
                         }
@@ -137,15 +142,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
     }, []);
 
     return (
-        /*
-                Iteration 3 - showing the tradies that are:
-                    1. assigned to the job OR
-                    2. have applied for the job (in a carousel)
-                Iteration 4 -
-                  1. showing the payment related info in completed jobs
-                    2. showing the review/rating related info/abilities
-         */
-
         <Box
             sx={{
                 minWidth: "20%",
@@ -156,7 +152,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
             <div className={styles['title']}>
                 <Typography variant={'h3'}>
                     {request.requestStatus === ServiceRequestStatus.NEW && `New Service Request`}
-                    {/*{request.requestStatus === ServiceRequestStatus.PENDING_ACCEPTANCE && `Request Pending Acceptance`}*/}
                     {request.requestStatus === ServiceRequestStatus.COMPLETE && `Completed Request`}
                     {request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION && `Request Pending Completion`}
                     {request.requestStatus === ServiceRequestStatus.ARCHIVED && `Finalised Request`}
@@ -164,25 +159,127 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
             </div>
             <div className={styles['request-overview']}>
                 {alert}
-                <Typography
-                    variant={'h4'}
-                    sx={{marginBottom: '2rem'}}
-                >
-                    {!showEdit ? `Request Details` : 'Edit Request Details'}
-                </Typography>
-                <Box
-                    sx={panelStyling}
-                >
-                    {!showEdit ?
-                        <RequestSummaryView request={request} professionalName={professionalName}/> :
-                        <RequestSummaryEdit
-                            request={request}
-                            setServiceDescEdit={setServiceDescEdit}
-                            setServiceTypeEdit={setServiceTypeEdit}
-                        />
-                    }
-                </Box>
+                <div>
+                    <Typography
+                        variant={'h4'}
+                        sx={{marginBottom: '1rem'}}
+                    >
+                        {!showEdit ? `Request Details` : 'Edit Request Details'}
+                    </Typography>
+                    <Box sx={panelStyling}>
+                        {!showEdit ?
+                            <RequestSummaryView request={request} professionalName={professionalName}/> :
+                            <RequestSummaryEdit
+                                request={request}
+                                setServiceDescEdit={setServiceDescEdit}
+                                setServiceTypeEdit={setServiceTypeEdit}
+                            />
+                        }
+                    </Box>
+                </div>
+                {request.requestStatus === ServiceRequestStatus.COMPLETE &&
+                    <div>
+                        <Typography
+                            variant={'h4'}
+                            sx={{marginBottom: '1rem'}}
+                        >
+                            Payment
+                        </Typography>
+                        <Box sx={panelStyling}>
+                            <Typography>
+                                Payment was successfully made with the CC on the account, on request completion.
+                            </Typography>
+                        </Box>
+                        {(userType === UserType.CLIENT) && (request.rating === null && request.review === null) &&
+                            <>
+                                <Typography
+                                    variant={'h4'}
+                                    sx={{marginBottom: '1rem'}}
+                                >
+                                    Leave a rating and review
+                                </Typography>
+                                <Box sx={panelStyling}>
+                                    <Typography fontWeight={'bold'}>Rating</Typography>
+                                    <RadioGroup>
+                                        <RadioGroup
+                                            aria-labelledby={"services__form-group"}
+                                            onChange={(event) => setRating(event.target.value as unknown as number)}
+                                        >
+                                            <div style={{justifyContent: "center", display: "flex"}}>
+                                                <FormControlLabel
+                                                    name={"rating"}
+                                                    value={1}
+                                                    key={`rating-1`}
+                                                    control={<Radio color={"warning"}/>}
+                                                    label={1}
+                                                />
+                                                <FormControlLabel
+                                                    name={"rating"}
+                                                    value={2}
+                                                    key={`rating-2`}
+                                                    control={<Radio color={"warning"}/>}
+                                                    label={2}
+                                                />
+                                                <FormControlLabel
+                                                    name={"rating"}
+                                                    value={3}
+                                                    key={`rating-3`}
+                                                    control={<Radio color={"warning"}/>}
+                                                    label={3}
+                                                />
+                                                <FormControlLabel
+                                                    name={"rating"}
+                                                    value={4}
+                                                    key={`rating-4`}
+                                                    control={<Radio color={"warning"}/>}
+                                                    label={4}
+                                                />
+                                                <FormControlLabel
+                                                    name={"rating"}
+                                                    value={5}
+                                                    key={`rating-5`}
+                                                    control={<Radio color={"warning"}/>}
+                                                    label={5}
+                                                />
+                                            </div>
 
+                                        </RadioGroup>
+                                    </RadioGroup>
+                                    <Typography fontWeight={'bold'}>Review</Typography>
+                                    <ThemedTextField
+                                        multiline
+                                        rows={5}
+                                        style={{width: "100%"}}
+                                        type={"text"}
+                                        label={"Review (Optional)"}
+                                        onChange={(event) => setReview(event.target.value)}
+                                    />
+                                </Box>
+                            </>
+                        }
+                        {(request.rating !== undefined) && (request.rating !== null) &&
+                            <>
+                                <Typography
+                                    variant={'h4'}
+                                    sx={{marginBottom: '1rem'}}
+                                >
+                                    Review
+                                </Typography>
+                                <Box sx={panelStyling}>
+                                    <Typography fontWeight={'bold'}>Rating:</Typography>
+                                    <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/>
+                                    {request.review ?
+                                        <>
+                                            <Typography fontWeight={'bold'}>Review:</Typography>
+                                            <Typography>{request.review}</Typography>
+                                        </> : <></>
+                                    }
+                                </Box>
+                            </>
+                        }
+
+                    </div>
+                }
             </div>
             {
                 !loadingCards ?
@@ -243,7 +340,6 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     <ThemedButton
                         onClick={() => {
                             setMarkCompleteDisabled(true);
-                            const auth_token = JSON.parse(localStorage.getItem("access_token") || "{ }")
                             const InputObject = {
                                 requestID: request.requestID,
                                 requestStatus: ServiceRequestStatus.COMPLETE
@@ -257,16 +353,10 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                 }
                             }).then(response => {
                                 if (response.status === 200) {
-                                    swal("Complete!", "You have successfully marked the job as complete!", "success").then(
-                                        //Couldn't think of a more elegant way to refresh the page than this, if someone can feel free to change
-                                        temp => {
-                                            window.location.reload();
-                                        });
-
-
-                                }
-                                else {
-                                    swal("Error", "Try Again", "error").then(temp => {
+                                    swal("Complete!", "You have successfully marked the job as complete!", "success")
+                                        .then(() => window.location.reload());
+                                } else {
+                                    swal("Error", "There was an error marking the job as complete", "error").then(temp => {
                                         setMarkCompleteDisabled(false);
                                     });
                                 }
@@ -274,6 +364,35 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                         }}
                         disabled={markCompleteDisabled}>
                         Mark Complete
+                    </ThemedButton>
+                }
+                {
+                    (request.requestStatus === ServiceRequestStatus.COMPLETE) && (userType === UserType.CLIENT) && (request.rating === null && request.review === null) &&
+                    <ThemedButton
+                        disabled={rating === undefined}
+                        onClick={() => {
+                            const requestObject = {
+                                reviewID: -1,
+                                request_id: request.requestID,
+                                rating: rating,
+                                review: review
+                            }
+                            axios.post(`${DEV_PATH}/serviceRequest/review`, requestObject, {
+                                headers: {
+                                    'Authorization': auth_token,
+                                    ...CORS_HEADER,
+
+                                }
+                            }).then(response => {
+                                if (response.data.reviewID !== undefined) {
+                                    swal("Success", "Successfully submitted the review", "success").then(() => window.location.reload());
+                                } else {
+                                    swal("Error", "Error in submitting the review", "error").then(() => window.location.reload());
+                                }
+                            });
+                        }}
+                    >
+                        Submit review
                     </ThemedButton>
                 }
             </div>
