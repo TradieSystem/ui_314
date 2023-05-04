@@ -39,7 +39,7 @@ export const ProfessionalProfile = () => {
                                 (request: ServiceRequest) => request.requestID && request.requestID > 0
                             );
                             const filteredReviews = filteredRequests.filter(
-                                (request) => request.rating && request.rating > 0 && request.review && request.review.trim().length > 0
+                                (request) => request.rating && request.rating > 0
                             );
                             setServiceRequests(filteredReviews);
                             const totalRating = filteredReviews.reduce(
