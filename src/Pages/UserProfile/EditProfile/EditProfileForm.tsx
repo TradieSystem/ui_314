@@ -4,7 +4,7 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import {Alert, Box, Grid} from "@mui/material";
 import {User} from "../../../Types/User";
-import {alphabeticRegExp, monthRegExp, numericRegExp, phoneRegExp,} from "../../SignUp/SignUp";
+import {alphabeticRegExp, monthRegExp, numericRegExp, phoneRegExp, postcodeRange} from "../../SignUp/SignUp";
 import {EditProfileGeneral} from "./EditProfilePanels/EditProfileGeneral";
 import {EditProfileAddress} from "./EditProfilePanels/EditProfileAddress";
 import {EditProfileProfessionalDetails} from "./EditProfilePanels/EditProfileProfessionalDetails";
@@ -60,7 +60,7 @@ const EditSchema = Yup.object().shape({
     suburb: Yup.string()
         .matches(alphabeticRegExp, "Suburb must contain only alphabetic characters"),
     postcode: Yup.string()
-        .matches(numericRegExp, 'Postcode is not valid')
+        .matches(postcodeRange, 'Postcode is not valid')
         .length(4, "Postcode should be 4 digits"),
     incomingCCNumber: Yup.string()
         .matches(numericRegExp, 'Card number is not valid')
