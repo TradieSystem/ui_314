@@ -26,6 +26,8 @@ export const numericRegExp = /^\d+$/;
 export const alphabeticRegExp = /^[A-Za-z\s]*$/;
 export const monthRegExp = /0[1-9]|1[012]/i;
 
+export const postcodeRange= /^([2][0][0][0]|2[0-9][0-9][0-9])$/;
+
 const SignUpSchema = Yup.object().shape({
     firstname: Yup.string().required("First name is required"),
     lastname: Yup.string().required("Last name is required"),
@@ -44,7 +46,7 @@ const SignUpSchema = Yup.object().shape({
         .matches(alphabeticRegExp, "Suburb must contain only alphabetic characters")
         .required("Suburb is required"),
     postcode: Yup.string()
-        .matches(numericRegExp, 'Postcode is not valid')
+        .matches(postcodeRange, 'Postcode is not valid')
         .length(4, "Postcode should be 4 digits")
         .required("Postcode is required"),
     incomingCCName: Yup.string().required("CC Name is required"),
