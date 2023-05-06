@@ -58,7 +58,7 @@ describe('<SideNavigationMenuItem>', () => {
         })).toBeVisible();
 
         //Mock user clicking the button, and expect the mock function to have been called
-        userEvent.click(menuItem);
+        await userEvent.click(menuItem);
 
         await waitFor(() => {
             expect(onClickMock).toHaveBeenCalled();
