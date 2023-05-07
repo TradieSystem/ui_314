@@ -84,7 +84,7 @@ const EditSchema = Yup.object().shape({
         .length(4, 'Expiry year must be 4 numbers'),
 });
 
-const EditProfileForm = () => {
+const EditProfileForm = () : JSX.Element => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const authorizationToken = JSON.parse(localStorage.getItem("access_token") || "{}");
     const [generalValid, setGeneralValid] = useState(false);
@@ -326,7 +326,6 @@ const EditProfileForm = () => {
 
     useEffect(() => {
         if(submitting) {
-            // console.log(updatedUserObject);
             axios
                 .put(`${DEV_PATH}/user/updateUser`, updatedUserObject, {
                     headers: {
@@ -342,7 +341,6 @@ const EditProfileForm = () => {
                             userType: user.userType
                         }
                         localStorage.setItem("user", JSON.stringify(returnedUser));
-                        // console.error(returnedUser);
 
                         setSubmitting(false);
                         swal("Updated", "Your account has been successfully updated", "success")
@@ -386,6 +384,8 @@ const EditProfileForm = () => {
                 </Formik>
             </Box>
         );
+    } else {
+        return <></>
     }
 };
 
