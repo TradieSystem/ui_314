@@ -13,8 +13,11 @@ const ForgotPassword = () => {
         <RootStyle style={{
             backgroundImage: 'url(' + Image + ')',
             backgroundSize: "cover",
-            height: "100vh",
             color: "#0c0c0c",
+            minHeight: "100vh",
+            minWidth: "100vh",
+            width: "100%",
+            height: "100%"
         }}>
             <RootStyle style={{
                 height: "900px",
