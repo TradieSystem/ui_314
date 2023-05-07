@@ -23,8 +23,8 @@ export const SideNavigation = () => {
                 anchor={"left"}
                 open={true}
                 PaperProps={{
-                    className: isExpanded ? styles['side-nav__open'] : styles['side-nav__closed'],
-                    sx: {backgroundColor: "#ffffff", color: "#db5b13"}
+                    className: `${styles['side-nav']} ${isExpanded ? styles['side-nav__open'] : styles['side-nav__closed']}`,
+                    sx: {}
                 }}
             >
                 {isExpanded ?

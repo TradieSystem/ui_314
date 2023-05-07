@@ -16,3 +16,13 @@
     gap: 0.75rem;
     margin-bottom: 1rem;
 }
+.menu-item:hover,
+.menu-item:focus {
+    width: 11rem;
+    background-image: linear-gradient(to right, rgba(216, 206, 205, 0), #d97e49, rgba(216, 206, 205, 0));
+}
+
+.menu-item__selected {
+    width: 11rem;
+    background-image: linear-gradient(to right, rgba(216, 206, 205, 0), #d97e49, rgba(216, 206, 205, 0));
+}
