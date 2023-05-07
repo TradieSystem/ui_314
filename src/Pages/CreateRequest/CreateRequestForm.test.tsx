@@ -74,6 +74,9 @@ describe('<CreateRequestForm', () => {
 
         await waitFor(() => {
             expect(screen.getByText('Created')).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
             expect(screen.getByText('The service request was created successfully')).toBeInTheDocument();
         });
 
@@ -93,6 +96,9 @@ describe('<CreateRequestForm', () => {
 
         await waitFor(() => {
             expect(screen.getByText('Error')).toBeInTheDocument();
+        });
+
+        await waitFor(() => {
             expect(screen.getByText('There was an error creating your request')).toBeInTheDocument();
         });
 
