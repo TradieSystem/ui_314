@@ -17,3 +17,5 @@ export const RequestHistory = (): JSX.Element => {
         </PageContainer>
     )
 }
+
+export default RequestHistory;

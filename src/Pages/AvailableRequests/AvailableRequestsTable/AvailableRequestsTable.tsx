@@ -66,7 +66,7 @@ const getHeaderBorderRadius = (columnEnum: AvailableRequestsTableColumn): string
     }
 }
 
-export const AvailableRequestsTable = () => {
+export const AvailableRequestsTable = () : JSX.Element => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
 
