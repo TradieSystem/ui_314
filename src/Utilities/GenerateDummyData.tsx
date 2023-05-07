@@ -175,6 +175,26 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         professionalID: (generateProfessionals().at(1) as User).user_id,
         postcode: "2001",
     },
+    {
+        requestID: 12,
+        requestDate: new Date("03/03/2023"),
+        serviceType: ServiceType.OVEN_REPAIRS,
+        professionalID: dummyProfessionalUser.user_id,
+        requestStatus: ServiceRequestStatus.NEW,
+        postcode: "2222",
+        clientID: (generateClients().at(0) as User).user_id,
+        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        applications: [
+            {
+                requestID: 3,
+                applicationID: 1,
+                offerDate: new Date("05/05/2023"),
+                professionalID: dummyProfessionalUser.user_id,
+                cost: 500.50,
+                applicationStatus: ServiceRequestApplicationStatus.PENDING
+            }
+        ],
+    },
 ]
 
 /**

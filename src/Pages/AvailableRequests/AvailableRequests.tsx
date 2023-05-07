@@ -16,10 +16,10 @@ export const AvailableRequests = (): JSX.Element => {
                 component={motion.div}
                 {...fadeInUp}
             >
-                <AvailableRequestsTable />
+                <AvailableRequestsTable/>
             </Box>
         </PageContainer>
-    )
+    );
 }
 
 export default AvailableRequests;
