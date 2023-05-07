@@ -1,6 +1,6 @@
 import React from "react";
 import {MemoryRouter} from "react-router-dom";
-import {SideNavigationMenuItem, SideNavigationMenuItemProps} from "./SideNavigationMenuItem/SideNavigationMenuItem";
+import {SideNavigationMenuItemProps} from "./SideNavigationMenuItem/SideNavigationMenuItem";
 import {NavigationContext} from "../../Contexts/NavigationContext";
 import ArticleIcon from "@mui/icons-material/Article";
 import {UserType} from "../../Types/Account";
