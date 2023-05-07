@@ -14,7 +14,6 @@ import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../../Routes";
 import swal from "sweetalert";
 import {useNavigate} from "react-router-dom";
 
-
 export interface ApplicationConfirmationDialogProps {
     /**
      * The {@link ServiceRequest} that is being applied for
@@ -34,7 +33,7 @@ export interface ApplicationConfirmationDialogProps {
 
 type ServiceRequestApplicationBase = Omit<ServiceRequestApplication, "offerDate">;
 
-interface ServiceRequestApplicationCreate extends ServiceRequestApplicationBase{
+interface ServiceRequestApplicationCreate extends ServiceRequestApplicationBase {
     offerDate: string;
 }
 
@@ -55,7 +54,7 @@ export const ApplicationConfirmationDialog = ({
 
     const handleSubmit = () => {
         setLoading(true);
-        const application : ServiceRequestApplicationCreate = {
+        const application: ServiceRequestApplicationCreate = {
             requestID: request.requestID,
             applicationID: -1,              //-1 when we are creating applications
             offerDate: format(new Date(), "MM/dd/yyyy"),
@@ -69,22 +68,22 @@ export const ApplicationConfirmationDialog = ({
                 ...CORS_HEADER
             }
         })
-        .then((response) => {
-            if(response.data.requestID) {
-                swal("Success", "You have successfully applied for the service request.", "success")
-                    .then(() => {
-                        setLoading(false);
-                        setShowConfirmationDialog(false);
-                        window.location.reload();
-                    })
-            } else {
-                throw new Error();
-            }
-        })
-        .catch(() => {
-            swal("Error", "There was an error submitting an application.", "error")
-                .then(() => navigate(`/${RoutesEnum.AVAILABLE_REQUESTS}`));
-        });
+            .then((response) => {
+                if (response.data.requestID) {
+                    swal("Success", "You have successfully applied for the service request.", "success")
+                        .then(() => {
+                            setLoading(false);
+                            setShowConfirmationDialog(false);
+                            window.location.reload();
+                        })
+                } else {
+                    throw new Error();
+                }
+            })
+            .catch(() => {
+                swal("Error", "There was an error submitting an application.", "error")
+                    .then(() => navigate(`/${RoutesEnum.AVAILABLE_REQUESTS}`));
+            });
     }
 
     return (

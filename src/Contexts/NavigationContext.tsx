@@ -7,7 +7,7 @@ import {UserType} from "../Types/Account";
 import MenuIcon from '@mui/icons-material/Menu';
 import {User} from "../Types/User";
 
-const NavigationContext = createContext({} as NavigationContextState);
+export const NavigationContext = createContext({} as NavigationContextState);
 
 interface NavigationContextState {
     //Current state of side navigation bar

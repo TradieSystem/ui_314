@@ -1,8 +1,11 @@
 import {render, screen} from "@testing-library/react";
-import React from "react";
+import React, {useState} from "react";
 import PageContainer from "./PageContainer";
-import {NavigationContextContextProvider} from "../../Contexts/NavigationContext";
+import {NavigationContext, NavigationContextContextProvider} from "../../Contexts/NavigationContext";
 import {MemoryRouter} from "react-router-dom";
+import {SideNavigationMenuItemProps} from "../SideNavigation/SideNavigationMenuItem/SideNavigationMenuItem";
+import ArticleIcon from "@mui/icons-material/Article";
+import {RoutesEnum} from "../../Routes";
 
 interface TestProps {
     title?: string;
@@ -29,8 +32,44 @@ const TestComponent = (props: TestProps) => {
                 </PageContainer>
             </NavigationContextContextProvider>
         </MemoryRouter>
-    )
+    );
 }
+
+const TestComponentExpanded = (props: TestProps) => {
+    const [isExpanded, setIsExpanded] = useState<boolean>(true);
+    let sideNavigationMenuItems: SideNavigationMenuItemProps[] = [
+        {
+            icon: <ArticleIcon/>,
+            text: 'Request History',
+            route: RoutesEnum.REQUEST_HISTORY
+        },
+    ];
+    const value = {
+        isExpanded,
+        setIsExpanded,
+        sideNavigationMenuItems
+    }
+    return (
+        <MemoryRouter>
+            <NavigationContext.Provider value={value}>
+                <PageContainer
+                    title={props.title || 'Test title'}
+                    subtitle={props.subtitle}
+                >
+                    <>
+                        {
+                            props.showChildren &&
+                            <button>
+                                Test button
+                            </button>
+                        }
+                    </>
+                </PageContainer>
+            </NavigationContext.Provider>
+        </MemoryRouter>
+    );
+}
+
 describe('<PageContainer>', () => {
     test('should render the <PageContainer> with the correct structure when title passed in', () => {
         render(<TestComponent/>);
@@ -78,5 +117,25 @@ describe('<PageContainer>', () => {
         expect(screen.getByRole('button', {
             name: /test button/i
         })).toBeVisible();
+    });
+
+    test('should render the <PageContainer> with the side navigation state correct', () => {
+        render(<TestComponentExpanded/>);
+
+        //The condense icon is visible
+        expect(screen.getByTestId('ChevronLeftIcon')).toBeVisible();
+
+        //Text should be visible
+        expect(
+            screen.getByRole('heading', {
+                name: /account profile/i
+            })
+        ).toBeVisible();
+
+        expect(
+            screen.getByRole('heading', {
+                name: /logout/i
+            })
+        ).toBeVisible();
     });
 });

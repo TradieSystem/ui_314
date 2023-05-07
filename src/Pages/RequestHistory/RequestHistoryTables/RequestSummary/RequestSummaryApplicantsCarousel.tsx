@@ -26,9 +26,7 @@ export interface RequestSummaryApplicantsCarouselProps {
      * Cards to display on the carousel
      */
     cards: ServiceRequestApplicationCard[];
-
 }
-
 
 const settings = {
     dots: true,
@@ -46,11 +44,10 @@ export interface ServiceRequestApplicationCard extends ServiceRequestApplication
     offerDate: string;
 }
 
-
 export const RequestSummaryApplicantsCarousel = ({
                                                      request,
                                                      cards
-                                                 }: RequestSummaryApplicantsCarouselProps) => {
+                                                 }: RequestSummaryApplicantsCarouselProps) : JSX.Element => {
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
     const auth_token: string = JSON.parse(localStorage.getItem("auth_token") || "{}");
     const userType = user?.userType;
@@ -74,13 +71,13 @@ export const RequestSummaryApplicantsCarousel = ({
             },
         })
             .then((r) => {
-                if (r.data) {
+                if (r.data.applicationID) {
                     swal("Success", "Successfully selected a professional", "success").then(() => window.location.reload())
                 } else {
                     throw Error();
                 }
             }).catch(() => {
-            swal("Error", "An issue occurred when attempting to accept a tradie", "error")
+            swal("Error", "An issue occurred when attempting to accept a professional", "error")
                 .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
         });
 
@@ -118,6 +115,7 @@ export const RequestSummaryApplicantsCarousel = ({
                             <ThemedButton
                                 disabled={loading}
                                 onClick={() => handleSelection(card.applicationID)}
+                                data-testid={"accept-button"}
                             >
                                 Accept
                             </ThemedButton>
@@ -136,7 +134,6 @@ export const RequestSummaryApplicantsCarousel = ({
                         <Slider{...settings}>{listItems}</Slider>
                     </div>
                 </>
-
             }
         </div>
     );

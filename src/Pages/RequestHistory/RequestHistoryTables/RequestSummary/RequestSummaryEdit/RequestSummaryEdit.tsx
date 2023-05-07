@@ -5,7 +5,6 @@ import ThemedSelect from "../../../../../Components/ThemedSelect/ThemedSelect";
 import {ServiceType} from "../../../../../Types/ServiceType";
 import ThemedTextField from "../../../../../Components/TextField/ThemedTextField";
 
-
 export interface RequestSummaryEditProps {
     /**
      * The request to edit
@@ -51,6 +50,8 @@ export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeE
                     <ThemedTextField
                         onChange={(event) => setServiceDescEdit(event.target.value)}
                         multiline
+                        id={"description-edit"}
+                        name={"description-edit"}
                     />
                 </Grid>
             </Grid>
