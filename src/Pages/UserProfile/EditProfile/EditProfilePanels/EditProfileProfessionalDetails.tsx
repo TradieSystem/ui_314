@@ -129,6 +129,15 @@ export const EditProfileProfessionalDetails = ({setProfessionalDetailsValid}: Ed
                     gap: "1rem"
                 }}
             >
+                {!cardExpiryValid() &&
+                    <Typography
+                        sx={{textAlign: "center"}}
+                        variant={'subtitle1'}
+                        color={"red"}
+                    >
+                        * Card expiry invalid
+                    </Typography>
+                }
                 <div
                     style={{
                         display: "flex",
