@@ -2,7 +2,7 @@ import {User} from "../Types/User";
 import {MembershipOption, UserType} from "../Types/Account";
 import {ServiceRequestApplicationStatus, ServiceRequestStatus} from "../Types/ServiceRequest";
 import {ServiceType} from "../Types/ServiceType";
-import {dummyProfessionalUser} from "../Contexts/AuthContext";
+import {dummyClientUser, dummyProfessionalUser} from "../Contexts/AuthContext";
 import {ServiceRequestTableRow} from "../Pages/RequestHistory/RequestHistoryTables/RequestHistoryTable";
 
 /**
@@ -47,9 +47,9 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("01/02/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.COMPLETE,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
-        professionalID: (generateProfessionals().at(0) as User).user_id,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
+        professionalID: dummyProfessionalUser.user_id,
         postcode: "2000",
         jobDescription: "I want a new fence please",
         rating: 3,
@@ -61,9 +61,9 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.ARCHIVED,
         postcode: "2111",
-        professionalID: (generateProfessionals().at(1) as User).user_id,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: dummyProfessionalUser.user_id,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         rating: 4,
         review: "Guess it's fine"
     },
@@ -71,11 +71,11 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestID: 3,
         requestDate: new Date("03/03/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
-        professionalID: (generateProfessionals().at(2) as User).user_id,
+        professionalID: dummyProfessionalUser.user_id,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
         postcode: "2222",
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         applications: [
             {
                 requestID: 3,
@@ -92,8 +92,8 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
         requestStatus: ServiceRequestStatus.NEW,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         postcode: "2333",
     },
     {
@@ -102,8 +102,8 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         serviceType: ServiceType.TREE_REMOVAL,
         requestStatus: ServiceRequestStatus.NEW,
         postcode: "2444",
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         jobDescription: 'The tree is in the way'
     },
     {
@@ -111,14 +111,14 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("03/10/2023"),
         serviceType: ServiceType.PLUMBING,
         requestStatus: ServiceRequestStatus.NEW,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         applications: [
             {
                 requestID: 6,
                 applicationID: 1,
                 offerDate: new Date("05/05/2023"),
-                professionalID: (generateProfessionals().at(0) as User).user_id,
+                professionalID: dummyProfessionalUser.user_id,
                 cost: 50.50,
                 applicationStatus: ServiceRequestApplicationStatus.PENDING
             }
@@ -131,19 +131,19 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("03/11/2022"),
         serviceType: ServiceType.FENCE_INSTALLATION,
         requestStatus: ServiceRequestStatus.ARCHIVED,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         postcode: "2666",
-        professionalID: (generateProfessionals().at(0) as User).user_id
+        professionalID: dummyProfessionalUser.user_id
     },
     {
         requestID: 10,
         requestDate: new Date("03/07/2023"),
         serviceType: ServiceType.TREE_REMOVAL,
         requestStatus: ServiceRequestStatus.COMPLETE,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
-        professionalID: (generateProfessionals().at(0) as User).user_id,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
+        professionalID: dummyProfessionalUser.user_id,
         postcode: "2777",
     },
     {
@@ -151,9 +151,9 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("03/12/2023"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.PENDING_COMPLETION,
-        professionalID: (generateProfessionals().at(1) as User).user_id,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        professionalID: dummyProfessionalUser.user_id,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         postcode: "2888",
     },
     {
@@ -161,8 +161,8 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("03/15/2023"),
         serviceType: ServiceType.ROOF_CLEANING,
         requestStatus: ServiceRequestStatus.NEW,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         postcode: "2999",
     },
     {
@@ -170,9 +170,9 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         requestDate: new Date("12/15/2020"),
         serviceType: ServiceType.OVEN_REPAIRS,
         requestStatus: ServiceRequestStatus.ARCHIVED,
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
-        professionalID: (generateProfessionals().at(1) as User).user_id,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
+        professionalID: dummyProfessionalUser.user_id,
         postcode: "2001",
     },
     {
@@ -182,8 +182,8 @@ export const dummyServiceRequests: ServiceRequestTableRow[] = [
         professionalID: dummyProfessionalUser.user_id,
         requestStatus: ServiceRequestStatus.NEW,
         postcode: "2222",
-        clientID: (generateClients().at(0) as User).user_id,
-        clientName: `${(generateClients().at(0) as User).firstName} ${(generateClients().at(0) as User).lastName}`,
+        clientID: dummyClientUser.user_id,
+        clientName: `${dummyClientUser.firstName} ${dummyClientUser.lastName}`,
         applications: [
             {
                 requestID: 3,
