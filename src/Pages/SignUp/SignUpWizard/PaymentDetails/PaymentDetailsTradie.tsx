@@ -17,12 +17,16 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
     const [alert, setAlert] = useState(<></>);
 
     function stepsComplete() {
+        const enteredDate = new Date(`${(values as SignUpFields).incomingCCExpiryMonth}/28/${(values as SignUpFields).incomingCCExpiryYear}`);
+        const currentDate = new Date();
+
         return (
             (errors as SignUpFields).incomingCCName === undefined &&
             (errors as SignUpFields).incomingCCCVV === undefined &&
             (errors as SignUpFields).incomingCCName === undefined &&
             (errors as SignUpFields).incomingCCExpiryMonth === undefined &&
-            (errors as SignUpFields).incomingCCExpiryYear === undefined
+            (errors as SignUpFields).incomingCCExpiryYear === undefined &&
+            (currentDate < enteredDate)
         )
     }
 
