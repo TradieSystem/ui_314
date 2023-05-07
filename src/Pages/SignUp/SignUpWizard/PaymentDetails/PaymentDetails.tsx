@@ -17,12 +17,16 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
     const [alert, setAlert] = useState(<></>);
 
     function stepsComplete() {
+        const enteredDate = new Date(`${(values as SignUpFields).outgoingCCExpiryMonth}/28/${(values as SignUpFields).outgoingCCExpiryYear}`);
+        const currentDate = new Date();
+
         return (
             (errors as SignUpFields).outgoingCCName === undefined &&
             (errors as SignUpFields).outgoingCCCVV === undefined &&
             (errors as SignUpFields).outgoingCCNumber === undefined &&
             (errors as SignUpFields).outgoingCCExpiryMonth === undefined &&
-            (errors as SignUpFields).outgoingCCExpiryYear === undefined
+            (errors as SignUpFields).outgoingCCExpiryYear === undefined &&
+            (currentDate < enteredDate)
         )
     }
 
