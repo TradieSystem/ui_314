@@ -506,3 +506,5 @@ export const RequestHistoryTable = (): JSX.Element => {
         </div>
     );
 }
+
+export default RequestHistoryTable;

@@ -39,7 +39,7 @@ export interface RequestSummaryProps {
     request: ServiceRequest;
 }
 
-export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) => {
+export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) : JSX.Element=> {
     const [showEdit, setShowEdit] = useState(false);
 
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
@@ -399,3 +399,5 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
         </Box>
     )
 }
+
+export default RequestSummary;
