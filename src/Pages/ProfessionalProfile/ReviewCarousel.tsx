@@ -44,7 +44,7 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
     );
 };
 
-const CarouselReview = (props: {filteredReviews: ServiceRequest[]}) => {
+const ReviewCarousel = (props: {filteredReviews: ServiceRequest[]}) => {
     const { filteredReviews } = props;
 
     const groupedReviews = filteredReviews.reduce((acc: any[], review, i) => {
@@ -64,4 +64,4 @@ const CarouselReview = (props: {filteredReviews: ServiceRequest[]}) => {
         </Slider>
     );
 };
-export default CarouselReview;
+export default ReviewCarousel;
