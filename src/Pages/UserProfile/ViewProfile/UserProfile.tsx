@@ -9,7 +9,7 @@ import {motion} from "framer-motion";
 import {fadeInUp} from "../../../Effects/Animations";
 
 
-const UserProfile = () => {
+const UserProfile = () : JSX.Element => {
     const navigate = useNavigate();
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
 
@@ -102,6 +102,8 @@ const UserProfile = () => {
                 </Stack>
             </Box>
         );
+    } else {
+        return <></>
     }
 }
 export default UserProfile;
