@@ -17,6 +17,9 @@ export interface EditProfileButtonControlsProps {
      */
     submitting: boolean;
 
+    /**
+     * Value to represent if the submit button should be disabled
+     */
     disabled: boolean;
 }
 
