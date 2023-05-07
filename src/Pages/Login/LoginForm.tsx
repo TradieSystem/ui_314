@@ -3,7 +3,7 @@ import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {Form, FormikProvider, useFormik} from "formik";
 import * as Yup from "yup";
 import Loading from "../../Effects/loading";
-import {Box, Checkbox, FormControlLabel, IconButton, InputAdornment, Link, Stack} from "@mui/material";
+import {Box, IconButton, InputAdornment, Link, Stack} from "@mui/material";
 import {Icon} from "@iconify/react";
 import {motion} from "framer-motion";
 import {animate} from "../../Effects/Animations";
@@ -35,7 +35,6 @@ const LoginForm = () => {
             password: "",
             remember: true,
         },
-
 
         validationSchema: LoginSchema,
         onSubmit: ({email, password}) => {
@@ -78,7 +77,7 @@ const LoginForm = () => {
     });
 
 
-    const {errors, touched, values, isSubmitting, handleSubmit, getFieldProps} =
+    const {errors, touched, isSubmitting, handleSubmit, getFieldProps} =
         formik;
 
     return (
@@ -121,6 +120,7 @@ const LoginForm = () => {
                             label="Password"
                             {...getFieldProps("password")}
                             value={formik.values.password}
+                            data-testid={"password-field"}
                             onChange={formik.handleChange}
                             error={Boolean(touched.password && errors.password)}
                             helperText={touched.password && errors.password}
@@ -149,24 +149,10 @@ const LoginForm = () => {
                     >
                         <Stack
                             direction="row"
-                            alignItems="center"
-                            justifyContent="space-between"
+                            alignItems="right"
+                            justifyContent="right"
                             sx={{my: 2}}
                         >
-                            <FormControlLabel
-                                style={{color: "black"}}
-                                control={
-                                    <Checkbox
-                                        inputProps={{'aria-label': 'controlled'}}
-                                        {...getFieldProps("remember")}
-                                        checked={values.remember}
-                                        color={"warning"}
-                                    />
-                                }
-
-                                label="Remember me"
-                            />
-
                             <Link
                                 component={RouterLink}
                                 variant="subtitle2"
