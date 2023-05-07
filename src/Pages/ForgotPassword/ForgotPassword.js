@@ -22,27 +22,26 @@ const ForgotPassword = () => {
                 border: "2px solid #DB5B13",
                 padding: "20px",
             }}>
-            <Container maxWidth="sm">
-                <ContentStyle>
-                    <HeadingStyle component={motion.div} {...fadeInUp}>
-                        <Logo/>
-                    </HeadingStyle>
+                <Container maxWidth="sm">
+                    <ContentStyle>
+                        <HeadingStyle component={motion.div} {...fadeInUp}>
+                            <Logo/>
+                        </HeadingStyle>
 
-                    <ForgotPasswordform/>
+                        <ForgotPasswordform/>
 
-                    <Typography
-                        component={motion.p}
-                        {...fadeInUp}
-                        variant="body2"
-                        align="left"
-                        sx={{mt: 3}}
-                    >
-                    </Typography>
-                </ContentStyle>
-            </Container>
+                        <Typography
+                            component={motion.p}
+                            {...fadeInUp}
+                            variant="body2"
+                            align="left"
+                            sx={{mt: 3}}
+                        >
+                        </Typography>
+                    </ContentStyle>
+                </Container>
+            </RootStyle>
         </RootStyle>
-        </RootStyle>
-
     );
 };
 

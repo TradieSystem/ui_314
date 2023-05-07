@@ -21,14 +21,12 @@ const animate = {
     },
 };
 
-
 const ForgotPasswordForm = () => {
-
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [securityQuestions, setSecurityQuestions] = useState<SecurityQuestionSet[]>([]);
     const [isSecurityQuestionsValid, setIsSecurityQuestionsValid] = useState(false);
-    const [userId,SetUser] = useState<number>();
+    const [userId, SetUser] = useState<number>();
     const [password, setPassword] = useState('');
     const md5Hash = require("md5-hash");
     const [showPassword, setShowPassword] = useState(false);
@@ -59,7 +57,6 @@ const ForgotPasswordForm = () => {
             .filter((answer) => answer.answer !== null) as { securityQuestion: string, answer: string }[];
 
     }
-
 
     const PasswordReset = () => {
 
@@ -138,7 +135,6 @@ const ForgotPasswordForm = () => {
             });
     };
 
-
     return (
         <form onSubmit={handleSubmit}>
             <Box
@@ -166,7 +162,8 @@ const ForgotPasswordForm = () => {
                             id="email"
                             label="Email Address"
                             value={email}
-                            onChange={handleEmailChange}>
+                            onChange={handleEmailChange}
+                        >
                         </ThemedTextField>
                     </Box>
                     <Box style={{justifyContent: "center", display: "flex"}}>
@@ -176,47 +173,44 @@ const ForgotPasswordForm = () => {
                     </Box>
                     {securityQuestions.length > 0 && (
                         <>
-                        <Box
-                            sx={{
-                                background: "#d9c8c6",
-                                borderRadius: 5,
-                                border: "2px solid #DB5B13",
-                                padding: 2
-                            }}>
-                            <p style={{justifyContent: "center", display: "flex"}}>Please answer the following security
-                                questions:</p>
-                            {securityQuestions.map((question, index) => (
-
-                                <div key={question.securityQuestion}>
-
-                                    <Grid container spacing={1}>
-                                        <Grid item xs={6}>
-                                        <label htmlFor={`answer-${index}`}>{question.securityQuestion}</label>
+                            <Box
+                                sx={{
+                                    background: "#d9c8c6",
+                                    borderRadius: 5,
+                                    border: "2px solid #DB5B13",
+                                    padding: 2
+                                }}>
+                                <p style={{justifyContent: "center", display: "flex"}}>
+                                    Please answer the following security questions:
+                                </p>
+                                {securityQuestions.map((question, index) => (
+                                    <div key={question.securityQuestion}>
+                                        <Grid container spacing={1}>
+                                            <Grid item xs={6}>
+                                                <label htmlFor={`answer-${index}`}>{question.securityQuestion}</label>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <input
+                                                    style={{
+                                                        background: "#dcdcdc",
+                                                        borderColor: "#dc7336",
+                                                        borderRadius: 5,
+                                                        border: "2px solid #DB5B13",
+                                                        padding: 11,
+                                                        outline: "none",
+                                                        marginBottom: "10px"
+                                                    }}
+                                                    type="text"
+                                                    id={`answer-${index}`}
+                                                    value={question.answer ?? ''}
+                                                    onChange={(event) => handleInputChange(event, index)}
+                                                />
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={6}>
-                                        <input style={{
-                                            background: "#dcdcdc",
-                                            borderColor: "#dc7336",
-                                            borderRadius: 5,
-                                            border: "2px solid #DB5B13",
-                                            padding: 11,
-                                            outline: "none",
-                                            marginBottom: "10px"
-                                        }}
-                                               type="text"
-                                               id={`answer-${index}`}
-                                               value={question.answer ?? ''}
-                                               onChange={(event) => handleInputChange(event, index)}/>
-                                        </Grid>
-                                    </Grid>
-                                </div>
-                            ))}
-                        </Box>
-
-
+                                    </div>
+                                ))}
+                            </Box>
                             <ThemedButton type="button" onClick={handleQuestions}>Submit Form</ThemedButton>
-
-
                         </>
                     )}
                     {isSecurityQuestionsValid ? (
@@ -243,6 +237,7 @@ const ForgotPasswordForm = () => {
                                         fullWidth
                                         type={showPassword ? "text" : "password"}
                                         id="password"
+                                        data-testid={"password-reset"}
                                         value={password}
                                         label="Password"
                                         onChange={handlePasswordChange}
@@ -271,8 +266,6 @@ const ForgotPasswordForm = () => {
                             </Box>
                         </Box>
                     ) : null}
-
-
                 </Box>
             </Box>
         </form>
