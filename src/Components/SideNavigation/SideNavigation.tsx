@@ -29,12 +29,12 @@ export const SideNavigation = () => {
                 {isExpanded ?
                     <SideNavigationMenuItem
                         text={'Collapse'}
-                        icon={<ChevronLeft sx={{color: "#db5b13"}}/>}
+                        icon={<ChevronLeft sx={{color: "#0c0c0c"}}/>}
                         onClick={() => setIsExpanded(!isExpanded)}
                     />
                     :
                     <SideNavigationMenuItem
-                        icon={<ChevronRight sx={{color: "#db5b13"}}/>}
+                        icon={<ChevronRight sx={{color: "#090909"}}/>}
                         onClick={() => setIsExpanded(!isExpanded)}
                     />
                 }
