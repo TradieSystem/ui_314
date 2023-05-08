@@ -25,6 +25,7 @@ export const panelStyling = {
     borderRadius: "20px",
     border: "1px solid #DB5B13",
     margin: "0 2rem 2rem 2rem",
+    background:"#f6e3d7"
 }
 
 export interface EditUserFields {

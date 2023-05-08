@@ -21,12 +21,12 @@ export const ThemedButton = ({loadingButton, variantOverride, ...props}: ThemedB
         <Button
             variant={variantOverride ? variantOverride : 'outlined'}
             sx={{
-                background: !variantOverride ? "rgba(219,91,19,0.3)" : "",
+                background: !variantOverride ? "rgb(238,179,144)" : "",
                 borderColor: "#DB5B13",
                 borderWidth: 1,
                 color: "black",
                 '&:hover': {
-                    background: "rgba(219,91,19,0.3)",
+                    background: "rgb(238,179,144)",
                     borderColor: "#DB5B13",
                     borderWidth: 1.5,
                     boxShadow: 0,
@@ -38,13 +38,13 @@ export const ThemedButton = ({loadingButton, variantOverride, ...props}: ThemedB
         <LoadingButton
             variant={'outlined'}
             sx={{
-                background: "rgba(219,91,19,0.3)",
+                background: "rgb(238,179,144)",
                 borderColor: "#DB5B13",
                 borderWidth: 1,
                 color: "black",
                 boxShadow: 0,
                 '&:hover': {
-                    background: "rgba(219,91,19,0.3)",
+                    background: "rgb(238,179,144)",
                     borderColor: "#DB5B13",
                     borderWidth: 1.5,
                     boxShadow: 0,

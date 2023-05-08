@@ -21,7 +21,7 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
             borderRadius: "20px",
             border: "2px solid #DB5B13",
             padding:"50px",
-            background: "#d9c8c6"}}>
+            background: "#f6e3d7"}}>
             {reviews.map(review => (
                 <div key={review.requestID} style={{ marginBottom: "20px"}}>
                     <Grid container spacing={4} style={{justifyContent: "center", display: "flex",padding:"20px"}}>

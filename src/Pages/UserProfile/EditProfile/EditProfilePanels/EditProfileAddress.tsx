@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Grid, Typography} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
 import {EditUserFields, panelStyling} from "../EditProfileForm";
 import {useFormikContext} from "formik";
@@ -26,6 +26,7 @@ export const EditProfileAddress = ({setAddressValid}: EditProfileAddressProps): 
     }, [values, errors]);
 
     return (
+       
         <Grid
             item
             sx={panelStyling}

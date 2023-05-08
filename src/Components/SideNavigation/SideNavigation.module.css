@@ -7,7 +7,7 @@
     background-color: #ffffff;
     color: #db5b13;
     z-index: 1;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, width 0.3s ease-in-out;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out, width 0.4s ease-in-out;
 }
 @keyframes navOpen {
     0% {
@@ -21,7 +21,7 @@
 }
 
 .side-nav__open {
-    animation: navOpen 0.3s ease-in-out forwards;
+    animation: navOpen 0.4s ease-in-out forwards;
 }
 
 @keyframes navClose {
@@ -36,7 +36,7 @@
 }
 
 .side-nav__closed {
-    animation: navClose 0.3s ease-in-out forwards;
+    animation: navClose 0.4s ease-in-out forwards;
 }
 .side-nav__toggle {
     position: absolute;
@@ -48,19 +48,18 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 2;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.4s ease-in-out;
 }
 
 .side-nav__toggle::before,
 .side-nav__toggle::after {
     content: "";
-    display: block;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 1.5rem;
     height: 0.2rem;
-    background-color: #333;
+    background-color: rgba(252, 247, 247, 0);
     transform: translate(-50%, -50%);
 }
 

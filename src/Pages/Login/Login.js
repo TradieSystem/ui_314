@@ -6,29 +6,29 @@ import {motion} from "framer-motion";
 import Logo from "../../Components/logo";
 import {fadeInUp} from '../../Effects/Animations';
 import {ContentStyle, HeadingStyle, RootStyle} from "../../CommonStyles/SignUp_Login";
-import Image from "./Background.jpg";
+import Image from "./img_2.png";
+
 
 const Login = () => {
 
     return (
         <RootStyle style={{
-            backgroundImage: 'url(' + Image + ')',
+            backgroundImage: `url(${Image})`,
             backgroundSize: "cover",
             color: "#f5f5f5",
             minHeight: "100vh",
-            minWidth: "100vh",
-            width: "100%",
-            height: "100%"
+            height: "100%",
         }}>
             <RootStyle style={{
                 height: "700px",
-                borderRadius: "25px",
                 border: "2px solid #DB5B13",
                 padding: "20px",
+                borderRadius: "25px"
             }}>
                 <Container maxWidth="sm">
                     <ContentStyle>
-                        <HeadingStyle component={motion.div} {...fadeInUp}>
+                        <HeadingStyle component={motion.div} {...fadeInUp} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                            T-Titans
                             <Logo/>
                         </HeadingStyle>
                         <Stack
@@ -47,9 +47,9 @@ const Login = () => {
                                 align="left"
                                 sx={{mt: 3}}
                             >
-                                <span style={{color: "black"}}>
-                                    Don’t have an account?{" "}
-                                </span>
+            <span style={{color: "black"}}>
+              Don’t have an account?{" "}
+            </span>
                                 <Link variant="subtitle2" component={RouterLink} to="/signup">
                                     Sign up
                                 </Link>

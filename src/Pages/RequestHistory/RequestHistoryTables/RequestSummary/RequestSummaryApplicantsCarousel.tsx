@@ -93,7 +93,7 @@ export const RequestSummaryApplicantsCarousel = ({
                     width: "460px"
                 }}>
                     <CardContent style={{
-                        background: "#d9c8c6",
+                        background: "#f6e3d7",
                     }}>
                         <Typography>
                             <b>Professional Name:</b> {card.professionalName}

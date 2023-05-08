@@ -228,7 +228,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                     icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
                     sx={{
                         color: "#3f3f3f",
-                        backgroundColor: "#c7c7c7",
+                        backgroundColor: "#f6e3d7",
                         border: "1.5px solid #3f3f3f",
                         marginBottom: 2
                     }}
