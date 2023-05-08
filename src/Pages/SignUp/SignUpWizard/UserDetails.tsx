@@ -80,7 +80,8 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     return (
         <RootStyle>
             <Container maxWidth={"xs"}>
-                <HeadingStyle>
+                <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                    T-Titans
                     <Logo/>
                 </HeadingStyle>
                 <ContentStyle>

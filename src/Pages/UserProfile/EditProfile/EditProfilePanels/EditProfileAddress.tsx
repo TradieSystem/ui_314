@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, Grid, Typography} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
 import {EditUserFields, panelStyling} from "../EditProfileForm";
 import {useFormikContext} from "formik";
