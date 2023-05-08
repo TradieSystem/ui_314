@@ -23,6 +23,7 @@ export interface RequestSummaryEditProps {
 export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeEdit}: RequestSummaryEditProps) => {
     return (
         <>
+            
             <Grid container spacing={3} marginBottom={2} gap={3}>
                 <Grid item sx={{display: "flex", alignItems: "center"}}>
                     <Typography fontWeight={'bold'}>Service Type:</Typography>
@@ -46,7 +47,7 @@ export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeE
                 <Grid item sx={{display: "flex", alignItems: "center"}}>
                     <Typography fontWeight={'bold'}>Description:</Typography>
                 </Grid>
-                <Grid item justifyContent={'right'} display={'flex'}>
+                <Grid item justifyContent={'right'} display={'flex'} >
                     <ThemedTextField
                         onChange={(event) => setServiceDescEdit(event.target.value)}
                         multiline

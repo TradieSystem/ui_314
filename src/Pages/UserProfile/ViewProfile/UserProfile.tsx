@@ -41,7 +41,7 @@ const UserProfile = () : JSX.Element => {
                     >
                         <Box
                             sx={{
-                                background: "#d9c8c6",
+                                background: "#f6e3d7",
                                 borderRadius: 5,
                                 border: "2px solid #DB5B13",
                                 padding: 4

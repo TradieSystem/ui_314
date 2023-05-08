@@ -11,7 +11,8 @@ const ContentStyle = styled("div")({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    background: "#d8cecd",
+    background: "#f3d9ca",
+    borderRadius: "25px"
 });
 
 

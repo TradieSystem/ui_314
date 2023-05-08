@@ -9,13 +9,13 @@
 }
 
 .banner {
-    background-color: #dec6c2;
+    background-color: rgba(222, 198, 194, 0);
     height: 6px;
     display: flex;
     justify-content: center;
-    background-image: linear-gradient(to right, rgba(216, 206, 205, 0), #d97e49, rgba(216, 206, 205, 0));
-    margin-left: 12rem;
-    margin-right: 6rem;
+    background-image: linear-gradient(to right, rgba(216, 206, 205, 0), rgb(220, 115, 54), rgba(216, 206, 205, 0));
+    margin-left: 10rem;
+    margin-right: 20rem;
 
 }
 .headers {
@@ -23,6 +23,10 @@
     justify-content: center;
     margin-left: 6rem;
 }
+html {
+    height: 100%;
+}
 body {
-    background-color: #dec6c2;
+    background: linear-gradient(-70deg, #fa7c30 30%, rgba(0, 0, 0, 0) 30%), url('img.png');
+
 }

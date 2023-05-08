@@ -23,19 +23,18 @@ export const SideNavigation = () => {
                 anchor={"left"}
                 open={true}
                 PaperProps={{
-                    className: isExpanded ? styles['side-nav__open'] : styles['side-nav__closed'],
-                    sx: {backgroundColor: "#ffffff", color: "#db5b13"}
+                    className: `${styles['side-nav']} ${isExpanded ? styles['side-nav__open'] : styles['side-nav__closed']}`
                 }}
             >
                 {isExpanded ?
                     <SideNavigationMenuItem
                         text={'Collapse'}
-                        icon={<ChevronLeft sx={{color: "#db5b13"}}/>}
+                        icon={<ChevronLeft sx={{color: "#0c0c0c"}}/>}
                         onClick={() => setIsExpanded(!isExpanded)}
                     />
                     :
                     <SideNavigationMenuItem
-                        icon={<ChevronRight sx={{color: "#db5b13"}}/>}
+                        icon={<ChevronRight sx={{color: "#090909"}}/>}
                         onClick={() => setIsExpanded(!isExpanded)}
                     />
                 }

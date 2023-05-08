@@ -4,7 +4,7 @@ import {
     ServiceRequestApplication,
     ServiceRequestApplicationStatus
 } from "../../../../Types/ServiceRequest";
-import {Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typography} from "@mui/material";
+import {Box, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Typography} from "@mui/material";
 import {format} from "date-fns";
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
@@ -87,66 +87,80 @@ export const ApplicationConfirmationDialog = ({
     }
 
     return (
-        <Dialog open={showConfirmationDialog}>
-            <div style={{backgroundColor: "#D8CECD", padding: "12px"}}>
+        <Dialog open={showConfirmationDialog} PaperProps={{style: {backgroundColor: 'transparent', boxShadow: 'none'}}}>
+            <div
+                style={{
+                    backgroundColor: "#f3d9ca",
+                    borderRadius: "20px",
+                    border: "2px solid #DB5B13",
+                    padding: "40px",
+                    overflow: 'hidden',
+                }}
+            >
                 <DialogTitle id={"application-confirmation__dialog"} sx={{fontWeight: "light", fontSize: "40px"}}>
                     {"Apply for Request"}
                 </DialogTitle>
-                <DialogContent>
-                    <Grid container spacing={4} marginBottom={2}>
-
-                        <Grid item>
-                            <Typography fontWeight={'bold'}>Application Number:</Typography>
+                <Box
+                    sx={{
+                        backgroundColor: "#f6e3d7",
+                        borderRadius: "15px",
+                        border: "2px solid #DB5B13",
+                    }}
+                >
+                    <DialogContent>
+                        <Grid container spacing={4} marginBottom={2}>
+                            <Grid item>
+                                <Typography fontWeight={'bold'}>Application Number:</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography>{`${request.requestID}`}</Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography>{`${request.requestID}`}</Typography>
+                        <Grid container spacing={7} marginBottom={2}>
+                            <Grid item>
+                                <Typography fontWeight={'bold'}>Application Date:</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid container spacing={7} marginBottom={2}>
-                        <Grid item>
-                            <Typography fontWeight={'bold'}>Application Date:</Typography>
+                        <Grid container spacing={11} marginBottom={2}>
+                            <Grid item>
+                                <Typography fontWeight={'bold'}>Service Type:</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography>{`${request.serviceType}`}</Typography>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
+                        <Grid container spacing={19} marginBottom={2}>
+                            <Grid item>
+                                <Typography fontWeight={'bold'}>Cost:</Typography>
+                            </Grid>
+                            <Grid item>
+                                <ThemedTextField
+                                    required
+                                    size={"small"}
+                                    value={requestCharge}
+                                    error={(requestCharge !== '') && (isNaN(Number(requestCharge)))}
+                                    helperText={(requestCharge !== '') && isNaN(Number(requestCharge)) && 'Cost should be a numeric value'}
+                                    onChange={(event) => setRequestCharge(event.target.value)}
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid container spacing={11} marginBottom={2}>
-                        <Grid item>
-                            <Typography fontWeight={'bold'}>Service Type:</Typography>
+                        <Grid container spacing={2} marginBottom={2}>
+                            <Grid item>
+                                <Typography fontWeight={'bold'}>Additional Description:</Typography>
+                            </Grid>
+                            <Grid item>
+                                {<Typography>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Typography>{`${request.serviceType}`}</Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={19} marginBottom={2}>
-                        <Grid item>
-                            <Typography fontWeight={'bold'}>Cost:</Typography>
-                        </Grid>
-                        <Grid item>
-                            <ThemedTextField
-                                required
-                                size={"small"}
-                                value={requestCharge}
-                                error={(requestCharge !== '') && (isNaN(Number(requestCharge)))}
-                                helperText={(requestCharge !== '') && isNaN(Number(requestCharge)) && 'Cost should be a numeric value'}
-                                onChange={(event) => setRequestCharge(event.target.value)}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={2} marginBottom={2}>
-                        <Grid item>
-                            <Typography fontWeight={'bold'}>Additional Description:</Typography>
-                        </Grid>
-                        <Grid item>
-                            {<Typography>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
-                        </Grid>
-                    </Grid>
-                </DialogContent>
+                    </DialogContent>
+                </Box>
                 <DialogActions sx={{gap: 2}}>
                     <ThemedButton
                         onClick={() => {
                             setShowConfirmationDialog(false);
-
                         }}
                         variant={'text'}
                     >

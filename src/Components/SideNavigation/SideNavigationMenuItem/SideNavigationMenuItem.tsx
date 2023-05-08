@@ -25,27 +25,27 @@ export interface SideNavigationMenuItemProps {
      * (Optional) Callback to perform an onClick action
      */
     onClick?: () => void;
+
+    selected?: boolean;
 }
 
-export const SideNavigationMenuItem = ({text, icon, route, onClick}: SideNavigationMenuItemProps) => {
+export const SideNavigationMenuItem = ({text, icon, route, onClick, selected}: SideNavigationMenuItemProps) => {
     const {isExpanded} = useNavigationContext();
     const navigate = useNavigate();
 
     return (
         <div
-            className={isExpanded ? `${styles['menu-item']} ${styles['menu-item__expanded']}` : `${styles['menu-item']} ${styles['menu-item__condensed']}`}
+            className={isExpanded ? `${styles['menu-item']} ${styles['menu-item__expanded']} ${selected ? styles['menu-item__selected'] : ''}` : `${styles['menu-item']} ${styles['menu-item__condensed']} ${selected ? styles['menu-item__selected'] : ''}`}
             onClick={() => {
                 if(onClick) {
                     onClick();
                 }
                 route && navigate(`/${route}`);
             }}
-
         >
             {icon}
             {isExpanded && <Typography fontWeight={"bold"} variant={'subtitle1'}>{text}</Typography>}
         </div>
     )
 }
-
 export default SideNavigationMenuItem;

@@ -25,6 +25,7 @@ const panelStyling = {
     borderRadius: "20px",
     border: "1px solid #DB5B13",
     margin: "0 2rem 2rem 0",
+    background:"#f6e3d7"
 }
 
 export interface RequestSummaryProps {
@@ -145,7 +146,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
         <Box
             sx={{
                 minWidth: "20%",
-                backgroundColor: "#D8CECD",
+                backgroundColor: "#f3d9ca",
                 borderRadius: "12px"
             }}
         >
