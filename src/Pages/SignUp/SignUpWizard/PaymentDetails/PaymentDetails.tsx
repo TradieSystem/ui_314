@@ -65,11 +65,6 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                         T-Titans
                         <Logo/>
                     </HeadingStyle>
-                    <HeadingStyle>
-                        <Typography variant={'h3'}>
-                            Outgoing Payment Details
-                        </Typography>
-                    </HeadingStyle>
                     <ContentStyle>
                         <Box
                             component={motion.div}
@@ -85,13 +80,18 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                 sx={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    gap: 1.5,
+                                    gap: 2,
                                     marginTop: 5
                                 }}
                                 component={motion.div}
                                 initial={{opacity: 0, y: 40}}
                                 animate={animate}
                             >
+                                <HeadingStyle>
+                                    <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                       Outgoing Payment Details
+                                    </Typography>
+                                </HeadingStyle>
                                 <ThemedTextField
                                     fullWidth
                                     autoComplete="outgoing cc name"

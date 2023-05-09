@@ -61,15 +61,10 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                     borderRadius: "25px"
                 }}>
                 <Container maxWidth={"xs"}>
-                    <HeadingStyle>
                         <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                             T-Titans
                             <Logo/>
                         </HeadingStyle>
-                        <Typography variant={'h3'}>
-                            Incoming Payment Details
-                        </Typography>
-                    </HeadingStyle>
                     <ContentStyle>
                         <Box
                             component={motion.div}
@@ -94,12 +89,17 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                                     initial={{opacity: 0, y: 40}}
                                     animate={animate}
                                 >
+                                    <HeadingStyle>
+                                    <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                        Incoming Payment Details
+                                    </Typography>
+                                     </HeadingStyle>
                                     <Typography
                                         align={'center'}
                                         variant={'subtitle1'}
-                                        sx={{fontWeight: 'bold'}}
+                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                     >
-                                        Card details to receive payments
+                                        Card details to receive payments:
                                     </Typography>
                                     <ThemedTextField
                                         fullWidth

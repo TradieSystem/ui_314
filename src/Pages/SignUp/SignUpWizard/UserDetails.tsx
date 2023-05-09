@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {motion} from "framer-motion";
-import {Alert, Box, Container, IconButton, InputAdornment} from "@mui/material";
+import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 import {animate} from "../../../Effects/Animations";
 import {Icon} from "@iconify/react";
 import {useFormikContext} from "formik";
@@ -112,12 +112,17 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
+                            <HeadingStyle>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                    User Details
+                                </Typography>
+                            </HeadingStyle>
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="first name"

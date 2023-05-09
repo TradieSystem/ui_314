@@ -74,15 +74,10 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                 borderRadius: "25px"
             }}>
             <Container maxWidth={"xs"}>
-                <HeadingStyle>
                     <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                         T-Titans
                         <Logo/>
                     </HeadingStyle>
-                    <Typography variant={'h3'}>
-                        Security Questions
-                    </Typography>
-                </HeadingStyle>
                 <ContentStyle>
                     {alert}
                     <Box
@@ -94,17 +89,22 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                         }}
                         sx={{marginTop: 2}}
                     >
+                        <HeadingStyle>
+                            <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                Security Questions
+                            </Typography>
+                        </HeadingStyle>
                         <Box
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 1:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 1:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion1 || ''}
@@ -142,7 +142,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 2:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 2:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion2 || ''}
@@ -180,7 +180,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 3:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 3:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion3 || ''}

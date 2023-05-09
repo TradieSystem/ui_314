@@ -37,14 +37,9 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                 borderRadius: "25px"
             }}>
             <Container maxWidth={"xs"}>
-                <HeadingStyle>
-                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                        T-Titans
-                        <Logo/>
-                    </HeadingStyle>
-                    <Typography variant={'h3'}>
-                        Address
-                    </Typography>
+                <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                    T-Titans
+                    <Logo/>
                 </HeadingStyle>
                 <ContentStyle>
                     {alert}
@@ -61,12 +56,17 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
+                            <HeadingStyle>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"35px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                    Address
+                                </Typography>
+                            </HeadingStyle>
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="street number"
