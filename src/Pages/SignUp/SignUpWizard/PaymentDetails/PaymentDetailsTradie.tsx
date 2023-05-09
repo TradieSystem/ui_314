@@ -9,6 +9,8 @@ import {useFormikContext} from "formik";
 import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
 import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
+import Logo from '../../../../Components/logo';
+import Image from "./img_2.png";
 
 export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps) => {
     const {values, touched, getFieldProps, errors} = useFormikContext();
@@ -45,9 +47,25 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
 
     return (
         <>
-            <RootStyle>
+            <RootStyle style={{
+                backgroundImage: `url(${Image})`,
+                backgroundSize: "cover",
+                color: "#f5f5f5",
+                minHeight: "100vh",
+                height: "100%",
+            }}>
+                <RootStyle style={{
+                    height: "auto",
+                    border: "2px solid #DB5B13",
+                    padding: "20px",
+                    borderRadius: "25px"
+                }}>
                 <Container maxWidth={"xs"}>
                     <HeadingStyle>
+                        <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                            T-Titans
+                            <Logo/>
+                        </HeadingStyle>
                         <Typography variant={'h3'}>
                             Incoming Payment Details
                         </Typography>
@@ -197,6 +215,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                         </Box>
                     </ContentStyle>
                 </Container>
+            </RootStyle>
             </RootStyle>
         </>
     )

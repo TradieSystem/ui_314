@@ -7,6 +7,8 @@ import {SignUpFields, SignUpProps} from "../SignUp";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import ThemedTextField from "../../../Components/TextField/ThemedTextField";
 import {useFormikContext} from "formik";
+import Logo from '../../../Components/logo';
+import Image from "./img_2.png";
 
 export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
     const {errors, touched, getFieldProps} = useFormikContext();
@@ -21,9 +23,25 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
             <Container maxWidth={"xs"}>
                 <HeadingStyle>
+                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                        T-Titans
+                        <Logo/>
+                    </HeadingStyle>
                     <Typography variant={'h3'}>
                         Address
                     </Typography>
@@ -128,6 +146,7 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }

@@ -16,6 +16,7 @@ export const SideNavigation = () => {
     const navigate = useNavigate();
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
 
+
     return (
         <>
             <Drawer
@@ -23,7 +24,10 @@ export const SideNavigation = () => {
                 anchor={"left"}
                 open={true}
                 PaperProps={{
-                    className: `${styles['side-nav']} ${isExpanded ? styles['side-nav__open'] : styles['side-nav__closed']}`
+                    className: `${styles['side-nav']} ${isExpanded ? styles['side-nav__open'] : styles['side-nav__closed']}`,
+                    style: {
+                        width: 'calc(50% - 40px)' ,
+                    }
                 }}
             >
                 {isExpanded ?

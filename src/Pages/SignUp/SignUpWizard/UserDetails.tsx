@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../Routes";
 import {SignUpFields, SignUpProps} from "../SignUp";
 import axios from "axios";
+import Image from "./img_2.png";
 
 export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -78,8 +79,20 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
-            <Container maxWidth={"xs"}>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
+            <Container maxWidth={"sm"}>
                 <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                     T-Titans
                     <Logo/>
@@ -224,6 +237,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }

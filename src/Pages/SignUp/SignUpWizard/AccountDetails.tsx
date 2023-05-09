@@ -8,6 +8,8 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {Field, useFormikContext} from "formik";
 import {UserType, MembershipOption} from "../../../Types/Account";
 import {ServiceType} from "../../../Types/ServiceType";
+import Logo from '../../../Components/logo';
+import Image from "./img_2.png";
 
 export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
     const {values, setFieldValue} = useFormikContext();
@@ -27,9 +29,25 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
             <Container maxWidth="sm">
                 <HeadingStyle>
+                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                        T-Titans
+                        <Logo/>
+                    </HeadingStyle>
                     <Typography variant={'h3'}>
                         Account Details
                     </Typography>
@@ -192,6 +210,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import SideNavigation from "../SideNavigation/SideNavigation";
 import styles from './PageContainer.module.css';
-import {useNavigationContext} from "../../Contexts/NavigationContext";
+import { useNavigationContext } from "../../Contexts/NavigationContext";
 
 /**
  * Interface describing the properties of {@link PageContainer}
@@ -30,17 +30,16 @@ export interface PageContainerProps {
  * @param subtitle (Optional) to display in smaller font, under the header
  * @param children (Optional) content to display on the body of the page, under title and subtitle
  */
-export const PageContainer = ({title, subtitle, children}: PageContainerProps) => {
-    const {isExpanded} = useNavigationContext();
+export const PageContainer = ({ title, subtitle, children }: PageContainerProps) => {
+    const { isExpanded } = useNavigationContext();
 
     return (
         <>
-            <SideNavigation/>
-            <div className={styles['headers']}>
-                <Typography variant={'h1'} style={{fontSize: "60px"}}>{title}</Typography>
+            <SideNavigation />
+            <div className={`${styles['headers']} ${isExpanded ? styles['headers__min'] : styles['banner__max']}`}>
+                <Typography variant={'h1'} style={{ fontSize: "60px" }}>{title}</Typography>
             </div>
-            <div className={styles['banner']}/>
-
+            <div className={`${styles['banner']} ${isExpanded ? styles['banner__min'] : styles['banner__max']}`} />
             <div id={'page-content'} className={isExpanded ? styles['page-content__min'] : styles['page-content__max']}>
                 {subtitle &&
                     <div className={styles['headers']}>
