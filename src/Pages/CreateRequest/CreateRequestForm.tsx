@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Loading from "../../Effects/loading"
-import {Box, FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import {Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography} from "@mui/material";
 import {motion} from "framer-motion";
 import {ThemedButton} from "../../Components/Button/ThemedButton";
 import ThemedTextField from "../../Components/TextField/ThemedTextField";
@@ -74,13 +74,20 @@ const CreateRequestForm = () => {
                     display: "flex",
                     flexDirection: "column",
                     gap: 3,
+                    justifyContent:"center"
                 }}
                 component={motion.div}
                 initial={{opacity: 0, y: 40}}
                 animate={animate}
             >
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent:"center",
+                        gap: 4,
+                    }}>
+                <Typography style={{color:"black",fontSize:"25px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Pick a Job: </Typography>
                 <FormControl>
-                    <p style={{fontSize: "20px", fontWeight: "bold"}}>Pick a Job:</p>
                     <RadioGroup
                         aria-labelledby="Checkbutton"
                         defaultValue="Tree Removal"
@@ -88,6 +95,7 @@ const CreateRequestForm = () => {
                     >
                         <RadioGroup
                             aria-labelledby={"services__form-group"}
+                            style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}
                             value={serviceType}
                             onChange={(event) => setServiceType(event.target.value as ServiceType)}
                         >
@@ -105,10 +113,11 @@ const CreateRequestForm = () => {
                         </RadioGroup>
                     </RadioGroup>
                 </FormControl>
+                </Box>
                 <ThemedTextField
+                    style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit',backgroundColor: "#f6e3d7" }}
                     multiline
                     rows={15}
-                    style={{backgroundColor: "#f6e3d7"}}
                     autoComplete="Description"
                     type="text"
                     label="Description Of Job"

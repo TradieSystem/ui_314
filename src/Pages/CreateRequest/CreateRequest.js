@@ -1,13 +1,28 @@
 import React from "react";
 import {Container} from "@mui/material";
-import CreateRequestForm from "./CreateRequestForm"
-import {PageContainer} from '../../Components/PageContainer/PageContainer'
+import CreateRequestForm from "./CreateRequestForm";
+import styled from "@emotion/styled";
+import {PageContainer} from '../../Components/PageContainer/PageContainer';
+
+
+const ContentStyle = styled("div")({
+    maxWidth: 480,
+    padding: 25,
+    margin: "auto",
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    background: "#f3d9ca",
+    borderRadius: "25px"
+});
 
 const CreateRequest = () => {
     return (
         <PageContainer title={'Request Form'}>
-            <Container maxWidth="sm" >
+            <Container maxWidth="sm">
+                <ContentStyle>
                 <CreateRequestForm/>
+                    </ContentStyle>
             </Container>
         </PageContainer>
     );

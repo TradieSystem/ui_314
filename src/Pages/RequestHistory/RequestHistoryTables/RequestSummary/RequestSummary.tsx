@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Box, FormControlLabel, Radio, RadioGroup, Typography} from "@mui/material";
+import {Alert, Box, styled, Typography} from "@mui/material";
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
@@ -18,7 +18,12 @@ import {useNavigate} from "react-router-dom";
 import {format} from "date-fns";
 import {InfoOutlined} from "@mui/icons-material";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
-import Rating from "@mui/material/Rating";
+import Rating, { IconContainerProps } from "@mui/material/Rating";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 
 const panelStyling = {
     padding: 3,
@@ -38,6 +43,48 @@ export interface RequestSummaryProps {
      * The service request to view details for
      */
     request: ServiceRequest;
+}
+const StyledRating = styled(Rating)(({ theme }) => ({
+    '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
+        color: theme.palette.action.disabled,
+        fontSize: "4rem"
+    },
+    '& .MuiRating-iconFilled .MuiSvgIcon-root': {
+        fontSize: "4rem"
+    },
+}));
+
+const customIcons: {
+    [index: string]: {
+        icon: React.ReactElement;
+        label: string;
+    };
+} = {
+    1: {
+        icon: <SentimentVeryDissatisfiedIcon color="error" />,
+        label: 'Very Dissatisfied',
+    },
+    2: {
+        icon: <SentimentDissatisfiedIcon color="error" />,
+        label: 'Dissatisfied',
+    },
+    3: {
+        icon: <SentimentSatisfiedIcon color="warning" />,
+        label: 'Neutral',
+    },
+    4: {
+        icon: <SentimentSatisfiedAltIcon color="success" />,
+        label: 'Satisfied',
+    },
+    5: {
+        icon: <SentimentVerySatisfiedIcon color="success" />,
+        label: 'Very Satisfied',
+    },
+};
+
+function IconContainer(props: IconContainerProps) {
+    const { value, ...other } = props;
+    return <span {...other}>{customIcons[value].icon}</span>;
 }
 
 export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) => {
@@ -59,7 +106,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
     const [cards] = useState<ServiceRequestApplicationCard[]>([]);
     const [professionalName, setProfessionalName] = useState<string>();
 
-    const [rating, setRating] = useState<number>();
+    const [rating, setRating] = useState<number | undefined>();
     const [review, setReview] = useState<string>();
 
     const navigate = useNavigate();
@@ -203,56 +250,22 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                 </Typography>
                                 <Box sx={panelStyling}>
                                     <Typography style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Rating</Typography>
-                                    <RadioGroup>
-                                        <RadioGroup
-                                            aria-labelledby={"services__form-group"}
-                                            onChange={(event) => setRating(event.target.value as unknown as number)}
-                                        >
-                                            <div style={{justifyContent: "center", display: "flex"}}>
-                                                <FormControlLabel
-                                                    name={"rating"}
-                                                    value={1}
-                                                    key={`rating-1`}
-                                                    control={<Radio color={"warning"}/>}
-                                                    label={1}
-                                                />
-                                                <FormControlLabel
-                                                    name={"rating"}
-                                                    value={2}
-                                                    key={`rating-2`}
-                                                    control={<Radio color={"warning"}/>}
-                                                    label={2}
-                                                />
-                                                <FormControlLabel
-                                                    name={"rating"}
-                                                    value={3}
-                                                    key={`rating-3`}
-                                                    control={<Radio color={"warning"}/>}
-                                                    label={3}
-                                                />
-                                                <FormControlLabel
-                                                    name={"rating"}
-                                                    value={4}
-                                                    key={`rating-4`}
-                                                    control={<Radio color={"warning"}/>}
-                                                    label={4}
-                                                />
-                                                <FormControlLabel
-                                                    name={"rating"}
-                                                    value={5}
-                                                    key={`rating-5`}
-                                                    control={<Radio color={"warning"}/>}
-                                                    label={5}
-                                                />
-                                            </div>
-
-                                        </RadioGroup>
-                                    </RadioGroup>
+                                    <StyledRating
+                                        sx={{ fontSize: "4rem" }}
+                                        name="highlight-selected-only"
+                                        value={rating ?? 0}
+                                        IconContainerComponent={IconContainer}
+                                        getLabelText={(value: number) => customIcons[value].label}
+                                        highlightSelectedOnly
+                                        onChange={(event, newValue) => {
+                                            setRating(newValue ?? undefined);
+                                        }}
+                                    />
                                     <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Review</Typography>
                                     <ThemedTextField
                                         multiline
                                         rows={5}
-                                        style={{width: "100%"}}
+                                        style={{width: "100%",backgroundColor:"#f3d9ca"}}
                                         type={"text"}
                                         label={"Review (Optional)"}
                                         onChange={(event) => setReview(event.target.value)}
@@ -274,8 +287,8 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                     <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/>
                                     {request.review ?
                                         <>
-                                            <Typography fontWeight={'bold'}>Review:</Typography>
-                                            <Typography>{request.review}</Typography>
+                                            <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Review:</Typography>
+                                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit' }}>{request.review}</Typography>
                                         </> : <></>
                                     }
                                 </Box>
@@ -306,7 +319,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                     margin: 2
                                 }}
                             >
-                                <Typography color={"black"}>
+                                <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                     Loading application details...
                                 </Typography>
                             </Alert> : <></>

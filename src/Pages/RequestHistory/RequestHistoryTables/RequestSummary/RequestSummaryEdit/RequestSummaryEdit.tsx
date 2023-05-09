@@ -26,12 +26,13 @@ export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeE
             
             <Grid container spacing={3} marginBottom={2} gap={3}>
                 <Grid item sx={{display: "flex", alignItems: "center"}}>
-                    <Typography fontWeight={'bold'}>Service Type:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Service Type:</Typography>
                 </Grid>
                 <Grid item justifyContent={'right'} display={'flex'}>
                     <ThemedSelect
                         defaultValue={request.serviceType}
                         size={'small'}
+                        style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', backgroundColor:"#f3d9ca" }}
                         onChange={(event) => setServiceTypeEdit(event.target.value as ServiceType)}
                     >
                         {Object.entries(ServiceType).map(([key, value]) => {
@@ -45,11 +46,12 @@ export const RequestSummaryEdit = ({request, setServiceDescEdit, setServiceTypeE
                 </Grid>
                 <Box width={"100%"}/>
                 <Grid item sx={{display: "flex", alignItems: "center"}}>
-                    <Typography fontWeight={'bold'}>Description:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Description:</Typography>
                 </Grid>
                 <Grid item justifyContent={'right'} display={'flex'} >
                     <ThemedTextField
                         onChange={(event) => setServiceDescEdit(event.target.value)}
+                        style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', backgroundColor:"#f3d9ca" }}
                         multiline
                         id={"description-edit"}
                         name={"description-edit"}
