@@ -26,60 +26,60 @@ export const RequestSummaryView = ({request, professionalName}: RequestSummaryVi
         <>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
-                    <Typography fontWeight={'bold'}>Application Number:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Application Number:</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{`${request.requestID}`}</Typography>
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} marginBottom={2}>
-                <Grid item>
-                    <Typography fontWeight={'bold'}>Application Date:</Typography>
-                </Grid>
-                <Grid item>
-                    <Typography>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${request.requestID}`}</Typography>
                 </Grid>
             </Grid>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
-                    <Typography fontWeight={'bold'}>Service Type:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Application Date:</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{`${request.serviceType}`}</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
                 </Grid>
             </Grid>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
-                    <Typography fontWeight={'bold'}>Status:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Service Type:</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{`${request.requestStatus}`}</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${request.serviceType}`}</Typography>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} marginBottom={2}>
+                <Grid item>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Status:</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography  style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${request.requestStatus}`}</Typography>
                 </Grid>
             </Grid>
             {professionalName &&
                 <Grid container spacing={2} marginBottom={2}>
                     <Grid item>
-                        <Typography fontWeight={'bold'}>Assigned Professional:</Typography>
+                        <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Assigned Professional:</Typography>
                     </Grid>
                     <Grid item>
-                        <Typography>{professionalName}</Typography>
+                        <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{professionalName}</Typography>
                     </Grid>
                 </Grid>
             }
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
-                    <Typography fontWeight={'bold'}>Cost:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Cost:</Typography>
                 </Grid>
                 <Grid item>
-                    <Typography>{approvedApplication ? `$${approvedApplication.cost}` : '-'}</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{approvedApplication ? `$${approvedApplication.cost}` : '-'}</Typography>
                 </Grid>
             </Grid>
             <Grid container spacing={2} marginBottom={2}>
                 <Grid item>
-                    <Typography fontWeight={'bold'}>Additional Description:</Typography>
+                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Additional Description:</Typography>
                 </Grid>
                 <Grid item>
-                    {<Typography>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
+                    {<Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
                 </Grid>
             </Grid>
         </>

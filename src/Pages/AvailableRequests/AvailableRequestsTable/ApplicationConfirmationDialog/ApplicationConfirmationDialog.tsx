@@ -97,7 +97,7 @@ export const ApplicationConfirmationDialog = ({
                     overflow: 'hidden',
                 }}
             >
-                <DialogTitle id={"application-confirmation__dialog"} sx={{fontWeight: "light", fontSize: "40px"}}>
+                <DialogTitle id={"application-confirmation__dialog"} style={{textAlign:"center",color:"black", fontSize:"40px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
                     {"Apply for Request"}
                 </DialogTitle>
                 <Box
@@ -110,31 +110,31 @@ export const ApplicationConfirmationDialog = ({
                     <DialogContent>
                         <Grid container spacing={4} marginBottom={2}>
                             <Grid item>
-                                <Typography fontWeight={'bold'}>Application Number:</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Application Number:</Typography>
                             </Grid>
                             <Grid item>
-                                <Typography>{`${request.requestID}`}</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${request.requestID}`}</Typography>
                             </Grid>
                         </Grid>
                         <Grid container spacing={7} marginBottom={2}>
                             <Grid item>
-                                <Typography fontWeight={'bold'}>Application Date:</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Application Date:</Typography>
                             </Grid>
                             <Grid item>
-                                <Typography>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${format(request.requestDate, 'dd/MM/yyyy')}`}</Typography>
                             </Grid>
                         </Grid>
                         <Grid container spacing={11} marginBottom={2}>
                             <Grid item>
-                                <Typography fontWeight={'bold'}>Service Type:</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Service Type:</Typography>
                             </Grid>
                             <Grid item>
-                                <Typography>{`${request.serviceType}`}</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{`${request.serviceType}`}</Typography>
                             </Grid>
                         </Grid>
                         <Grid container spacing={19} marginBottom={2}>
                             <Grid item>
-                                <Typography fontWeight={'bold'}>Cost:</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Cost:</Typography>
                             </Grid>
                             <Grid item>
                                 <ThemedTextField
@@ -149,10 +149,10 @@ export const ApplicationConfirmationDialog = ({
                         </Grid>
                         <Grid container spacing={2} marginBottom={2}>
                             <Grid item>
-                                <Typography fontWeight={'bold'}>Additional Description:</Typography>
+                                <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Additional Description:</Typography>
                             </Grid>
                             <Grid item>
-                                {<Typography>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
+                                {<Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
                             </Grid>
                         </Grid>
                     </DialogContent>

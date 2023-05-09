@@ -2,6 +2,11 @@
     display: flex;
     justify-content: center;
     margin: 2rem 2rem 2rem 2rem;
+    color: black;
+    font-size: 30px;
+    font-family:Fahrenheit;
+    font-weight: bold;
+    text-decoration-line: underline;
 }
 
 .control-buttons {
