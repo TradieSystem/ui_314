@@ -28,8 +28,8 @@ const UserProfile = () => {
                         <AccountCircleSharp style={{width: "150px", height: "150px"}}/>
                     </div>
                     <div>
-                        <p style={{textAlign: "center", fontSize: "30px"}}> {user.firstName} {user.lastName}</p>
-                        <p style={{textAlign: "center", fontSize: "20px"}}> {user.userType}</p>
+                        <p style={{textAlign: "center", fontSize: "40px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold' }}> {user.firstName} {user.lastName}</p>
+                        <p style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold'}}> {user.userType}</p>
                     </div>
                     <Box
                         sx={{
@@ -44,39 +44,39 @@ const UserProfile = () => {
                                 background: "#f6e3d7",
                                 borderRadius: 5,
                                 border: "2px solid #DB5B13",
-                                padding: 4
+                                padding: 3
                             }}
                         >
                             <Grid container sx={{marginBottom: 2}}>
                                 <Grid item>
-                                    <Typography fontWeight={"bold"} fontSize={20}>Contact Details:</Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Contact Details:</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container sx={{gap: 2, marginBottom: 1}}>
                                 <Grid item>
-                                    <Typography fontWeight={"bold"} fontSize={16}>Mobile:</Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit',fontWeight: 'bold'}}>Mobile:</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography>{user.mobile}</Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container sx={{gap: 2, marginBottom: 1}}>
-                                <Grid item>
-                                    <Typography fontWeight={"bold"} fontSize={16}>Email:</Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography>{user.email}</Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit'}}>{user.mobile}</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container sx={{gap: 2, marginBottom: 1}}>
                                 <Grid item>
-                                    <Typography fontWeight={"bold"} fontSize={16}>Address:</Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Email:</Typography>
                                 </Grid>
                                 <Grid item>
-                                    <Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit'}}>{user.email}</Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container sx={{gap: 2, marginBottom: 1}}>
+                                <Grid item>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Address:</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit'}}>
                                         {`${user.address.streetNumber} ${user.address.streetName}`}
                                     </Typography>
-                                    <Typography>
+                                    <Typography style={{textAlign: "center", fontSize: "20px",color:"black",fontFamily:'Fahrenheit'}}>
                                         {`${user.address.suburb} ${user.address.postcode}`}
                                     </Typography>
                                 </Grid>

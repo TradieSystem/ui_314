@@ -26,16 +26,16 @@ const ReviewCard = ({ reviews }: ReviewCardProps) => {
                 <div key={review.requestID} style={{ marginBottom: "20px"}}>
                     <Grid container spacing={4} style={{justifyContent: "center", display: "flex",padding:"20px"}}>
                         <Grid item xs={3}>
-                            <Typography><b>Request:</b> {review.requestID}</Typography>
+                            <Typography style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}><b style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>Request:</b> {review.requestID}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography><b>Service:</b> {review.serviceType}</Typography>
+                            <Typography style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}><b style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>Service:</b> {review.serviceType}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography><b>Review:</b> {review.review}</Typography>
+                            <Typography style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit' }}><b style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>Review:</b> {review.review}</Typography>
                         </Grid>
                         <Grid item xs={3}>
-                            <Typography><b>Rating:</b> {review.rating}/5</Typography>
+                            <Typography style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}><b style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>Rating:</b> {review.rating}/5</Typography>
                         </Grid>
                     </Grid>
                 </div>
