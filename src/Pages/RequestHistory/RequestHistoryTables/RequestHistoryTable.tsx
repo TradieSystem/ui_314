@@ -348,7 +348,10 @@ export const RequestHistoryTable = (): JSX.Element => {
                                         sx={{
                                             borderRadius: getHeaderBorderRadius(key as ClientRequestHistoryColumn),
                                             backgroundColor: "#d3733c",
-                                            color: "white"
+                                            color: "black",
+                                            fontSize:"25px",
+                                            fontFamily:'Fahrenheit',
+                                            fontWeight: 'bold'
                                         }}
                                     >
                                         {/*Manage and Review columns aren't sortable*/}
@@ -381,7 +384,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                                 <TableCell/>
                                 {user.userType === UserType.PROFESSIONAL && <TableCell/>}
                                 <TableCell>
-                                    <Typography>
+                                    <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                         There are no service requests for this user.
                                     </Typography>
                                 </TableCell>
@@ -409,23 +412,23 @@ export const RequestHistoryTable = (): JSX.Element => {
                                                 },
                                             }}
                                         >
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 {request.requestID}
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 {format(request.requestDate, "dd/MM/yyyy")}
-                                            </TableCell>
+                                            </TableCell >
                                             {/*Location column only renders for professionals viewing their confirmed service requests*/}
                                             {
                                                 user.userType === UserType.PROFESSIONAL &&
-                                                <TableCell>
+                                                <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                     <b>{request.postcode}</b>
                                                 </TableCell>
                                             }
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 {request.serviceType}
-                                            </TableCell>
-                                            <TableCell>
+                                            </TableCell >
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 <div className={styles['status-cell']}>
                                                     <StatusIcon status={request.requestStatus}/>
                                                     <b>{request.requestStatus}</b>
@@ -434,17 +437,17 @@ export const RequestHistoryTable = (): JSX.Element => {
                                             {/*Show client attached to the service request only if we are viewing as a professional*/}
                                             {
                                                 user.userType === UserType.PROFESSIONAL &&
-                                                <TableCell>
+                                                <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                     {request.clientName}
                                                 </TableCell>
                                             }
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 {request.applications?.filter((app) => app.professionalID === request.professionalID).at(0) ?
                                                     `$${request.applications?.filter((app) => app.professionalID === request.professionalID).at(0)?.cost}` :
                                                     '-'
                                                 }
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 <ThemedButton
                                                     variantOverride={'text'}
                                                     onClick={() => {
@@ -460,7 +463,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                                                     }
                                                 </ThemedButton>
                                             </TableCell>
-                                            <TableCell>
+                                            <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                                 {request.rating ?
                                                     <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/> :
                                                     <>-</>
