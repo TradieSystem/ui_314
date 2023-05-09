@@ -6,7 +6,7 @@ import {PageContainer} from '../../Components/PageContainer/PageContainer'
 const CreateRequest = () => {
     return (
         <PageContainer title={'Request Form'}>
-            <Container maxWidth="sm">
+            <Container maxWidth="sm" >
                 <CreateRequestForm/>
             </Container>
         </PageContainer>
