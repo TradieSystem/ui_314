@@ -85,7 +85,7 @@ export const ProfessionalProfile = (): JSX.Element => {
                         />
                     </div>
                     <Box style={{justifyContent: "center", display: "grid"}}>
-                        <div style={{justifyContent: "center", display: "flex"}}>
+                        <div style={{justifyContent: "center", display: "flex", fontSize: "20px",color:"black",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>
                             <h1>{user.firstName} {user.lastName}</h1>
                         </div>
                         <center><Rating name="read-only" value={Number(averageRating.toFixed(1))} readOnly/></center>
@@ -97,6 +97,9 @@ export const ProfessionalProfile = (): JSX.Element => {
                                 justifyContent: "center",
                                 display: "flex",
                                 alignItems: "center"
+                                , fontSize: "20px",
+                                color:"black",
+                                fontFamily:'Fahrenheit'
                             }}>Loading...</Typography>
                         ) : (
                             <>
@@ -106,7 +109,10 @@ export const ProfessionalProfile = (): JSX.Element => {
                                     </Box>
                                 ) : (
                                     <Typography
-                                        style={{justifyContent: "center", display: "flex", alignItems: "center"}}>There
+                                        style={{justifyContent: "center", display: "flex", alignItems: "center",
+                                            fontSize: "20px",
+                                            color:"black",
+                                            fontFamily:'Fahrenheit'}}>There
                                         Are No Reviews</Typography>
                                 )}
                             </>

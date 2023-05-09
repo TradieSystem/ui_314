@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Checkbox, FormControlLabel, FormGroup, Grid, IconButton, InputAdornment, Typography} from "@mui/material";
-import {EditUserFields, panelStyling} from "../EditProfileForm";
+import {EditUserFields, panelStyling1} from "../EditProfileForm";
 import {Field, useFormikContext} from "formik";
 import {User} from "../../../../Types/User";
 import {UserType} from "../../../../Types/Account";
@@ -112,12 +112,10 @@ export const EditProfileProfessionalDetails = ({setProfessionalDetailsValid}: Ed
     return (
         <Grid
             item
-            sx={panelStyling}
+            sx={panelStyling1}
         >
             <Typography
-                sx={{textAlign: "center"}}
-                fontWeight={"bold"}
-                fontSize={25}
+                style={{textAlign:"center", color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}
                 marginBottom={1}
             >
                 {user.userType === UserType.CLIENT ? 'Link Professional Account' : 'Update Professional Details'}
@@ -148,9 +146,9 @@ export const EditProfileProfessionalDetails = ({setProfessionalDetailsValid}: Ed
                     <div>
                         <Typography
                             variant={'subtitle1'}
-                            sx={{fontWeight: 'bold'}}
+                            style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                         >
-                            Please select services to offer
+                            Please select services to offer:
                         </Typography>
                         {
                             user.userType === UserType.CLIENT &&
@@ -188,9 +186,9 @@ export const EditProfileProfessionalDetails = ({setProfessionalDetailsValid}: Ed
                     >
                         <Typography
                             variant={'subtitle1'}
-                            sx={{fontWeight: 'bold'}}
+                            style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                         >
-                            Card details to receive payments
+                            Card details to receive payments:
                         </Typography>
                         {
                             user.userType === UserType.CLIENT &&

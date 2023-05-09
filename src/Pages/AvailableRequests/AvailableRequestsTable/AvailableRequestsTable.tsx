@@ -303,7 +303,10 @@ export const AvailableRequestsTable = () : JSX.Element => {
                                     sx={{
                                         borderRadius: getHeaderBorderRadius(key as AvailableRequestsTableColumn),
                                         backgroundColor: "#d3733c",
-                                        color: "white"
+                                        color: "black",
+                                        fontSize:"25px",
+                                        fontFamily:'Fahrenheit',
+                                        fontWeight: 'bold'
                                     }}
                                 >
                                     {/*Apply and Details columns aren't sortable*/}
@@ -362,22 +365,22 @@ export const AvailableRequestsTable = () : JSX.Element => {
                                             },
                                         }}
                                     >
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             {request.requestID}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             {format(request.requestDate, "dd/MM/yyyy")}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             <><b>{request.postcode}</b></>
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             {request.serviceType}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             {request.clientName}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             <ThemedButton
                                                 variantOverride={'text'}
                                                 onClick={() => {
@@ -388,7 +391,7 @@ export const AvailableRequestsTable = () : JSX.Element => {
                                                 View
                                             </ThemedButton>
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
                                             <Tooltip
                                                 title={user?.user_id && professionalHasApplied(request) ? 'Application to request already submitted' : ''}>
                                         <span>

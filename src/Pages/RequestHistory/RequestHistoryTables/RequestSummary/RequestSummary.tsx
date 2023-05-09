@@ -164,6 +164,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     <Typography
                         variant={'h4'}
                         sx={{marginBottom: '1rem'}}
+                        style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                     >
                         {!showEdit ? `Request Details` : 'Edit Request Details'}
                     </Typography>
@@ -182,12 +183,13 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     <div>
                         <Typography
                             variant={'h4'}
+                            style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                             sx={{marginBottom: '1rem'}}
                         >
                             Payment
                         </Typography>
                         <Box sx={panelStyling}>
-                            <Typography>
+                            <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>
                                 Payment was successfully made with the CC on the account, on request completion.
                             </Typography>
                         </Box>
@@ -200,7 +202,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                     Leave a rating and review
                                 </Typography>
                                 <Box sx={panelStyling}>
-                                    <Typography fontWeight={'bold'}>Rating</Typography>
+                                    <Typography style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Rating</Typography>
                                     <RadioGroup>
                                         <RadioGroup
                                             aria-labelledby={"services__form-group"}
@@ -246,7 +248,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
 
                                         </RadioGroup>
                                     </RadioGroup>
-                                    <Typography fontWeight={'bold'}>Review</Typography>
+                                    <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Review</Typography>
                                     <ThemedTextField
                                         multiline
                                         rows={5}
@@ -262,12 +264,13 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                             <>
                                 <Typography
                                     variant={'h4'}
+                                    style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                     sx={{marginBottom: '1rem'}}
                                 >
                                     Review
                                 </Typography>
                                 <Box sx={panelStyling}>
-                                    <Typography fontWeight={'bold'}>Rating:</Typography>
+                                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Rating:</Typography>
                                     <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/>
                                     {request.review ?
                                         <>

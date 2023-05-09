@@ -63,7 +63,7 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                             animate={animate}
                         >
                             <HeadingStyle>
-                                <Typography variant={'h3'} style={{color:"black", fontSize:"35px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
                                     Address
                                 </Typography>
                             </HeadingStyle>
