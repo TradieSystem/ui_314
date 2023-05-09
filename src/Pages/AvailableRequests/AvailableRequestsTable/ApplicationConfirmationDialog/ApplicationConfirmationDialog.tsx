@@ -91,7 +91,7 @@ export const ApplicationConfirmationDialog = ({
             <div
                 style={{
                     backgroundColor: "#f3d9ca",
-                    borderRadius: "20px",
+                    borderRadius: "12px",
                     border: "2px solid #DB5B13",
                     padding: "40px",
                     overflow: 'hidden',
@@ -103,7 +103,7 @@ export const ApplicationConfirmationDialog = ({
                 <Box
                     sx={{
                         backgroundColor: "#f6e3d7",
-                        borderRadius: "15px",
+                        borderRadius: "12px",
                         border: "2px solid #DB5B13",
                     }}
                 >

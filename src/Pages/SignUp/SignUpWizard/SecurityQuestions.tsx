@@ -9,6 +9,8 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import ThemedSelect from "../../../Components/ThemedSelect/ThemedSelect";
 import {SecurityQuestion} from "../../../Types/Account";
 import ThemedTextField from "../../../Components/TextField/ThemedTextField";
+import Logo from '../../../Components/logo';
+import Image from "./img_2.png";
 
 export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
     const {errors, touched, getFieldProps, values, setFieldValue} = useFormikContext();
@@ -58,13 +60,24 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
             <Container maxWidth={"xs"}>
-                <HeadingStyle>
-                    <Typography variant={'h3'}>
-                        Security Questions
-                    </Typography>
-                </HeadingStyle>
+                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                        T-Titans
+                        <Logo/>
+                    </HeadingStyle>
                 <ContentStyle>
                     {alert}
                     <Box
@@ -76,17 +89,22 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                         }}
                         sx={{marginTop: 2}}
                     >
+                        <HeadingStyle>
+                            <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                Security Questions
+                            </Typography>
+                        </HeadingStyle>
                         <Box
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 1:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 1:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion1 || ''}
@@ -124,7 +142,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 2:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 2:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion2 || ''}
@@ -162,7 +180,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography fontWeight={'bold'}>Question 3:</Typography>
+                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Question 3:</Typography>
                             <ThemedSelect
                                 size={'small'}
                                 value={(values as SignUpFields).securityQuestion3 || ''}
@@ -224,6 +242,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }

@@ -14,19 +14,35 @@
     display: flex;
     justify-content: center;
     background-image: linear-gradient(to right, rgba(216, 206, 205, 0), rgb(220, 115, 54), rgba(216, 206, 205, 0));
-    margin-left: 10rem;
+    margin-left: 8rem;
     margin-right: 20rem;
 
 }
 .headers {
     display: flex;
     justify-content: center;
-    margin-left: 6rem;
 }
 html {
     height: 100%;
 }
 body {
     background: linear-gradient(-70deg, #fa7c30 30%, rgba(0, 0, 0, 0) 30%), url('img.png');
+    overflow: hidden;
+}
 
+
+.banner__min{
+    margin-right: -17.5rem;
+
+}
+.banner__max {
+    margin-left: 7.5rem;
+}
+
+.headers__max {
+    margin-left: 7.5rem;
+}
+
+.headers__min{
+    margin-right: -17.5rem;
 }

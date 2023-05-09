@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {motion} from "framer-motion";
-import {Alert, Box, Container, IconButton, InputAdornment} from "@mui/material";
+import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
 import {animate} from "../../../Effects/Animations";
 import {Icon} from "@iconify/react";
 import {useFormikContext} from "formik";
@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../Routes";
 import {SignUpFields, SignUpProps} from "../SignUp";
 import axios from "axios";
+import Image from "./img_2.png";
 
 export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -78,8 +79,20 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
-            <Container maxWidth={"xs"}>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
+            <Container maxWidth={"sm"}>
                 <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                     T-Titans
                     <Logo/>
@@ -99,12 +112,17 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
+                            <HeadingStyle>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                    User Details
+                                </Typography>
+                            </HeadingStyle>
                             <ThemedTextField
                                 fullWidth
                                 autoComplete="first name"
@@ -224,6 +242,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }

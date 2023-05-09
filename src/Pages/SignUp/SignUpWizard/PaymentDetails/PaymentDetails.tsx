@@ -9,6 +9,8 @@ import {ThemedButton} from "../../../../Components/Button/ThemedButton";
 import {useFormikContext} from "formik";
 import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
+import Logo from '../../../../Components/logo';
+import Image from "./img_2.png";
 
 export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => {
     const {values, touched, getFieldProps, errors} = useFormikContext();
@@ -49,12 +51,23 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
 
     return (
         <>
-            <RootStyle>
+            <RootStyle style={{
+                backgroundImage: `url(${Image})`,
+                backgroundSize: "cover",
+                color: "#f5f5f5",
+                minHeight: "100vh",
+                height: "100%",
+            }}>
+                <RootStyle style={{
+                    height: "auto",
+                    border: "2px solid #DB5B13",
+                    padding: "20px",
+                    borderRadius: "25px"
+                }}>
                 <Container maxWidth={"xs"}>
-                    <HeadingStyle>
-                        <Typography variant={'h3'}>
-                            Outgoing Payment Details
-                        </Typography>
+                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                        T-Titans
+                        <Logo/>
                     </HeadingStyle>
                     <ContentStyle>
                         <Box
@@ -71,13 +84,18 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                 sx={{
                                     display: "flex",
                                     flexDirection: "column",
-                                    gap: 1.5,
+                                    gap: 2,
                                     marginTop: 5
                                 }}
                                 component={motion.div}
                                 initial={{opacity: 0, y: 40}}
                                 animate={animate}
                             >
+                                <HeadingStyle>
+                                    <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                       Outgoing Payment Details
+                                    </Typography>
+                                </HeadingStyle>
                                 <ThemedTextField
                                     fullWidth
                                     autoComplete="outgoing cc name"
@@ -196,6 +214,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                         </Box>
                     </ContentStyle>
                 </Container>
+            </RootStyle>
             </RootStyle>
         </>
     );

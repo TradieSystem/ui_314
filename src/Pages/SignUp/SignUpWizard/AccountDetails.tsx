@@ -8,6 +8,8 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {Field, useFormikContext} from "formik";
 import {UserType, MembershipOption} from "../../../Types/Account";
 import {ServiceType} from "../../../Types/ServiceType";
+import Logo from '../../../Components/logo';
+import Image from "./img_2.png";
 
 export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
     const {values, setFieldValue} = useFormikContext();
@@ -27,12 +29,25 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
     }
 
     return (
-        <RootStyle>
+        <RootStyle style={{
+            backgroundImage: `url(${Image})`,
+            backgroundSize: "cover",
+            color: "#f5f5f5",
+            minHeight: "100vh",
+            height: "100%",
+        }}>
+            <RootStyle style={{
+                height: "auto",
+                border: "2px solid #DB5B13",
+                padding: "20px",
+                borderRadius: "25px"
+            }}>
             <Container maxWidth="sm">
                 <HeadingStyle>
-                    <Typography variant={'h3'}>
-                        Account Details
-                    </Typography>
+                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                        T-Titans
+                        <Logo/>
+                    </HeadingStyle>
                 </HeadingStyle>
                 <ContentStyle>
                     <Box
@@ -48,17 +63,20 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 1.5,
+                                gap: 2,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
+                            <Typography variant={'h3'}  style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                Account Details
+                            </Typography>
                             <Typography
                                 align={'center'}
-                                sx={{ fontWeight: 'bold' }}
+                                style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                             >
-                                Please select your account type
+                                Please select your account type:
                             </Typography>
                             <RadioGroup
                                 aria-labelledby={"user-type__radio-button-group"}
@@ -68,6 +86,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 value={(values as SignUpFields).userType ? (values as SignUpFields).userType : " "}
                             >
                                 <FormControlLabel
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                     value={UserType.CLIENT}
                                     control={
                                         <Radio
@@ -78,6 +97,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     label="Client"
                                 />
                                 <FormControlLabel
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                     value={UserType.PROFESSIONAL}
                                     control={<Radio color={"warning"} name={"userType"}/>}
                                     label="Professional"
@@ -98,9 +118,9 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 animate={animate}
                             >
                                 <Typography
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                     align={'center'}
                                     variant={'subtitle1'}
-                                    sx={{ fontWeight: 'bold' }}
                                 >
                                     Please select your membership option
                                 </Typography>
@@ -112,11 +132,13 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     value={(values as SignUpFields).membershipOption ? (values as SignUpFields).membershipOption : " "}
                                 >
                                     <FormControlLabel
+                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                         value={MembershipOption.SUBSCRIPTION}
                                         control={<Radio color={"warning"} name={"membershipOption"}/>}
                                         label={"Subscription"}
                                     />
                                     <FormControlLabel
+                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                         value={MembershipOption.PAY_AS_YOU_GO}
                                         control={<Radio color={"warning"} name={"membershipOption"}/>}
                                         label={"Pay as you go"}
@@ -140,11 +162,11 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 <Typography
                                     align={'center'}
                                     variant={'subtitle1'}
-                                    sx={{ fontWeight: 'bold' }}
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                                 >
-                                    Please select services to offer
+                                    Please select services to offer:
                                 </Typography>
-                                <FormGroup aria-labelledby={"services__form-group"}>
+                                <FormGroup aria-labelledby={"services__form-group"} style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                                     {Object.entries(ServiceType).map(([key, value]) => {
                                         return (
                                             <Field
@@ -192,6 +214,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                     </Box>
                 </ContentStyle>
             </Container>
+        </RootStyle>
         </RootStyle>
     )
 }
