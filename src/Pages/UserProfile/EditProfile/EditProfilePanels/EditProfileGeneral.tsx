@@ -28,9 +28,7 @@ export const EditProfileGeneral = ({setGeneralValid}: EditProfileGeneralProps): 
             sx={panelStyling}
         >
             <Typography
-                sx={{textAlign: "center"}}
-                fontWeight={"bold"}
-                fontSize={25}
+                style={{textAlign:"center", color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}
                 marginBottom={1}
             >
                 General

@@ -15,9 +15,7 @@ export const EditProfileClientAccount = (): JSX.Element => {
             sx={panelStyling}
         >
             <Typography
-                sx={{textAlign: "center"}}
-                fontWeight={"bold"}
-                fontSize={25}
+                style={{textAlign:"center", color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}
                 marginBottom={1}
             >
                 {user.client !== undefined ? `Edit Client Account` : `Link Client Account`}
@@ -33,9 +31,9 @@ export const EditProfileClientAccount = (): JSX.Element => {
                 <Typography
                     align={'center'}
                     variant={'subtitle1'}
-                    sx={{fontWeight: 'bold'}}
+                    style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
                 >
-                    Please select your membership option
+                    Please select your membership option:
                 </Typography>
                 <RadioGroup
                     aria-labelledby={"user-membership-option__radio-button-group"}

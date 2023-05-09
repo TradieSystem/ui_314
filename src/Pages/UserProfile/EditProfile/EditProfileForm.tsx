@@ -20,7 +20,15 @@ import {motion} from "framer-motion";
 import {fadeInUp} from "../../../Effects/Animations";
 
 export const panelStyling = {
-    width: "40%",
+    width: "auto",
+    padding: 3,
+    borderRadius: "20px",
+    border: "1px solid #DB5B13",
+    margin: "0 2rem 2rem 2rem",
+    background:"#f6e3d7"
+}
+export const panelStyling1 = {
+    width: "auto",
     padding: 3,
     borderRadius: "20px",
     border: "1px solid #DB5B13",
