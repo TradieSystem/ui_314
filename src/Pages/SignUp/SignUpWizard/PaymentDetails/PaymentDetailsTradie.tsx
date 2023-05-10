@@ -9,7 +9,7 @@ import {useFormikContext} from "formik";
 import {UserType} from "../../../../Types/Account";
 import {Icon} from "@iconify/react";
 import {Alert, Box, Container, IconButton, InputAdornment, Typography} from "@mui/material";
-import Logo from '../../../../Components/logo';
+import Logo from '../../../../Components/Logo2';
 import Image from "./img_2.png";
 
 export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps) => {
@@ -62,13 +62,10 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                     height: "auto",
                     border: "2px solid #DB5B13",
                     padding: "20px",
+                    background: "#f3d9ca",
                     borderRadius: "25px"
                 }}>
                 <Container maxWidth={"xs"}>
-                        <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                            T-Titans
-                            <Logo/>
-                        </HeadingStyle>
                     <ContentStyle>
                         <Box
                             component={motion.div}
@@ -79,7 +76,6 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                             }}
                             sx={{marginTop: 2}}
                         >
-                            {alert}
                             {
                                 ((values as SignUpFields).userType === UserType.PROFESSIONAL) &&
                                 <Box
@@ -94,7 +90,11 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                                     animate={animate}
                                 >
                                     <HeadingStyle>
-                                    <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                        <Logo/>
+                                    </HeadingStyle>
+                                    {alert}
+                                    <HeadingStyle>
+                                    <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit' }}>
                                         Incoming Payment Details
                                     </Typography>
                                      </HeadingStyle>

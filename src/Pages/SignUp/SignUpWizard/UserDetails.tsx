@@ -6,7 +6,7 @@ import {Icon} from "@iconify/react";
 import {useFormikContext} from "formik";
 import {ContentStyle, HeadingStyle, RootStyle} from "../../../CommonStyles/SignUp_Login";
 import {ThemedTextField} from "../../../Components/TextField/ThemedTextField";
-import Logo from "../../../Components/logo";
+import Logo from "../../../Components/Logo2";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {useNavigate} from "react-router-dom";
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../Routes";
@@ -90,15 +90,11 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                 height: "auto",
                 border: "2px solid #DB5B13",
                 padding: "20px",
+                background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
             <Container maxWidth={"sm"}>
-                <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                    T-Titans
-                    <Logo/>
-                </HeadingStyle>
                 <ContentStyle>
-                    {alert}
                     <Box
                         component={motion.div}
                         animate={{
@@ -119,7 +115,11 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                             animate={animate}
                         >
                             <HeadingStyle>
-                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                <Logo/>
+                            </HeadingStyle>
+                            {alert}
+                            <HeadingStyle>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"25px",fontFamily:'Fahrenheit'}}>
                                     User Details
                                 </Typography>
                             </HeadingStyle>

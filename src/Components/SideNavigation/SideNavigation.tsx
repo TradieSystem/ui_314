@@ -42,8 +42,11 @@ export const SideNavigation = () => {
                 {
                     sideNavigationMenuItems.map((item) => {
                         return (
-                            <SideNavigationMenuItem key={`${item.text}-side__icon`} icon={item.icon} text={item.text}
-                                                    route={item.route}/>
+                            <SideNavigationMenuItem key={`${item.text}-side__icon`} 
+                                                    icon={item.icon} 
+                                                    text={item.text}
+                                                    route={item.route}
+                            />
                         )
                     })
                 }

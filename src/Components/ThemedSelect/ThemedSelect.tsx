@@ -6,8 +6,9 @@ export const ThemedSelect = ({children, ...props}: SelectProps) => {
         <Select
             variant={'outlined'}
             sx={{
-                background: "#dcdcdc",
+                background: "#ffffff",
                 border: "2px solid #dc7336",
+                fontFamily:'Fahrenheit',
             }}
             {...props}
         >

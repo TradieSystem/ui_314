@@ -154,10 +154,16 @@ export const exportPDF = async (
 
     //Adding the summary tables
     autoTable(pdf, {
+
         head: user.userType === UserType.CLIENT ? [generateClientHeader()] : [generateProfessionalHeader()],
         body: user.userType === UserType.CLIENT ? generateClientTable() : generateProfessionalTable(),
-        startY: y
+        startY: y,
+        headStyles: {
+        fillColor: [211, 115, 60]
+    }
     });
+
+
 
     //Finally, save the PDF
     pdf.save(`Service Requests ${user.firstName} ${user.lastName} - ${(new Date()).toLocaleDateString()}.pdf`)

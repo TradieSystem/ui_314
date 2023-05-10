@@ -23,12 +23,12 @@ const Login = () => {
                 height: "700px",
                 border: "2px solid #DB5B13",
                 padding: "20px",
-                borderRadius: "25px"
+                background: "#f3d9ca",
+                borderRadius: "25px",
             }}>
                 <Container maxWidth="sm">
                     <ContentStyle>
                         <HeadingStyle component={motion.div} {...fadeInUp} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                            T-Titans
                             <Logo/>
                         </HeadingStyle>
                         <Stack
@@ -47,7 +47,7 @@ const Login = () => {
                                 align="left"
                                 sx={{mt: 3}}
                             >
-            <span style={{color: "black"}}>
+            <span style={{color: "black", fontFamily:'Fahrenheit'}}>
               Don’t have an account?{" "}
             </span>
                                 <Link variant="subtitle2" component={RouterLink} to="/signup">
