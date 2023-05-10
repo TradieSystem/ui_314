@@ -6,10 +6,12 @@ export const ThemedTextField = ({helperText, children, ...props}: TextFieldProps
         <TextField
             variant={'outlined'}
             sx={{
-                background: "#dcdcdc",
+                background: "#ffffff",
                 borderColor: "#dc7336",
+                fontFamily:'Fahrenheit',
                 '& label.Mui-focused': {
                     color: '#dc7336',
+                    fontFamily:'Fahrenheit',
                 },
                 '& .MuiInput-underline:after': {
                     borderBottomColor: '#dc7336'

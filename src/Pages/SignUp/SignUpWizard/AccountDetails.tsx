@@ -8,7 +8,7 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import {Field, useFormikContext} from "formik";
 import {UserType, MembershipOption} from "../../../Types/Account";
 import {ServiceType} from "../../../Types/ServiceType";
-import Logo from '../../../Components/logo';
+import Logo from '../../../Components/Logo2';
 import Image from "./img_2.png";
 
 export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
@@ -40,12 +40,12 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                 height: "auto",
                 border: "2px solid #DB5B13",
                 padding: "20px",
+                background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
             <Container maxWidth="sm">
                 <HeadingStyle>
-                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                        T-Titans
+                    <HeadingStyle>
                         <Logo/>
                     </HeadingStyle>
                 </HeadingStyle>
@@ -69,17 +69,18 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
-                            <Typography variant={'h3'}  style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                            <Typography variant={'h3'}  style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit'}}>
                                 Account Details
                             </Typography>
                             <Typography
                                 align={'center'}
-                                style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                             >
                                 Please select your account type:
                             </Typography>
                             <RadioGroup
                                 aria-labelledby={"user-type__radio-button-group"}
+                                style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                 onChange={(event) => {
                                     setFieldValue("userType", event.currentTarget.value)
                                 }}
@@ -97,7 +98,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     label="Client"
                                 />
                                 <FormControlLabel
-                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                     value={UserType.PROFESSIONAL}
                                     control={<Radio color={"warning"} name={"userType"}/>}
                                     label="Professional"
@@ -118,13 +119,14 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 animate={animate}
                             >
                                 <Typography
-                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                     align={'center'}
                                     variant={'subtitle1'}
                                 >
-                                    Please select your membership option
+                                    Please select your membership option:
                                 </Typography>
                                 <RadioGroup
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                     aria-labelledby={"user-membership-option__radio-button-group"}
                                     onChange={(event) => {
                                         setFieldValue("membershipOption", event.currentTarget.value)
@@ -132,13 +134,13 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                     value={(values as SignUpFields).membershipOption ? (values as SignUpFields).membershipOption : " "}
                                 >
                                     <FormControlLabel
-                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                         value={MembershipOption.SUBSCRIPTION}
                                         control={<Radio color={"warning"} name={"membershipOption"}/>}
                                         label={"Subscription"}
                                     />
                                     <FormControlLabel
-                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                        style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                         value={MembershipOption.PAY_AS_YOU_GO}
                                         control={<Radio color={"warning"} name={"membershipOption"}/>}
                                         label={"Pay as you go"}
@@ -162,7 +164,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 <Typography
                                     align={'center'}
                                     variant={'subtitle1'}
-                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                 >
                                     Please select services to offer:
                                 </Typography>

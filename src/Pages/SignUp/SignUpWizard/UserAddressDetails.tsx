@@ -7,7 +7,7 @@ import {SignUpFields, SignUpProps} from "../SignUp";
 import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import ThemedTextField from "../../../Components/TextField/ThemedTextField";
 import {useFormikContext} from "formik";
-import Logo from '../../../Components/logo';
+import Logo from '../../../Components/Logo2';
 import Image from "./img_2.png";
 
 export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
@@ -34,11 +34,11 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                 height: "auto",
                 border: "2px solid #DB5B13",
                 padding: "20px",
+                background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
             <Container maxWidth={"xs"}>
-                <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                    T-Titans
+                <HeadingStyle>
                     <Logo/>
                 </HeadingStyle>
                 <ContentStyle>
@@ -63,7 +63,7 @@ export const UserAddressDetails = ({setCurrentStep}: SignUpProps) => {
                             animate={animate}
                         >
                             <HeadingStyle>
-                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                                <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit'}}>
                                     Address
                                 </Typography>
                             </HeadingStyle>

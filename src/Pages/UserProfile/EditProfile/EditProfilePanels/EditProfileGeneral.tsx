@@ -9,6 +9,7 @@ export interface EditProfileGeneralProps {
     setGeneralValid: (isValid: boolean) => void
 }
 
+
 export const EditProfileGeneral = ({setGeneralValid}: EditProfileGeneralProps): JSX.Element => {
     const {errors, touched, getFieldProps, values} = useFormikContext();
     const [showPassword, setShowPassword] = useState(false);

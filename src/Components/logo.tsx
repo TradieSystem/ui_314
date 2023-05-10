@@ -6,10 +6,10 @@ const Logo = () => {
         <Box>
             <Box
                 component="img" sx={{
-                height: 233,
+                height: 300,
                 width: 350,
             }}
-                src="/logo.png" alt="logo"
+                src="/tradie (2).png" alt="logo"
             />
         </Box>
     );

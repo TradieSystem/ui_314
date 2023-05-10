@@ -2,7 +2,8 @@ import styled from "@emotion/styled";
 import {Box} from "@mui/material";
 
 export const RootStyle = styled("div")({
-    background: "#D8CECD",
+    background:"#f6e3d7",
+    fontFamily:'Fahrenheit',
     height: "100vh",
     display: "grid",
     placeItems: "center",
@@ -10,6 +11,7 @@ export const RootStyle = styled("div")({
 
 export const HeadingStyle = styled(Box)({
     textAlign: "center",
+    fontFamily:'Fahrenheit'
 });
 
 export const ContentStyle = styled("div")({
@@ -19,4 +21,5 @@ export const ContentStyle = styled("div")({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
+    fontFamily:'Fahrenheit'
 });

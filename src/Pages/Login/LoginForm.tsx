@@ -158,6 +158,7 @@ const LoginForm = () => {
                                 variant="subtitle2"
                                 to={`/${RoutesEnum.Security_question}`}
                                 underline="hover"
+                                style={{fontFamily:'Fahrenheit'}}
                             >
                                 Forgot password?
                             </Link>

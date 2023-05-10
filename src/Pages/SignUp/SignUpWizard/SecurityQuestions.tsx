@@ -9,7 +9,7 @@ import {ThemedButton} from "../../../Components/Button/ThemedButton";
 import ThemedSelect from "../../../Components/ThemedSelect/ThemedSelect";
 import {SecurityQuestion} from "../../../Types/Account";
 import ThemedTextField from "../../../Components/TextField/ThemedTextField";
-import Logo from '../../../Components/logo';
+import Logo from '../../../Components/Logo2';
 import Image from "./img_2.png";
 
 export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
@@ -71,13 +71,10 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                 height: "auto",
                 border: "2px solid #DB5B13",
                 padding: "20px",
+                background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
             <Container maxWidth={"xs"}>
-                    <HeadingStyle style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
-                        T-Titans
-                        <Logo/>
-                    </HeadingStyle>
                 <ContentStyle>
                     {alert}
                     <Box
@@ -90,7 +87,10 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                         sx={{marginTop: 2}}
                     >
                         <HeadingStyle>
-                            <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold',textDecorationLine: 'underline' }}>
+                            <Logo/>
+                        </HeadingStyle>
+                        <HeadingStyle>
+                            <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit' }}>
                                 Security Questions
                             </Typography>
                         </HeadingStyle>
@@ -98,7 +98,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                             sx={{
                                 display: "flex",
                                 flexDirection: "column",
-                                gap: 2,
+                                gap: 1,
                             }}
                             component={motion.div}
                             initial={{opacity: 0, y: 40}}

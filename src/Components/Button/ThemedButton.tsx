@@ -24,6 +24,7 @@ export const ThemedButton = ({loadingButton, variantOverride, ...props}: ThemedB
                 background: !variantOverride ? "rgb(238,179,144)" : "",
                 borderColor: "#DB5B13",
                 borderWidth: 1,
+                fontFamily:'Fahrenheit',
                 color: "black",
                 '&:hover': {
                     background: "rgb(238,179,144)",
@@ -42,6 +43,7 @@ export const ThemedButton = ({loadingButton, variantOverride, ...props}: ThemedB
                 borderColor: "#DB5B13",
                 borderWidth: 1,
                 color: "black",
+                fontFamily:'Fahrenheit',
                 boxShadow: 0,
                 '&:hover': {
                     background: "rgb(238,179,144)",

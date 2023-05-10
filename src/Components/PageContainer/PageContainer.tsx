@@ -37,13 +37,13 @@ export const PageContainer = ({ title, subtitle, children }: PageContainerProps)
         <>
             <SideNavigation />
             <div className={`${styles['headers']} ${isExpanded ? styles['headers__min'] : styles['banner__max']}`}>
-                <Typography variant={'h1'} style={{ fontSize: "60px" }}>{title}</Typography>
+                <Typography variant={'h1'} style={{ fontSize: "65px", fontFamily:"Fahrenheit", fontWeight:"bold"}}>{title}</Typography>
             </div>
             <div className={`${styles['banner']} ${isExpanded ? styles['banner__min'] : styles['banner__max']}`} />
             <div id={'page-content'} className={isExpanded ? styles['page-content__min'] : styles['page-content__max']}>
                 {subtitle &&
                     <div className={styles['headers']}>
-                        <Typography variant={'h5'}>{subtitle}</Typography>
+                        <Typography variant={'h5'} style={{fontFamily:"Fahrenheit"}}>{subtitle}</Typography>
                     </div>
                 }
                 {children}

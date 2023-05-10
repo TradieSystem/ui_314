@@ -35,6 +35,7 @@ export const SideNavigationMenuItem = ({text, icon, route, onClick, selected}: S
 
     return (
         <div
+
             className={isExpanded ? `${styles['menu-item']} ${styles['menu-item__expanded']} ${selected ? styles['menu-item__selected'] : ''}` : `${styles['menu-item']} ${styles['menu-item__condensed']} ${selected ? styles['menu-item__selected'] : ''}`}
             onClick={() => {
                 if(onClick) {
@@ -44,7 +45,7 @@ export const SideNavigationMenuItem = ({text, icon, route, onClick, selected}: S
             }}
         >
             {icon}
-            {isExpanded && <Typography fontWeight={"bold"} variant={'subtitle1'}>{text}</Typography>}
+            {isExpanded && <Typography style={{fontFamily:"Fahrenheit", fontWeight:"bold", fontSize:"18px"}}>{text}</Typography>}
         </div>
     )
 }

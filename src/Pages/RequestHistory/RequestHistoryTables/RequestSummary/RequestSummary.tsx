@@ -30,7 +30,8 @@ const panelStyling = {
     borderRadius: "20px",
     border: "1px solid #DB5B13",
     margin: "0 2rem 2rem 0",
-    background:"#f6e3d7"
+    background:"#f6e3d7",
+    fontFamily:'Fahrenheit'
 }
 
 export interface RequestSummaryProps {
@@ -198,14 +199,14 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
             }}
         >
             <div className={styles['title']}>
-                <Typography variant={'h3'}>
+                <Typography variant={'h3'}  style={{color:"black",fontSize:"50px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
                     {request.requestStatus === ServiceRequestStatus.NEW && `New Service Request`}
                     {request.requestStatus === ServiceRequestStatus.COMPLETE && `Completed Request`}
                     {request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION && `Request Pending Completion`}
                     {request.requestStatus === ServiceRequestStatus.ARCHIVED && `Finalised Request`}
                 </Typography>
             </div>
-            <div className={styles['request-overview']}>
+            <div className={styles['request-overview']} style={{fontFamily:'Fahrenheit'}}>
                 {alert}
                 <div>
                     <Typography
@@ -245,6 +246,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                 <Typography
                                     variant={'h4'}
                                     sx={{marginBottom: '1rem'}}
+                                    style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}
                                 >
                                     Leave a rating and review
                                 </Typography>
@@ -261,7 +263,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                             setRating(newValue ?? undefined);
                                         }}
                                     />
-                                    <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Review</Typography>
+                                    <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Review</Typography>
                                     <ThemedTextField
                                         multiline
                                         rows={5}
