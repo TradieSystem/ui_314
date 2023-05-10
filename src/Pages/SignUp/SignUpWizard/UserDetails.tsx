@@ -95,7 +95,6 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
             }}>
             <Container maxWidth={"sm"}>
                 <ContentStyle>
-                    {alert}
                     <Box
                         component={motion.div}
                         animate={{
@@ -118,6 +117,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                             <HeadingStyle>
                                 <Logo/>
                             </HeadingStyle>
+                            {alert}
                             <HeadingStyle>
                                 <Typography variant={'h3'} style={{color:"black", fontSize:"25px",fontFamily:'Fahrenheit'}}>
                                     User Details

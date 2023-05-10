@@ -74,9 +74,8 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                 background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
-            <Container maxWidth={"xs"}>
+            <Container maxWidth={"sm"}>
                 <ContentStyle>
-                    {alert}
                     <Box
                         component={motion.div}
                         animate={{
@@ -89,6 +88,7 @@ export const SecurityQuestions = ({setCurrentStep}: SignUpProps) => {
                         <HeadingStyle>
                             <Logo/>
                         </HeadingStyle>
+                        {alert}
                         <HeadingStyle>
                             <Typography variant={'h3'} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit' }}>
                                 Security Questions

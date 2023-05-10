@@ -72,7 +72,6 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                             }}
                             sx={{marginTop: 2}}
                         >
-                            {alert}
                             {
                                 ((values as SignUpFields).userType === UserType.PROFESSIONAL) &&
                                 <Box
@@ -89,6 +88,7 @@ export const PaymentDetailsTradie = ({setCurrentStep, handleSubmit}: SignUpProps
                                     <HeadingStyle>
                                         <Logo/>
                                     </HeadingStyle>
+                                    {alert}
                                     <HeadingStyle>
                                     <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit' }}>
                                         Incoming Payment Details

@@ -44,11 +44,6 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                 borderRadius: "25px"
             }}>
             <Container maxWidth="sm">
-                <HeadingStyle>
-                    <HeadingStyle>
-                        <Logo/>
-                    </HeadingStyle>
-                </HeadingStyle>
                 <ContentStyle>
                     <Box
                         component={motion.div}
@@ -69,6 +64,9 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             initial={{opacity: 0, y: 40}}
                             animate={animate}
                         >
+                            <HeadingStyle>
+                                <Logo/>
+                            </HeadingStyle>
                             <Typography variant={'h3'}  style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit'}}>
                                 Account Details
                             </Typography>

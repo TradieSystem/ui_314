@@ -72,7 +72,6 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                             }}
                             sx={{marginTop: 2}}
                         >
-                            {alert}
                             <Box
                                 sx={{
                                     display: "flex",
@@ -87,6 +86,7 @@ export const PaymentDetails = ({setCurrentStep, handleSubmit} : SignUpProps) => 
                                 <HeadingStyle>
                                     <Logo/>
                                 </HeadingStyle>
+                                {alert}
                                 <HeadingStyle>
                                     <Typography variant={'h3'}  style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit' }}>
                                        Outgoing Payment Details
