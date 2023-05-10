@@ -45,7 +45,7 @@ export const SideNavigationMenuItem = ({text, icon, route, onClick, selected}: S
             }}
         >
             {icon}
-            {isExpanded && <Typography style={{fontFamily:"Fahrenheit", fontWeight:"bold", fontSize:"18px"}}>{text}</Typography>}
+            {isExpanded && <Typography style={{fontFamily:"Fahrenheit", fontWeight:"bold", fontSize:"18px"}} variant={'subtitle1'}>{text}</Typography>}
         </div>
     )
 }
