@@ -166,7 +166,7 @@ const ForgotPasswordForm = () => {
                         >
                         </ThemedTextField>
                     </Box>
-                    <Box style={{justifyContent: "center", display: "flex"}}>
+                    <Box style={{justifyContent: "center", display: "flex",color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>
                         <ThemedButton type="button" onClick={handleGetQuestions}>
                             Get Security Questions
                         </ThemedButton>
@@ -175,7 +175,7 @@ const ForgotPasswordForm = () => {
                         <>
                             <Box
                                 sx={{
-                                    background: "#d9c8c6",
+                                    background: "#f6e3d7",
                                     borderRadius: 5,
                                     border: "2px solid #DB5B13",
                                     padding: 2
@@ -192,7 +192,7 @@ const ForgotPasswordForm = () => {
                                             <Grid item xs={6}>
                                                 <input
                                                     style={{
-                                                        background: "#dcdcdc",
+                                                        background: "#ffffff",
                                                         borderColor: "#dc7336",
                                                         borderRadius: 5,
                                                         border: "2px solid #DB5B13",

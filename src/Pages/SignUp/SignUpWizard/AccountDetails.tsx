@@ -41,7 +41,10 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                 border: "2px solid #DB5B13",
                 padding: "20px",
                 background: "#f3d9ca",
-                borderRadius: "25px"
+                borderRadius: "25px",
+              color:"black",
+                fontSize:"18px",
+                fontFamily:'Fahrenheit,'
             }}>
             <Container maxWidth="sm">
                 <ContentStyle>
@@ -67,7 +70,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                             <HeadingStyle>
                                 <Logo/>
                             </HeadingStyle>
-                            <Typography variant={'h3'}  style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit'}}>
+                            <Typography variant={'h3'} style={{textAlign:"center",color:"black", fontSize:"30px",fontFamily:'Fahrenheit'}}>
                                 Account Details
                             </Typography>
                             <Typography
@@ -77,15 +80,15 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 Please select your account type:
                             </Typography>
                             <RadioGroup
-                                aria-labelledby={"user-type__radio-button-group"}
                                 style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
+                                aria-labelledby={"user-type__radio-button-group"}
                                 onChange={(event) => {
                                     setFieldValue("userType", event.currentTarget.value)
                                 }}
                                 value={(values as SignUpFields).userType ? (values as SignUpFields).userType : " "}
                             >
                                 <FormControlLabel
-                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                    style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}
                                     value={UserType.CLIENT}
                                     control={
                                         <Radio
@@ -166,7 +169,7 @@ export const AccountDetails = ({setCurrentStep}: SignUpProps) => {
                                 >
                                     Please select services to offer:
                                 </Typography>
-                                <FormGroup aria-labelledby={"services__form-group"} style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                                <FormGroup aria-labelledby={"services__form-group"}   style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>
                                     {Object.entries(ServiceType).map(([key, value]) => {
                                         return (
                                             <Field

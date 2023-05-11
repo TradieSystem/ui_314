@@ -13,6 +13,7 @@ import axios from "axios";
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../Routes";
 import swal from "sweetalert";
 import {useNavigate} from "react-router-dom";
+import {Style} from "../../CommonStyles/SignUp_Login"
 
 const CreateRequestForm = () => {
     const [serviceType, setServiceType] = useState<ServiceType>(ServiceType.TREE_REMOVAL);
@@ -61,6 +62,7 @@ const CreateRequestForm = () => {
     }
 
     return (
+        <Style>
         <Box
             component={motion.div}
             animate={{
@@ -86,7 +88,8 @@ const CreateRequestForm = () => {
                         justifyContent:"center",
                         gap: 4,
                     }}>
-                <Typography style={{color:"black",fontSize:"25px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Pick a Job: </Typography>
+
+                    <Typography style={{color:"black",fontSize:"25px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Pick a Job: </Typography>
                 <FormControl>
                     <RadioGroup
                         aria-labelledby="Checkbutton"
@@ -95,7 +98,6 @@ const CreateRequestForm = () => {
                     >
                         <RadioGroup
                             aria-labelledby={"services__form-group"}
-                            style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}
                             value={serviceType}
                             onChange={(event) => setServiceType(event.target.value as ServiceType)}
                         >
@@ -115,7 +117,6 @@ const CreateRequestForm = () => {
                 </FormControl>
                 </Box>
                 <ThemedTextField
-                    style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit',backgroundColor: "#f6e3d7" }}
                     multiline
                     rows={15}
                     autoComplete="Description"
@@ -143,6 +144,7 @@ const CreateRequestForm = () => {
                 </Box>
             </Box>
         </Box>
+        </Style>
     );
 };
 

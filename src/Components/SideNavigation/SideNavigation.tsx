@@ -27,39 +27,37 @@ export const SideNavigation = () => {
                     className: `${styles['side-nav']} ${isExpanded ? styles['side-nav__open'] : styles['side-nav__closed']}`
                 }}
             >
-                {isExpanded ?
-                    <SideNavigationMenuItem
-                        text={'Collapse'}
-                        icon={<ChevronLeft sx={{color: "#0c0c0c"}}/>}
-                        onClick={() => setIsExpanded(!isExpanded)}
-                    />
-                    :
-                    <SideNavigationMenuItem
-                        icon={<ChevronRight sx={{color: "#090909"}}/>}
-                        onClick={() => setIsExpanded(!isExpanded)}
-                    />
-                }
-                {
-                    sideNavigationMenuItems.map((item) => {
-                        return (
-                            <SideNavigationMenuItem key={`${item.text}-side__icon`} 
-                                                    icon={item.icon} 
-                                                    text={item.text}
-                                                    route={item.route}
-                            />
-                        )
-                    })
-                }
-
-                <div style={{
-                    padding: "1rem", position: "absolute",
-                    bottom: "0"
-                }}>
+                <div>
+                    {isExpanded ?
+                        <SideNavigationMenuItem
+                            text={'Collapse'}
+                            icon={<ChevronLeft sx={{color: "#0c0c0c"}}/>}
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        />
+                        :
+                        <SideNavigationMenuItem
+                            icon={<ChevronRight sx={{color: "#090909"}}/>}
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        />
+                    }
+                    {
+                        sideNavigationMenuItems.map((item) => {
+                            return (
+                                <SideNavigationMenuItem key={`${item.text}-side__icon`}
+                                                        icon={item.icon}
+                                                        text={item.text}
+                                                        route={item.route}
+                                />
+                            )
+                        })
+                    }
+                </div>
+                <div style={{marginBottom: isExpanded ? "0rem" : "1rem"}}>
                     {
                         user.professional !== null && user.client !== null &&
                         <SideNavigationMenuItem
                             icon={<SupervisedUserCircle/>}
-                            text={`Toggle to ${user.userType === UserType.CLIENT ? 'Professional' : 'Client'} view`}
+                            text={`${user.userType === UserType.CLIENT ? 'Professional' : 'Client'} view`}
                             onClick={() => {
                                 const newUserObject = {
                                     ...user,

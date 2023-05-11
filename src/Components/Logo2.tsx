@@ -6,12 +6,14 @@ const Logo2 = () => {
         <Box>
             <Box
                 component="img" sx={{
-        height: 220,
-            width: 220,
-    }}
-    src="/tradie (2).png" alt="logo"
-        />
+                height: 220,
+                width: 220,
+            }}
+                src="/tradie (2).png" alt="logo"
+            />
         </Box>
-);
+    );
 }
+
+
 export default Logo2;

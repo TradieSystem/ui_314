@@ -223,6 +223,7 @@ export const RequestHistoryTable = (): JSX.Element => {
         if (loading) {
             setAlert(
                 <Alert
+                    style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}
                     severity={"info"}
                     variant={"outlined"}
                     icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
@@ -272,7 +273,7 @@ export const RequestHistoryTable = (): JSX.Element => {
                 .catch(() => {
                     setLoading(false);
                     setAlert(
-                        <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                        <Alert  style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}} severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
                             There was an issue retrieving the content
                         </Alert>
                     );

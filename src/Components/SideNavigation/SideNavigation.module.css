@@ -20,7 +20,10 @@
 }
 
 .side-nav__open {
-    animation: navOpen 0.4s ease-in-out forwards;
+    width: 15rem;
+    transition: width 0.3s !important;
+    display: flex;
+    justify-content: space-between;
 }
 
 @keyframes navClose {
@@ -35,7 +38,14 @@
 }
 
 .side-nav__closed {
-    animation: navClose 0.4s ease-in-out forwards;
+    width: 5rem;
+    transition: width 0.3s !important;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 255, 255, 0.3); /* lighter background color */
+    opacity: 0.8;
 }
 .side-nav__toggle {
     position: absolute;

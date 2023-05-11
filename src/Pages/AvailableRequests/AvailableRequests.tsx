@@ -5,6 +5,7 @@ import {Box} from "@mui/material";
 import {motion} from "framer-motion";
 import {fadeInUp} from "../../Effects/Animations";
 
+
 /**
  * Page to display the available {@link ServiceRequest}s for a professionl {@link User} to pick up
  */

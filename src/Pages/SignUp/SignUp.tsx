@@ -14,8 +14,7 @@ import {CCBillingType} from "../../Types/Payment";
 import {JSEncrypt} from "jsencrypt";
 import axios from "axios";
 import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../Routes";
-import {Alert, Typography} from "@mui/material";
-import {InfoOutlined} from "@mui/icons-material";
+import {Alert} from "@mui/material";
 import swal from "sweetalert";
 import {useNavigate} from "react-router-dom";
 
@@ -238,25 +237,6 @@ export const SignUp = () => {
                 }
             }
         }
-
-        setAlert(
-            <Alert
-                severity={"info"}
-                variant={"outlined"}
-                icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
-                sx={{
-                    color: "#3f3f3f",
-                    backgroundColor: "#c7c7c7",
-                    border: "1.5px solid #3f3f3f",
-                    margin: 3
-                }}
-            >
-                <Typography color={"black"}>
-                    Submitting details...
-                </Typography>
-            </Alert>
-        );
-
         //Send the details to the create user endpoint
         axios
             .post(`${DEV_PATH}/user/userCreate`, userObject, {
@@ -329,7 +309,7 @@ export const SignUp = () => {
             .catch(() => {
                 //This error will appear if we receive a response that is not a 200 status
                 setAlert(
-                    <Alert severity={"error"}>
+                    <Alert style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit', fontWeight: 'bold' }} severity={"error"}>
                         There was an issue creating the account.
                     </Alert>
                 );

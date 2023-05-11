@@ -107,7 +107,7 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
     const [cards] = useState<ServiceRequestApplicationCard[]>([]);
     const [professionalName, setProfessionalName] = useState<string>();
 
-    const [rating, setRating] = useState<number | undefined>();
+    const [rating, setRating] = useState<number>();
     const [review, setReview] = useState<string>();
 
     const navigate = useNavigate();

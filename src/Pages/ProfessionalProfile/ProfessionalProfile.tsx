@@ -55,7 +55,7 @@ export const ProfessionalProfile = (): JSX.Element => {
             }).catch((error) => {
             setIsLoading(false);
             setAlert(
-                <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
+                <Alert style={{color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}} severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
                     There was an issue retrieving the content
                 </Alert>
             );
