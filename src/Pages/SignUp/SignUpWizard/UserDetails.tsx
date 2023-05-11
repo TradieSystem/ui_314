@@ -93,7 +93,7 @@ export const UserDetails = ({setCurrentStep}: SignUpProps) => {
                 background: "#f3d9ca",
                 borderRadius: "25px"
             }}>
-            <Container maxWidth={"sm"}>
+            <Container maxWidth={"lg"}>
                 <ContentStyle>
                     <Box
                         component={motion.div}

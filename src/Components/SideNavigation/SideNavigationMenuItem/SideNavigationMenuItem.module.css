@@ -3,6 +3,7 @@
     padding: 0.5rem;
     cursor: pointer;
     margin-top: 1rem;
+     color: #444;
 }
 
 .menu-item__condensed {
@@ -27,7 +28,7 @@
     height: 4px;
     background-image: linear-gradient(to right, rgba(216, 206, 205, 0), rgb(91, 124, 153), rgba(216, 206, 205, 0));
     opacity: 0;
-    transition: opacity 0.3s ease-out;
+    transition: opacity 0.4s ease-out;
 }
 
 .menu-item:hover::after,

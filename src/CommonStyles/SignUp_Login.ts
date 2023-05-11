@@ -21,5 +21,24 @@ export const ContentStyle = styled("div")({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    fontFamily:'Fahrenheit'
+    "& .MuiTypography-root" :{
+        fontFamily:'Fahrenheit'
+    },
+    "& .MuiAlert-message":{
+        
+        fontFamily:'Fahrenheit'
+    }
+});
+export const Style = styled("div")({
+    "& .MuiAlert-message":{
+
+        fontFamily:'Fahrenheit',
+    },
+    "& .MuiTypography-root":{
+        fontFamily:'Fahrenheit'
+    },
+    "& .MuiPaper-root-MuiAlert-root":{
+
+        fontFamily:'Fahrenheit'
+    }
 });

@@ -8,10 +8,9 @@ export const ThemedTextField = ({helperText, children, ...props}: TextFieldProps
             sx={{
                 background: "#ffffff",
                 borderColor: "#dc7336",
-                fontFamily:'Fahrenheit',
                 '& label.Mui-focused': {
                     color: '#dc7336',
-                    fontFamily:'Fahrenheit',
+                    fontFamily:'Fahrenheit'
                 },
                 '& .MuiInput-underline:after': {
                     borderBottomColor: '#dc7336'
@@ -25,6 +24,22 @@ export const ThemedTextField = ({helperText, children, ...props}: TextFieldProps
                     },
                     '&.Mui-focused fieldset': {
                         borderColor: '#dc7336',
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                        color: '#dc7336',
+                        fontFamily: 'Fahrenheit',
+                    },
+                    '& .MuiInput-underline:after': {
+                        borderBottomColor: '#dc7336'
+                    },
+                    '& input': {
+                        fontFamily: 'Fahrenheit',
+                    },
+                    '& .MuiInputBase-input':{
+                        fontFamily: 'Fahrenheit'
+                    },
+                    '& .MuiOutlinedInput-input':{
+                        fontFamily: 'Fahrenheit'
                     },
                 },
             }}
