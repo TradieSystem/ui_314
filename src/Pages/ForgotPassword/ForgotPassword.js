@@ -26,8 +26,13 @@ const ForgotPassword = () => {
             }}>
                 <Container maxWidth="sm">
                     <ContentStyle>
-                        <HeadingStyle component={motion.div} {...fadeInUp} style={{color:"black", fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>
-                                <Logo2/>
+                        <HeadingStyle component={motion.div} {...fadeInUp} style={{
+                            color: "black",
+                            fontSize: "30px",
+                            fontFamily: 'Fahrenheit',
+                            fontWeight: 'bold'
+                        }}>
+                            <Logo2/>
                         </HeadingStyle>
 
                         <ForgotPasswordform/>

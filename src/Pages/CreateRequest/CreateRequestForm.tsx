@@ -28,7 +28,7 @@ const CreateRequestForm = () => {
     const handleSubmit = () => {
         setSubmitting(true);
 
-        const request : ServiceRequestCreate = {
+        const request: ServiceRequestCreate = {
             requestID: -1,
             requestDate: format(new Date(), 'MM/dd/yyyy'),
             serviceType: serviceType,
@@ -47,7 +47,7 @@ const CreateRequestForm = () => {
             })
             .then((response) => {
                 //Check if response was correct
-                if(response.data.statusCode === "200") {
+                if (response.data.statusCode === "200") {
                     setSubmitting(false);
                     swal("Created", "The service request was created successfully", "success")
                         .then(() => navigate(`/${RoutesEnum.REQUEST_HISTORY}`));
@@ -63,87 +63,95 @@ const CreateRequestForm = () => {
 
     return (
         <Style>
-        <Box
-            component={motion.div}
-            animate={{
-                transition: {
-                    staggerChildren: 0.55,
-                },
-            }}
-        >
             <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 3,
-                    justifyContent:"center"
-                }}
                 component={motion.div}
-                initial={{opacity: 0, y: 40}}
-                animate={animate}
+                animate={{
+                    transition: {
+                        staggerChildren: 0.55,
+                    },
+                }}
             >
                 <Box
                     sx={{
                         display: "flex",
-                        justifyContent:"center",
-                        gap: 4,
-                    }}>
-
-                    <Typography style={{color:"black",fontSize:"25px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Pick a Job: </Typography>
-                <FormControl>
-                    <RadioGroup
-                        aria-labelledby="Checkbutton"
-                        defaultValue="Tree Removal"
-                        name="CheckButton"
-                    >
-                        <RadioGroup
-                            aria-labelledby={"services__form-group"}
-                            value={serviceType}
-                            onChange={(event) => setServiceType(event.target.value as ServiceType)}
-                        >
-                            {Object.entries(ServiceType).map(([key, value]) => {
-                                return (
-                                    <FormControlLabel
-                                        name={"professionalServices"}
-                                        value={value}
-                                        key={key}
-                                        control={<Radio color={"warning"}/>}
-                                        label={value}
-                                    />
-                                );
-                            })}
-                        </RadioGroup>
-                    </RadioGroup>
-                </FormControl>
-                </Box>
-                <ThemedTextField
-                    multiline
-                    rows={15}
-                    autoComplete="Description"
-                    type="text"
-                    label="Description Of Job"
-                    onChange={(event) => setDescription(event.target.value)}
-                />
-                <Box
-                    component={motion.div}
-                    initial={{opacity: 0, y: 20}}
-                    animate={animate}
-                    marginTop={3}
-                    sx={{
-                        display: "flex",
-                        justifyContent: "right"
+                        flexDirection: "column",
+                        gap: 3,
+                        justifyContent: "center"
                     }}
+                    component={motion.div}
+                    initial={{opacity: 0, y: 40}}
+                    animate={animate}
                 >
-                    <ThemedButton
-                        type="submit"
-                        loadingButton={submitting}
-                        onClick={handleSubmit}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 4,
+                        }}>
+
+                        <Typography
+                            style={{
+                                color: "black",
+                                fontSize: "25px",
+                                fontFamily: 'Fahrenheit',
+                                fontWeight: 'bold'
+                            }}>
+                            Pick a Job:
+                        </Typography>
+                        <FormControl>
+                            <RadioGroup
+                                aria-labelledby="Checkbutton"
+                                defaultValue="Tree Removal"
+                                name="CheckButton"
+                            >
+                                <RadioGroup
+                                    aria-labelledby={"services__form-group"}
+                                    value={serviceType}
+                                    onChange={(event) => setServiceType(event.target.value as ServiceType)}
+                                >
+                                    {Object.entries(ServiceType).map(([key, value]) => {
+                                        return (
+                                            <FormControlLabel
+                                                name={"professionalServices"}
+                                                value={value}
+                                                key={key}
+                                                control={<Radio color={"warning"}/>}
+                                                label={value}
+                                            />
+                                        );
+                                    })}
+                                </RadioGroup>
+                            </RadioGroup>
+                        </FormControl>
+                    </Box>
+                    <ThemedTextField
+                        multiline
+                        rows={15}
+                        autoComplete="Description"
+                        type="text"
+                        label="Description Of Job"
+                        onChange={(event) => setDescription(event.target.value)}
+                    />
+                    <Box
+                        component={motion.div}
+                        initial={{opacity: 0, y: 20}}
+                        animate={animate}
+                        marginTop={3}
+                        sx={{
+                            display: "flex",
+                            justifyContent: "right"
+                        }}
                     >
-                        {submitting ? <Loading/> : "Send Request Form"}
-                    </ThemedButton>
+                        <ThemedButton
+                            type="submit"
+                            loadingButton={submitting}
+                            onClick={handleSubmit}
+                        >
+                            {submitting ? <Loading/> : "Send Request Form"}
+                        </ThemedButton>
+                    </Box>
                 </Box>
             </Box>
-        </Box>
         </Style>
     );
 };

@@ -166,7 +166,13 @@ const ForgotPasswordForm = () => {
                         >
                         </ThemedTextField>
                     </Box>
-                    <Box style={{justifyContent: "center", display: "flex",color:"black",fontSize:"18px",fontFamily:'Fahrenheit'}}>
+                    <Box style={{
+                        justifyContent: "center",
+                        display: "flex",
+                        color: "black",
+                        fontSize: "18px",
+                        fontFamily: 'Fahrenheit'
+                    }}>
                         <ThemedButton type="button" onClick={handleGetQuestions}>
                             Get Security Questions
                         </ThemedButton>
