@@ -57,12 +57,10 @@ describe('<RequestSummaryApplicantsCarousel>', () => {
         render(TestComponent());
 
         //Professional 1 card
-        expect(screen.getByText(/some professional/i)).toBeVisible();
-        expect(screen.getByText('1')).toBeVisible();
+        expect(screen.getAllByText('1')).toHaveLength(2);
         expect(screen.getAllByText(/Plumbing/i)).toHaveLength(2);
 
         //Professional 2 card
-        expect(screen.getByText(/another professional/i)).toBeVisible();
         expect(screen.getByText('12')).toBeVisible();
 
         //Accept buttons x 2
@@ -73,7 +71,6 @@ describe('<RequestSummaryApplicantsCarousel>', () => {
         mockedAxios.put.mockResolvedValue({data: testCards[0]});
 
         render(TestComponent());
-        expect(screen.getByText(/some professional/i)).toBeVisible();
 
         const acceptedButtons = screen.getAllByTestId("accept-button");
 
@@ -90,7 +87,6 @@ describe('<RequestSummaryApplicantsCarousel>', () => {
         mockedAxios.put.mockResolvedValue({data: "something else"});
 
         render(TestComponent());
-        expect(screen.getByText(/some professional/i)).toBeVisible();
 
         const acceptedButtons = screen.getAllByTestId("accept-button");
 

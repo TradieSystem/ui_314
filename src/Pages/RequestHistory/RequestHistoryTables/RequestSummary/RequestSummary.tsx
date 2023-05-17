@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Box, styled, Typography} from "@mui/material";
+import React, {useState} from 'react';
+import {Box, styled, Typography} from "@mui/material";
 import {ServiceRequest, ServiceRequestStatus} from "../../../../Types/ServiceRequest";
 import styles from './RequestSummary.module.css';
 import {ThemedButton} from "../../../../Components/Button/ThemedButton";
@@ -16,9 +16,8 @@ import {CORS_HEADER, DEV_PATH, RoutesEnum} from "../../../../Routes";
 import swal from "sweetalert";
 import {useNavigate} from "react-router-dom";
 import {format} from "date-fns";
-import {InfoOutlined} from "@mui/icons-material";
 import ThemedTextField from "../../../../Components/TextField/ThemedTextField";
-import Rating, { IconContainerProps } from "@mui/material/Rating";
+import Rating, {IconContainerProps} from "@mui/material/Rating";
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
@@ -30,8 +29,8 @@ const panelStyling = {
     borderRadius: "20px",
     border: "1px solid #DB5B13",
     margin: "0 2rem 2rem 0",
-    background:"#f6e3d7",
-    fontFamily:'Fahrenheit'
+    background: "#f6e3d7",
+    fontFamily: 'Fahrenheit'
 }
 
 export interface RequestSummaryProps {
@@ -45,7 +44,8 @@ export interface RequestSummaryProps {
      */
     request: ServiceRequest;
 }
-const StyledRating = styled(Rating)(({ theme }) => ({
+
+const StyledRating = styled(Rating)(({theme}) => ({
     '& .MuiRating-iconEmpty .MuiSvgIcon-root': {
         color: theme.palette.action.disabled,
         fontSize: "4rem"
@@ -62,33 +62,33 @@ const customIcons: {
     };
 } = {
     1: {
-        icon: <SentimentVeryDissatisfiedIcon color="error" />,
+        icon: <SentimentVeryDissatisfiedIcon color="error"/>,
         label: 'Very Dissatisfied',
     },
     2: {
-        icon: <SentimentDissatisfiedIcon color="error" />,
+        icon: <SentimentDissatisfiedIcon color="error"/>,
         label: 'Dissatisfied',
     },
     3: {
-        icon: <SentimentSatisfiedIcon color="warning" />,
+        icon: <SentimentSatisfiedIcon color="warning"/>,
         label: 'Neutral',
     },
     4: {
-        icon: <SentimentSatisfiedAltIcon color="success" />,
+        icon: <SentimentSatisfiedAltIcon color="success"/>,
         label: 'Satisfied',
     },
     5: {
-        icon: <SentimentVerySatisfiedIcon color="success" />,
+        icon: <SentimentVerySatisfiedIcon color="success"/>,
         label: 'Very Satisfied',
     },
 };
 
 function IconContainer(props: IconContainerProps) {
-    const { value, ...other } = props;
+    const {value, ...other} = props;
     return <span {...other}>{customIcons[value].icon}</span>;
 }
 
-export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps) : JSX.Element=> {
+export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryProps): JSX.Element => {
     const [showEdit, setShowEdit] = useState(false);
 
     const user: User = JSON.parse(localStorage.getItem("user") || "{}") as User;
@@ -100,12 +100,8 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
     const [markCompleteDisabled, setMarkCompleteDisabled] = useState<boolean>();
 
     const [loadingEdit, setLoadingEdit] = useState<boolean>(false);
-    const [loadingCards, setLoadingCards] = useState<boolean>(true);
-
-    const [alert, setAlert] = useState<JSX.Element>(<></>);
 
     const [cards] = useState<ServiceRequestApplicationCard[]>([]);
-    const [professionalName, setProfessionalName] = useState<string>();
 
     const [rating, setRating] = useState<number>();
     const [review, setReview] = useState<string>();
@@ -142,53 +138,19 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
             });
     }
 
-
-    useEffect(() => {
-        request.applications?.forEach((application) => {
-            axios.get(`${DEV_PATH}/user/userGet?user_id=${application.professionalID}`, {
-                headers: {
-                    ...CORS_HEADER,
-                    'Authorization': auth_token
-                },
-            })
-                .then((r) => {
-                    if (r.data && r.data.firstName && r.data.lastName) {
-                        const name = `${r.data.firstName} ${r.data.lastName}`;
-                        if (request.requestStatus === ServiceRequestStatus.NEW) {
-                            const newCard: ServiceRequestApplicationCard = {
-                                requestID: application.requestID,
-                                applicationID: application.applicationID,
-                                offerDate: format(new Date(), "MM/dd/yyyy"),
-                                professionalID: application.professionalID,
-                                cost: application.cost,
-                                applicationStatus: application.applicationStatus,
-                                professionalName: name
-                            }
-                            cards.push(newCard);
-                        } else {
-                            //We want to send the name to the summary card
-                            if (request.professionalID === application.professionalID) {
-                                setProfessionalName(name);
-                            }
-                        }
-
-                    }
-
-                    if (request.applications?.length === cards.length) {       //we reached the end of the initial data that we were iterating through to build up the client name
-                        setLoadingCards(false);
-                    }
-                })
-                .catch((error) => {
-                    setLoadingCards(false);
-                    setAlert(
-                        <Alert severity={"error"} onClose={() => setAlert(<></>)} sx={{marginBottom: 2}}>
-                            There was an issue retrieving the content
-                        </Alert>
-                    );
-                });
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    request.applications?.forEach((application) => {
+        if (request.requestStatus === ServiceRequestStatus.NEW) {
+            const newCard: ServiceRequestApplicationCard = {
+                requestID: application.requestID,
+                applicationID: application.applicationID,
+                offerDate: format(new Date(), "MM/dd/yyyy"),
+                professionalID: application.professionalID,
+                cost: application.cost,
+                applicationStatus: application.applicationStatus
+            }
+            cards.push(newCard);
+        }
+    });
 
     return (
         <Box
@@ -199,26 +161,26 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
             }}
         >
             <div className={styles['title']}>
-                <Typography variant={'h3'}  style={{color:"black",fontSize:"50px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>
+                <Typography variant={'h3'}
+                            style={{color: "black", fontSize: "50px", fontFamily: 'Fahrenheit', fontWeight: 'bold'}}>
                     {request.requestStatus === ServiceRequestStatus.NEW && `New Service Request`}
                     {request.requestStatus === ServiceRequestStatus.COMPLETE && `Completed Request`}
                     {request.requestStatus === ServiceRequestStatus.PENDING_COMPLETION && `Request Pending Completion`}
                     {request.requestStatus === ServiceRequestStatus.ARCHIVED && `Finalised Request`}
                 </Typography>
             </div>
-            <div className={styles['request-overview']} style={{fontFamily:'Fahrenheit'}}>
-                {alert}
+            <div className={styles['request-overview']} style={{fontFamily: 'Fahrenheit'}}>
                 <div>
                     <Typography
                         variant={'h4'}
                         sx={{marginBottom: '1rem'}}
-                        style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                        style={{color: "black", fontSize: "30px", fontFamily: 'Fahrenheit', fontWeight: 'bold'}}
                     >
                         {!showEdit ? `Request Details` : 'Edit Request Details'}
                     </Typography>
                     <Box sx={panelStyling}>
                         {!showEdit ?
-                            <RequestSummaryView request={request} professionalName={professionalName}/> :
+                            <RequestSummaryView request={request}/> :
                             <RequestSummaryEdit
                                 request={request}
                                 setServiceDescEdit={setServiceDescEdit}
@@ -231,13 +193,13 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                     <div>
                         <Typography
                             variant={'h4'}
-                            style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                            style={{color: "black", fontSize: "30px", fontFamily: 'Fahrenheit', fontWeight: 'bold'}}
                             sx={{marginBottom: '1rem'}}
                         >
                             Payment
                         </Typography>
                         <Box sx={panelStyling}>
-                            <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>
+                            <Typography style={{color: "black", fontSize: "20px", fontFamily: 'Fahrenheit'}}>
                                 Payment was successfully made with the CC on the account, on request completion.
                             </Typography>
                         </Box>
@@ -246,14 +208,19 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                 <Typography
                                     variant={'h4'}
                                     sx={{marginBottom: '1rem'}}
-                                    style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}
+                                    style={{color: "black", fontSize: "20px", fontFamily: 'Fahrenheit'}}
                                 >
                                     Leave a rating and review
                                 </Typography>
                                 <Box sx={panelStyling}>
-                                    <Typography style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Rating</Typography>
+                                    <Typography style={{
+                                        color: "black",
+                                        fontSize: "30px",
+                                        fontFamily: 'Fahrenheit',
+                                        fontWeight: 'bold'
+                                    }}>Rating</Typography>
                                     <StyledRating
-                                        sx={{ fontSize: "4rem" }}
+                                        sx={{fontSize: "4rem"}}
                                         name="highlight-selected-only"
                                         value={rating ?? 0}
                                         IconContainerComponent={IconContainer}
@@ -263,11 +230,16 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                                             setRating(newValue ?? undefined);
                                         }}
                                     />
-                                    <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit', fontWeight: 'bold'}}>Review</Typography>
+                                    <Typography style={{
+                                        color: "black",
+                                        fontSize: "15px",
+                                        fontFamily: 'Fahrenheit',
+                                        fontWeight: 'bold'
+                                    }}>Review</Typography>
                                     <ThemedTextField
                                         multiline
                                         rows={5}
-                                        style={{width: "100%",backgroundColor:"#f3d9ca"}}
+                                        style={{width: "100%", backgroundColor: "#f3d9ca"}}
                                         type={"text"}
                                         label={"Review (Optional)"}
                                         onChange={(event) => setReview(event.target.value)}
@@ -279,18 +251,37 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                             <>
                                 <Typography
                                     variant={'h4'}
-                                    style={{color:"black",fontSize:"30px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}
+                                    style={{
+                                        color: "black",
+                                        fontSize: "30px",
+                                        fontFamily: 'Fahrenheit',
+                                        fontWeight: 'bold'
+                                    }}
                                     sx={{marginBottom: '1rem'}}
                                 >
                                     Review
                                 </Typography>
                                 <Box sx={panelStyling}>
-                                    <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Rating:</Typography>
+                                    <Typography style={{
+                                        color: "black",
+                                        fontSize: "20px",
+                                        fontFamily: 'Fahrenheit',
+                                        fontWeight: 'bold'
+                                    }}>Rating:</Typography>
                                     <Rating name="rating" value={Number(request.rating.toFixed(1))} readOnly/>
                                     {request.review ?
                                         <>
-                                            <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Review:</Typography>
-                                            <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit' }}>{request.review}</Typography>
+                                            <Typography style={{
+                                                color: "black",
+                                                fontSize: "20px",
+                                                fontFamily: 'Fahrenheit',
+                                                fontWeight: 'bold'
+                                            }}>Review:</Typography>
+                                            <Typography style={{
+                                                color: "black",
+                                                fontSize: "15px",
+                                                fontFamily: 'Fahrenheit'
+                                            }}>{request.review}</Typography>
                                         </> : <></>
                                     }
                                 </Box>
@@ -301,31 +292,11 @@ export const RequestSummary = ({setShowRequestSummary, request}: RequestSummaryP
                 }
             </div>
             {
-                !loadingCards ?
-                    (
-                        (request.applications && request.applications?.length > 0) &&
-                        <RequestSummaryApplicantsCarousel
-                            cards={cards}
-                            request={request}
-                        />
-                    ) :
-                    ((request.requestStatus === ServiceRequestStatus.NEW && request.applications !== null) ?
-                            <Alert
-                                severity={"info"}
-                                variant={"outlined"}
-                                icon={<InfoOutlined sx={{color: "#3f3f3f"}}></InfoOutlined>}
-                                sx={{
-                                    color: "#3f3f3f",
-                                    backgroundColor: "#c7c7c7",
-                                    border: "1.5px solid #3f3f3f",
-                                    margin: 2
-                                }}
-                            >
-                                <Typography style={{color:"black",fontSize:"15px",fontFamily:'Fahrenheit'}}>
-                                    Loading application details...
-                                </Typography>
-                            </Alert> : <></>
-                    )
+                (request.applications && request.applications?.length > 0) &&
+                <RequestSummaryApplicantsCarousel
+                    cards={cards}
+                    request={request}
+                />
             }
             <div className={styles['control-buttons']}>
                 {!showEdit &&

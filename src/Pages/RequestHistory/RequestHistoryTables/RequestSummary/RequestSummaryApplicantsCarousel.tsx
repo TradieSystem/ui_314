@@ -40,7 +40,7 @@ const settings = {
 type ServiceRequestApplicationCardBase = Omit<ServiceRequestApplication, "offerDate">;
 
 export interface ServiceRequestApplicationCard extends ServiceRequestApplicationCardBase {
-    professionalName: string;
+    professionalName?: string;
     offerDate: string;
 }
 
@@ -96,7 +96,7 @@ export const RequestSummaryApplicantsCarousel = ({
                         background: "#f6e3d7",
                     }}>
                         <Typography>
-                            <b>Professional Name:</b> {card.professionalName}
+                            <b>Professional ID:</b> {card.professionalID}
                         </Typography>
                         <Typography>
                             <b>Application ID:</b> {`${card.applicationID}`}
