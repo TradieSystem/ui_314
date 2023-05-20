@@ -78,7 +78,7 @@ export const RequestSummaryView = ({request, professionalName}: RequestSummaryVi
                 <Grid item>
                     <Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit', fontWeight: 'bold' }}>Additional Description:</Typography>
                 </Grid>
-                <Grid item>
+                <Grid item maxWidth={400}>
                     {<Typography style={{color:"black",fontSize:"20px",fontFamily:'Fahrenheit'}}>{request.jobDescription ? `${request.jobDescription}` : '-'}</Typography>}
                 </Grid>
             </Grid>
