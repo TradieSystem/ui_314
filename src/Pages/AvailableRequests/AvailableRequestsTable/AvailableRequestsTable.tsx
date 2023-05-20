@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {
     ServiceRequest,
     ServiceRequestApplication,
-    ServiceRequestApplicationStatus
+    ServiceRequestApplicationStatus,
+    ServiceRequestStatus
 } from "../../../Types/ServiceRequest";
 import {SortDirection} from "../../../Utilities/TableUtils";
 import styles from './AvailableRequestsTable.module.css';
@@ -214,7 +215,7 @@ export const AvailableRequestsTable = () : JSX.Element => {
                             }
                             const approvedApplication: ServiceRequestApplication | undefined = request.applications?.filter((application) => application.applicationStatus === ServiceRequestApplicationStatus.APPROVED).at(0);
 
-                            if (!approvedApplication) {
+                            if (!approvedApplication && serviceRequest.requestStatus === ServiceRequestStatus.NEW) {
                                 incomingRequests.push(serviceRequest);
                             }
                         })
